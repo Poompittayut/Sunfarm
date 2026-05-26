@@ -12,339 +12,204 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root{
   --navy:#7F0000; --navy2:#5D0000; --sky:#EF5350;
-  --red:#B71C1C; --red-h:#7F0000; --red-l:#D32F2F; --red-xs:#FFF5F5;
-  --bg:#FAF5F5; --bg2:#F5ECEC;
+  --red:#B71C1C;
+  --bg:#FAF5F5;
   --white:#FFFFFF;
   --gray-50:#FFF8F8; --gray-100:#F5ECEC; --gray-200:#EED8D8; --gray-300:#E0BFBF;
   --gray-400:#C49A9A; --gray-500:#8A5A5A; --gray-700:#3D1A1A; --gray-900:#1A0A0A;
-  --green:#2E7D32; --amber:#E65100;
-  --card:rgba(255,255,255,0.88); --border:#F0DADA;
-  --shadow:0 4px 20px rgba(183,28,28,0.12),0 2px 8px rgba(0,0,0,0.05);
-  --shadow-sm:0 1px 4px rgba(183,28,28,0.08);
+  --green:#2E7D32;
+  --border:#F0DADA;
   --bottom-nav-h:64px;
 }
-html, body { height: 100%; background: #FAF5F5; font-family: 'Sarabun', sans-serif; color: var(--gray-900); -webkit-text-size-adjust: 100%; background-image: radial-gradient(ellipse 70% 40% at 50% 0%, rgba(183,28,28,0.07) 0%, transparent 55%); }
+html, body { height:100%; background:#FAF5F5; font-family:'Sarabun',sans-serif; color:var(--gray-900); -webkit-text-size-adjust:100%; background-image:radial-gradient(ellipse 70% 40% at 50% 0%, rgba(183,28,28,0.07) 0%, transparent 55%); }
 
-/* ─── LANDING PAGE ─── */
-#landingScreen {
-  position: fixed; inset: 0; z-index: 2000;
-  display: flex; align-items: center; justify-content: center; padding: 24px;
-  background: rgba(250,245,245,0.95);
-  backdrop-filter: blur(20px);
-}
-#landingScreen.gone { display: none; }
-.landing-bg { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
-.landing-orb {
-  position: absolute; border-radius: 50%;
-  filter: blur(60px); opacity: 0.25;
-}
-.orb1 { width: 500px; height: 500px; background: #B71C1C; top: -150px; right: -100px; }
-.orb2 { width: 400px; height: 400px; background: #D32F2F; bottom: -120px; left: -80px; }
-.orb3 { width: 300px; height: 300px; background: #EF9A9A; top: 40%; left: 40%; }
+/* LANDING */
+#landingScreen { position:fixed; inset:0; z-index:2000; display:flex; align-items:center; justify-content:center; padding:24px; background:rgba(250,245,245,0.95); backdrop-filter:blur(20px); }
+#landingScreen.gone { display:none; }
+.landing-bg { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+.landing-orb { position:absolute; border-radius:50%; filter:blur(60px); opacity:0.25; }
+.orb1 { width:500px; height:500px; background:#B71C1C; top:-150px; right:-100px; }
+.orb2 { width:400px; height:400px; background:#D32F2F; bottom:-120px; left:-80px; }
+.orb3 { width:300px; height:300px; background:#EF9A9A; top:40%; left:40%; }
+.landing-box { position:relative; z-index:1; width:100%; max-width:480px; background:#FFF; border:1px solid rgba(183,28,28,0.15); border-top:3px solid #B71C1C; border-radius:20px; padding:44px 36px 40px; box-shadow:0 20px 60px rgba(183,28,28,0.15),0 4px 20px rgba(0,0,0,0.06); text-align:center; animation:landingIn .5s cubic-bezier(.22,1,.36,1) both; }
+@keyframes landingIn { from{opacity:0;transform:translateY(24px) scale(.97)} to{opacity:1;transform:none} }
+.landing-logo { font-size:56px; margin-bottom:10px; }
+.landing-brand { font-family:'Kanit',sans-serif; font-size:30px; font-weight:700; color:#B71C1C; letter-spacing:3px; margin-bottom:4px; }
+.landing-sub { font-size:12.5px; color:#8A5A5A; letter-spacing:.5px; }
+.landing-divider { height:1px; background:rgba(183,28,28,0.15); margin:24px 0; }
+.landing-label { font-size:11px; font-weight:700; color:#8A5A5A; letter-spacing:1.2px; text-transform:uppercase; margin-bottom:18px; }
+.device-cards { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:20px; }
+.device-card { background:#FFF; border:1.5px solid rgba(183,28,28,0.15); border-radius:14px; padding:24px 16px 20px; cursor:pointer; box-shadow:0 2px 12px rgba(183,28,28,0.08); transition:transform .2s,border-color .2s,box-shadow .2s; }
+.device-card:hover { border-color:rgba(183,28,28,0.4); background:#FFF5F5; transform:translateY(-4px); box-shadow:0 8px 32px rgba(183,28,28,0.18); }
+.device-card:active { transform:scale(.97); }
+.device-icon { font-size:44px; margin-bottom:12px; display:block; }
+.device-title { font-family:'Kanit',sans-serif; font-size:17px; font-weight:700; color:#1A0A0A; margin-bottom:8px; }
+.device-desc { font-size:11.5px; color:#8A5A5A; line-height:1.65; margin-bottom:12px; }
+.device-badge { display:inline-block; padding:3px 12px; border-radius:99px; font-size:10px; font-weight:700; }
+.badge-m { background:rgba(74,144,217,0.2); color:#6BB3E8; border:1px solid rgba(74,144,217,0.3); }
+.badge-d { background:rgba(109,184,138,0.2); color:#7DCFA0; border:1px solid rgba(109,184,138,0.3); }
+.auto-detect { font-size:12px; color:#8A5A5A; min-height:18px; }
+@media (max-width:420px) { .landing-brand{font-size:26px} .device-icon{font-size:36px} .device-title{font-size:15px} }
 
-.landing-box {
-  position: relative; z-index: 1;
-  width: 100%; max-width: 480px;
-  background: #FFFFFF;
-  backdrop-filter: blur(24px);
-  border: 1px solid rgba(183,28,28,0.15);
-  border-top: 3px solid #B71C1C;
-  border-radius: 20px; padding: 44px 36px 40px;
-  box-shadow: 0 20px 60px rgba(183,28,28,0.15), 0 4px 20px rgba(0,0,0,0.06);
-  text-align: center;
-  animation: landingIn .5s cubic-bezier(.22,1,.36,1) both;
-}
-@keyframes landingIn {
-  from { opacity:0; transform:translateY(24px) scale(.97); }
-  to   { opacity:1; transform:none; }
-}
-.landing-logo { font-size: 56px; margin-bottom: 10px; }
-.landing-brand {
-  font-family: 'Kanit', sans-serif; font-size: 30px; font-weight: 700;
-  color: #B71C1C; letter-spacing: 3px; margin-bottom: 4px;
-}
-.landing-sub { font-size: 12.5px; color: #8A5A5A; letter-spacing: .5px; }
-.landing-divider {
-  height: 1px; background: rgba(183,28,28,0.15);
-  margin: 24px 0; border-radius: 1px;
-}
-.landing-label {
-  font-size: 11px; font-weight: 700; color: #8A5A5A;
-  letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 18px;
-}
-.device-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
-.device-card {
-  background: #FFFFFF;
-  border: 1.5px solid rgba(183,28,28,0.15);
-  border-radius: 14px; padding: 24px 16px 20px;
-  cursor: pointer;
-  box-shadow: 0 2px 12px rgba(183,28,28,0.08);
-  transition: transform .2s, border-color .2s, box-shadow .2s;
-}
-.device-card:hover {
-  border-color: rgba(183,28,28,0.4);
-  background: #FFF5F5;
-  transform: translateY(-4px);
-  box-shadow: 0 8px 32px rgba(183,28,28,0.18);
-}
-.device-card:active { transform: scale(.97); }
-.device-icon { font-size: 44px; margin-bottom: 12px; display: block; }
-.device-title {
-  font-family: 'Kanit', sans-serif; font-size: 17px; font-weight: 700;
-  color: #1A0A0A; margin-bottom: 8px;
-}
-.device-desc { font-size: 11.5px; color: #8A5A5A; line-height: 1.65; margin-bottom: 12px; }
-.device-badge {
-  display: inline-block; padding: 3px 12px; border-radius: 99px;
-  font-size: 10px; font-weight: 700; letter-spacing: .05em;
-}
-.badge-m { background: rgba(74,144,217,0.2); color: #6BB3E8; border: 1px solid rgba(74,144,217,0.3); }
-.badge-d { background: rgba(109,184,138,0.2); color: #7DCFA0; border: 1px solid rgba(109,184,138,0.3); }
-.auto-detect {
-  font-size: 12px; color: #8A5A5A;
-  min-height: 18px;
-}
+/* DASHBOARD */
+#dashApp { display:none; height:100dvh; }
+.app { display:flex; height:100%; overflow:hidden; }
 
-@media (max-width: 420px) {
-  .landing-box {
-  position: relative; z-index: 1;
-  width: 100%; max-width: 480px;
-  background: #FFFFFF;
-  backdrop-filter: blur(24px);
-  border: 1px solid rgba(183,28,28,0.15);
-  border-top: 3px solid #B71C1C;
-  border-radius: 20px; padding: 44px 36px 40px;
-  box-shadow: 0 20px 60px rgba(183,28,28,0.15), 0 4px 20px rgba(0,0,0,0.06);
-  text-align: center;
-  animation: landingIn .5s cubic-bezier(.22,1,.36,1) both;
+/* SIDEBAR */
+.sidebar { width:220px; background:linear-gradient(180deg,#7F0000 0%,#5D0000 100%); display:flex; flex-direction:column; flex-shrink:0; overflow-y:auto; box-shadow:4px 0 24px rgba(127,0,0,0.3); }
+.sidebar-logo { padding:24px 20px 20px; border-bottom:1px solid rgba(255,255,255,0.08); }
+.sidebar-logo h1 { font-family:'Kanit',sans-serif; font-size:22px; font-weight:700; color:#fff; letter-spacing:1px; }
+.sidebar-logo p { font-size:11px; color:rgba(255,255,255,0.4); margin-top:2px; }
+.sidebar-nav { padding:16px 0; flex:1; }
+.nav-section { padding:10px 16px 4px; font-size:10px; font-weight:700; color:rgba(255,255,255,0.3); letter-spacing:1.5px; text-transform:uppercase; }
+.nav-item { display:flex; align-items:center; gap:10px; padding:11px 20px; color:rgba(255,255,255,0.6); cursor:pointer; font-size:14px; font-weight:500; transition:all 0.15s; border-left:3px solid transparent; }
+.nav-item:hover { color:#fff; background:rgba(255,255,255,0.07); }
+.nav-item.active { color:#fff; background:rgba(74,144,217,0.18); border-left-color:var(--sky); }
+.nav-icon { font-size:16px; width:20px; text-align:center; }
+.sidebar-footer { padding:16px 20px; border-top:1px solid rgba(255,255,255,0.08); font-size:11px; color:rgba(255,255,255,0.25); line-height:1.6; }
+
+/* MAIN */
+.main { flex:1; display:flex; flex-direction:column; overflow:hidden; min-width:0; }
+.topbar { height:56px; display:flex; align-items:center; justify-content:space-between; padding:0 20px; border-bottom:2px solid var(--red); background:rgba(255,255,255,0.92); backdrop-filter:blur(20px); box-shadow:0 2px 16px rgba(183,28,28,0.1); flex-shrink:0; }
+.topbar-left { display:flex; align-items:center; gap:10px; min-width:0; }
+.hamburger { display:none; background:none; border:none; cursor:pointer; padding:4px; color:var(--navy); font-size:22px; flex-shrink:0; }
+.topbar-title { font-family:'Kanit',sans-serif; font-size:17px; font-weight:600; color:var(--navy); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.topbar-meta { font-size:11px; color:var(--gray-500); }
+.topbar-right { display:flex; align-items:center; gap:10px; flex-shrink:0; }
+.badge-live { display:flex; align-items:center; gap:5px; background:#ecfdf5; color:#065f46; padding:4px 12px; border-radius:20px; font-size:11px; font-weight:700; border:1px solid #bbf7d0; }
+.badge-live::before { content:''; width:6px; height:6px; border-radius:50%; background:#10b981; animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1}50%{opacity:.4} }
+.btn-mode { cursor:pointer; background:var(--gray-100); color:var(--navy); border:1.5px solid rgba(127,0,0,0.2); padding:6px 14px; border-radius:8px; font-size:12px; font-weight:700; font-family:'Sarabun',sans-serif; white-space:nowrap; transition:all 0.15s; }
+.btn-mode:hover { background:var(--gray-200); }
+.content { flex:1; overflow-y:auto; padding:22px 24px; background:transparent; -webkit-overflow-scrolling:touch; }
+.content::-webkit-scrollbar { width:5px; }
+.content::-webkit-scrollbar-thumb { background:var(--gray-200); border-radius:3px; }
+.tab-content { display:none; }
+.tab-content.active { display:block; }
+
+/* SECTION HEADER */
+.section-header { margin-bottom:18px; }
+.section-header h2 { font-family:'Kanit',sans-serif; font-size:19px; font-weight:700; color:var(--navy); }
+.section-header p { font-size:12px; color:var(--gray-500); margin-top:3px; }
+
+/* KPI */
+.kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:14px; margin-bottom:18px; }
+.kpi-card { background:#fff; border-radius:14px; padding:18px 20px; border:1px solid rgba(0,0,0,0.06); position:relative; overflow:hidden; box-shadow:0 4px 16px rgba(0,0,0,0.08),0 1px 4px rgba(0,0,0,0.05); transition:box-shadow 0.2s,transform 0.2s; }
+.kpi-card:hover { box-shadow:0 8px 28px rgba(0,0,0,0.12); transform:translateY(-1px); }
+.kpi-card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:var(--accent,var(--sky)); }
+.kpi-label { font-size:11px; color:var(--gray-500); font-weight:600; margin-bottom:8px; line-height:1.3; text-transform:uppercase; letter-spacing:0.3px; }
+.kpi-value { font-family:'Bebas Neue',sans-serif; font-size:38px; color:var(--navy); line-height:1; }
+.kpi-unit { font-size:11px; color:var(--gray-500); margin-top:4px; }
+.kpi-sub { font-size:11px; color:var(--green); font-weight:700; margin-top:6px; }
+.kpi-icon { position:absolute; right:14px; top:16px; font-size:22px; opacity:0.1; }
+
+/* CHARTS */
+.chart-grid-2col { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
+.chart-card { background:#fff; border-radius:14px; padding:20px; border:1px solid rgba(0,0,0,0.06); box-shadow:0 4px 16px rgba(0,0,0,0.08),0 1px 4px rgba(0,0,0,0.04); margin-bottom:16px; }
+.chart-grid-2col .chart-card { margin-bottom:0; }
+.chart-title { font-family:'Kanit',sans-serif; font-size:14px; font-weight:700; color:var(--navy); margin-bottom:3px; }
+.chart-sub { font-size:11px; color:var(--gray-500); margin-bottom:16px; }
+.chart-wrap { position:relative; height:230px; }
+
+/* TABLES */
+.table-card { background:#fff; border-radius:14px; border:1px solid rgba(0,0,0,0.06); overflow:hidden; margin-bottom:16px; box-shadow:0 4px 16px rgba(0,0,0,0.08),0 1px 4px rgba(0,0,0,0.04); }
+.table-header { padding:14px 18px; border-bottom:1px solid var(--gray-100); display:flex; align-items:center; justify-content:space-between; }
+.table-title { font-family:'Kanit',sans-serif; font-size:14px; font-weight:700; color:var(--navy); }
+.table-count { font-size:11px; color:var(--gray-500); background:var(--gray-100); padding:2px 8px; border-radius:10px; font-weight:600; }
+.table-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+table { width:100%; border-collapse:collapse; min-width:480px; }
+th { background:var(--gray-100); color:var(--navy); font-size:11px; font-weight:700; padding:10px 14px; text-align:left; font-family:'Kanit',sans-serif; white-space:nowrap; letter-spacing:0.3px; }
+td { padding:10px 14px; font-size:12px; color:var(--gray-700); border-bottom:1px solid var(--gray-100); white-space:nowrap; }
+tr:last-child td { border-bottom:none; }
+tr:hover td { background:var(--gray-50); }
+.mobile-record { display:none; padding:14px 16px; border-bottom:1px solid var(--gray-100); }
+.mobile-record:last-child { border-bottom:none; }
+.mobile-record-title { font-family:'Kanit',sans-serif; font-size:13px; font-weight:700; color:var(--navy); margin-bottom:10px; }
+.mobile-record-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px 14px; }
+.mobile-field { display:flex; flex-direction:column; gap:2px; }
+.mobile-field-label { font-size:9px; color:var(--gray-500); font-weight:700; text-transform:uppercase; letter-spacing:0.6px; }
+.mobile-field-value { font-size:13px; color:var(--gray-700); font-weight:600; }
+.status-badge { display:inline-block; padding:3px 10px; border-radius:20px; font-size:10px; font-weight:700; }
+.status-active { background:#ecfdf5; color:#065f46; }
+.status-planning { background:#eff6ff; color:#1e40af; }
+.status-selected { background:#fef3c7; color:#92400e; }
+
+/* INSIGHT */
+.insight-section { margin-top:4px; padding:18px 20px; border-radius:14px; background:#fff; border:1px solid rgba(0,0,0,0.06); margin-bottom:8px; box-shadow:0 4px 16px rgba(0,0,0,0.07); }
+.insight-title { font-family:'Kanit',sans-serif; font-size:14px; font-weight:700; color:var(--navy); margin-bottom:14px; }
+.insight-grid { display:flex; gap:12px; }
+.insight-card { flex:1; display:flex; align-items:flex-start; gap:10px; padding:14px; border-radius:10px; }
+.insight-card strong { display:block; font-size:10px; margin-bottom:4px; color:var(--gray-700); font-weight:700; text-transform:uppercase; letter-spacing:0.4px; }
+.insight-card p { margin:0; color:#4b5563; font-size:12px; line-height:1.6; }
+.insight-icon { font-size:16px; flex-shrink:0; margin-top:1px; }
+.insight-positive { background:#ecfdf5; border:1px solid #bbf7d0; }
+.insight-warning  { background:#fffbeb; border:1px solid #fde68a; }
+.insight-neutral  { background:#eff6ff; border:1px solid #bfdbfe; }
+
+/* BOTTOM NAV */
+.bottom-nav { display:none; position:fixed; bottom:0; left:0; right:0; height:var(--bottom-nav-h); background:linear-gradient(135deg,#7F0000,#5D0000); border-top:1px solid rgba(255,255,255,0.1); z-index:100; overflow-x:auto; scrollbar-width:none; box-shadow:0 -4px 20px rgba(127,0,0,0.25); }
+.bottom-nav::-webkit-scrollbar { display:none; }
+.bottom-nav-inner { display:flex; height:100%; min-width:max-content; padding:0 8px; }
+.bnav-item { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; padding:0 14px; cursor:pointer; color:rgba(255,255,255,0.45); transition:color 0.15s; min-width:64px; border:none; background:none; -webkit-tap-highlight-color:transparent; }
+.bnav-item.active { color:#fff; }
+.bnav-icon { font-size:20px; width:38px; height:34px; display:flex; align-items:center; justify-content:center; border-radius:10px; transition:background 0.15s; }
+.bnav-item.active .bnav-icon { background:rgba(74,144,217,0.28); }
+.bnav-label { font-size:10px; font-weight:700; white-space:nowrap; }
+
+/* DRAWER */
+.drawer-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:200; }
+.drawer-overlay.open { display:block; }
+.drawer { position:fixed; top:0; left:-260px; width:260px; height:100%; background:var(--navy); z-index:201; transition:left 0.25s ease; display:flex; flex-direction:column; overflow-y:auto; box-shadow:4px 0 24px rgba(0,0,0,0.3); }
+.drawer.open { left:0; }
+.drawer-logo { padding:20px; border-bottom:1px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:space-between; }
+.drawer-logo h1 { font-family:'Kanit',sans-serif; font-size:20px; font-weight:700; color:#fff; }
+.drawer-close { background:none; border:none; color:rgba(255,255,255,0.5); font-size:22px; cursor:pointer; padding:4px; }
+
+/* FORCE MOBILE */
+body.force-mobile .sidebar { display:none; }
+body.force-mobile .bottom-nav { display:flex !important; }
+body.force-mobile .hamburger { display:flex !important; }
+body.force-mobile .kpi-grid { grid-template-columns:repeat(2,1fr) !important; gap:10px !important; }
+body.force-mobile .kpi-value { font-size:28px !important; }
+body.force-mobile .table-desktop { display:none !important; }
+body.force-mobile .mobile-record { display:block !important; }
+body.force-mobile .chart-grid-2col { display:block !important; }
+body.force-mobile .chart-grid-2col .chart-card { margin-bottom:14px !important; }
+body.force-mobile .insight-grid { flex-direction:column !important; }
+body.force-mobile .content { padding-bottom:calc(var(--bottom-nav-h) + 16px) !important; }
+
+/* FORCE DESKTOP */
+body.force-desktop .sidebar { display:flex !important; }
+body.force-desktop .bottom-nav { display:none !important; }
+body.force-desktop .hamburger { display:none !important; }
+body.force-desktop .kpi-grid { grid-template-columns:repeat(auto-fit,minmax(170px,1fr)) !important; }
+body.force-desktop .kpi-value { font-size:38px !important; }
+body.force-desktop .table-desktop { display:block !important; }
+body.force-desktop .mobile-record { display:none !important; }
+body.force-desktop .chart-grid-2col { display:grid !important; grid-template-columns:1fr 1fr !important; gap:16px !important; }
+body.force-desktop .chart-grid-2col .chart-card { margin-bottom:0 !important; }
+body.force-desktop .insight-grid { flex-direction:row !important; }
+
+/* RESPONSIVE */
+@media (max-width:768px) {
+  .sidebar { display:none; }
+  .bottom-nav { display:flex; }
+  .hamburger { display:flex; }
+  .kpi-grid { grid-template-columns:repeat(2,1fr); gap:10px; }
+  .kpi-value { font-size:28px; }
+  .table-desktop { display:none; }
+  .mobile-record { display:block; }
+  .chart-grid-2col { display:block; }
+  .chart-grid-2col .chart-card { margin-bottom:14px; }
+  .insight-grid { flex-direction:column; }
+  .content { padding-bottom:calc(var(--bottom-nav-h) + 16px); }
 }
-  .landing-brand { font-size: 26px; }
-  .device-icon { font-size: 36px; }
-  .device-title { font-size: 15px; }
-}
-
-/* ─── DASHBOARD APP ─── */
-#dashApp { display: none; height: 100dvh; }
-.app { display: flex; height: 100%; overflow: hidden; }
-
-/* ─── SIDEBAR ─── */
-.sidebar {
-  width: 220px; background: linear-gradient(180deg, #7F0000 0%, #5D0000 100%); display: flex; flex-direction: column; flex-shrink: 0; overflow-y: auto;
-  box-shadow: 4px 0 24px rgba(127,0,0,0.3);
-}
-.sidebar-logo { padding: 24px 20px 20px; border-bottom: 1px solid rgba(255,255,255,0.08); }
-.sidebar-logo h1 { font-family: 'Kanit',sans-serif; font-size: 22px; font-weight: 700; color: #fff; letter-spacing: 1px; }
-.sidebar-logo p { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px; }
-.sidebar-nav { padding: 16px 0; flex: 1; }
-.nav-section { padding: 10px 16px 4px; font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.3); letter-spacing: 1.5px; text-transform: uppercase; }
-.nav-item {
-  display: flex; align-items: center; gap: 10px; padding: 11px 20px;
-  color: rgba(255,255,255,0.6); cursor: pointer; font-size: 14px; font-weight: 500;
-  transition: all 0.15s; border-left: 3px solid transparent;
-}
-.nav-item:hover { color: #fff; background: rgba(255,255,255,0.07); }
-.nav-item.active { color: #fff; background: rgba(74,144,217,0.18); border-left-color: var(--sky); }
-.nav-icon { font-size: 16px; width: 20px; text-align: center; }
-.sidebar-footer { padding: 16px 20px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 11px; color: rgba(255,255,255,0.25); line-height: 1.6; }
-
-/* ─── MAIN ─── */
-.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
-
-/* ─── TOPBAR ─── */
-.topbar {
-  height: 56px; display: flex; align-items: center; justify-content: space-between;
-  padding: 0 20px; border-bottom: 2px solid var(--red);
-  background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(20px);
-  box-shadow: 0 2px 16px rgba(183,28,28,0.1);
-  flex-shrink: 0;
-}
-.topbar-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
-.hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; color: var(--navy); font-size: 22px; flex-shrink: 0; }
-.topbar-title { font-family: 'Kanit',sans-serif; font-size: 17px; font-weight: 600; color: var(--navy); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.topbar-meta { font-size: 11px; color: var(--gray-500); }
-.topbar-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-.badge-live { display: flex; align-items: center; gap: 5px; background: #ecfdf5; color: #065f46; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; border: 1px solid #bbf7d0; }
-.badge-live::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #10b981; animation: pulse 2s infinite; }
-.btn-mode { cursor: pointer; background: var(--light); color: var(--royal); border: 1.5px solid rgba(74,144,217,0.3); padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700; font-family: 'Sarabun',sans-serif; white-space: nowrap; transition: all 0.15s; }
-.btn-mode:hover { background: #d0e4f7; }
-
-/* ─── CONTENT ─── */
-.content { flex: 1; overflow-y: auto; padding: 22px 24px; background: transparent; -webkit-overflow-scrolling: touch; }
-.content::-webkit-scrollbar { width: 5px; }
-.content::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 3px; }
-.tab-content { display: none; }
-.tab-content.active { display: block; }
-
-/* ─── SECTION HEADER ─── */
-.section-header { margin-bottom: 18px; }
-.section-header h2 { font-family: 'Kanit',sans-serif; font-size: 19px; font-weight: 700; color: var(--navy); }
-.section-header p { font-size: 12px; color: var(--gray-500); margin-top: 3px; }
-
-/* ─── KPI CARDS ─── */
-.kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px,1fr)); gap: 14px; margin-bottom: 18px; }
-.kpi-card {
-  background: #fff; border-radius: 14px; padding: 18px 20px;
-  border: 1px solid rgba(0,0,0,0.06); position: relative; overflow: hidden;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.05);
-  transition: box-shadow 0.2s, transform 0.2s;
-}
-.kpi-card:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.12); transform: translateY(-1px); }
-.kpi-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--accent, var(--sky)); }
-.kpi-label { font-size: 11px; color: var(--gray-500); font-weight: 600; margin-bottom: 8px; line-height: 1.3; text-transform: uppercase; letter-spacing: 0.3px; }
-.kpi-value { font-family: 'Bebas Neue',sans-serif; font-size: 38px; color: var(--navy); line-height: 1; }
-.kpi-unit { font-size: 11px; color: var(--gray-500); margin-top: 4px; }
-.kpi-sub { font-size: 11px; color: var(--green); font-weight: 700; margin-top: 6px; }
-.kpi-icon { position: absolute; right: 14px; top: 16px; font-size: 22px; opacity: 0.1; }
-
-/* ─── CHART CARDS ─── */
-.chart-grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-.chart-card {
-  background: #fff; border-radius: 14px; padding: 20px;
-  border: 1px solid rgba(0,0,0,0.06);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04);
-  margin-bottom: 16px;
-}
-.chart-grid-2col .chart-card { margin-bottom: 0; }
-.chart-title { font-family: 'Kanit',sans-serif; font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 3px; }
-.chart-sub { font-size: 11px; color: var(--gray-500); margin-bottom: 16px; }
-.chart-wrap { position: relative; height: 230px; }
-
-/* ─── TABLE CARDS ─── */
-.table-card {
-  background: #fff; border-radius: 14px; border: 1px solid rgba(0,0,0,0.06);
-  overflow: hidden; margin-bottom: 16px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04);
-}
-.table-header { padding: 14px 18px; border-bottom: 1px solid var(--gray-100); display: flex; align-items: center; justify-content: space-between; }
-.table-title { font-family: 'Kanit',sans-serif; font-size: 14px; font-weight: 700; color: var(--navy); }
-.table-count { font-size: 11px; color: var(--gray-500); background: var(--gray-100); padding: 2px 8px; border-radius: 10px; font-weight: 600; }
-.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-table { width: 100%; border-collapse: collapse; min-width: 480px; }
-th { background: var(--light); color: var(--royal); font-size: 11px; font-weight: 700; padding: 10px 14px; text-align: left; font-family: 'Kanit',sans-serif; white-space: nowrap; letter-spacing: 0.3px; }
-td { padding: 10px 14px; font-size: 12px; color: var(--gray-700); border-bottom: 1px solid var(--gray-100); white-space: nowrap; }
-tr:last-child td { border-bottom: none; }
-tr:hover td { background: var(--gray-50); }
-
-/* Mobile table cards */
-.mobile-record { display: none; padding: 14px 16px; border-bottom: 1px solid var(--gray-100); }
-.mobile-record:last-child { border-bottom: none; }
-.mobile-record-title { font-family: 'Kanit',sans-serif; font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
-.mobile-record-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 14px; }
-.mobile-field { display: flex; flex-direction: column; gap: 2px; }
-.mobile-field-label { font-size: 9px; color: var(--gray-500); font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; }
-.mobile-field-value { font-size: 13px; color: var(--gray-700); font-weight: 600; }
-
-/* Status badges */
-.status-badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; }
-.status-active { background: #ecfdf5; color: #065f46; }
-.status-planning { background: #eff6ff; color: #1e40af; }
-.status-selected { background: #fef3c7; color: #92400e; }
-
-/* ─── INSIGHT ─── */
-.insight-section {
-  margin-top: 4px; padding: 18px 20px; border-radius: 14px;
-  background: #fff; border: 1px solid rgba(0,0,0,0.06); margin-bottom: 8px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
-}
-.insight-title { font-family: 'Kanit',sans-serif; font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 14px; }
-.insight-grid { display: flex; gap: 12px; }
-.insight-card { flex: 1; display: flex; align-items: flex-start; gap: 10px; padding: 14px; border-radius: 10px; font-size: 13px; line-height: 1.5; }
-.insight-card strong { display: block; font-size: 10px; margin-bottom: 4px; color: var(--gray-700); font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
-.insight-card p { margin: 0; color: #4b5563; font-size: 12px; line-height: 1.6; }
-.insight-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
-.insight-positive { background: #ecfdf5; border: 1px solid #bbf7d0; }
-.insight-warning  { background: #fffbeb; border: 1px solid #fde68a; }
-.insight-neutral  { background: #eff6ff; border: 1px solid #bfdbfe; }
-
-/* ─── BOTTOM NAV ─── */
-.bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; height: var(--bottom-nav-h); background: linear-gradient(135deg, #7F0000, #5D0000); border-top: 1px solid rgba(255,255,255,0.1); z-index: 100; overflow-x: auto; scrollbar-width: none; box-shadow: 0 -4px 20px rgba(127,0,0,0.25); }
-.bottom-nav::-webkit-scrollbar { display: none; }
-.bottom-nav-inner { display: flex; height: 100%; min-width: max-content; padding: 0 8px; }
-.bnav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 0 14px; cursor: pointer; color: rgba(255,255,255,0.45); transition: color 0.15s; min-width: 64px; border: none; background: none; -webkit-tap-highlight-color: transparent; }
-.bnav-item.active { color: #fff; }
-.bnav-icon { font-size: 20px; width: 38px; height: 34px; display: flex; align-items: center; justify-content: center; border-radius: 10px; transition: background 0.15s; }
-.bnav-item.active .bnav-icon { background: rgba(74,144,217,0.28); }
-.bnav-label { font-size: 10px; font-weight: 700; white-space: nowrap; }
-
-/* ─── DRAWER ─── */
-.drawer-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; }
-.drawer-overlay.open { display: block; }
-.drawer { position: fixed; top: 0; left: -260px; width: 260px; height: 100%; background: var(--navy); z-index: 201; transition: left 0.25s ease; display: flex; flex-direction: column; overflow-y: auto; box-shadow: 4px 0 24px rgba(0,0,0,0.3); }
-.drawer.open { left: 0; }
-.drawer-logo { padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: space-between; }
-.drawer-logo h1 { font-family: 'Kanit',sans-serif; font-size: 20px; font-weight: 700; color: #fff; }
-.drawer-close { background: none; border: none; color: rgba(255,255,255,0.5); font-size: 22px; cursor: pointer; padding: 4px; }
-
-/* ─── FORCE MODES ─── */
-body.force-mobile .sidebar {
-  width: 220px; background: linear-gradient(180deg, #7F0000 0%, #5D0000 100%); display: flex; flex-direction: column; flex-shrink: 0; overflow-y: auto;
-  box-shadow: 4px 0 24px rgba(127,0,0,0.3);
-}
-body.force-mobile .bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; height: var(--bottom-nav-h); background: linear-gradient(135deg, #7F0000, #5D0000); border-top: 1px solid rgba(255,255,255,0.1); z-index: 100; overflow-x: auto; scrollbar-width: none; box-shadow: 0 -4px 20px rgba(127,0,0,0.25); }
-body.force-mobile .hamburger { display: flex !important; }
-body.force-mobile .content { flex: 1; overflow-y: auto; padding: 22px 24px; background: transparent; -webkit-overflow-scrolling: touch; }
-body.force-mobile .kpi-grid { grid-template-columns: repeat(2,1fr) !important; gap: 10px !important; }
-body.force-mobile .kpi-value { font-size: 28px !important; }
-body.force-mobile .table-desktop { display: none !important; }
-body.force-mobile .mobile-record { display: block !important; }
-body.force-mobile .chart-grid-2col { display: block !important; }
-body.force-mobile .chart-grid-2col .chart-card { margin-bottom: 14px !important; }
-body.force-mobile .insight-grid { flex-direction: column !important; }
-body.force-mobile .topbar {
-  height: 56px; display: flex; align-items: center; justify-content: space-between;
-  padding: 0 20px; border-bottom: 2px solid var(--red);
-  background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(20px);
-  box-shadow: 0 2px 16px rgba(183,28,28,0.1);
-  flex-shrink: 0;
-}
-
-body.force-desktop .sidebar {
-  width: 220px; background: linear-gradient(180deg, #7F0000 0%, #5D0000 100%); display: flex; flex-direction: column; flex-shrink: 0; overflow-y: auto;
-  box-shadow: 4px 0 24px rgba(127,0,0,0.3);
-}
-body.force-desktop .bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; height: var(--bottom-nav-h); background: linear-gradient(135deg, #7F0000, #5D0000); border-top: 1px solid rgba(255,255,255,0.1); z-index: 100; overflow-x: auto; scrollbar-width: none; box-shadow: 0 -4px 20px rgba(127,0,0,0.25); }
-body.force-desktop .hamburger { display: none !important; }
-body.force-desktop .content { flex: 1; overflow-y: auto; padding: 22px 24px; background: transparent; -webkit-overflow-scrolling: touch; }
-body.force-desktop .kpi-grid { grid-template-columns: repeat(auto-fit,minmax(170px,1fr)) !important; }
-body.force-desktop .kpi-value { font-size: 38px !important; }
-body.force-desktop .table-desktop { display: block !important; }
-body.force-desktop .mobile-record { display: none !important; }
-body.force-desktop .chart-grid-2col { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 16px !important; margin-bottom: 16px !important; }
-body.force-desktop .chart-grid-2col .chart-card { margin-bottom: 0 !important; }
-body.force-desktop .insight-grid { flex-direction: row !important; }
-
-/* ─── RESPONSIVE ─── */
-@media (max-width: 768px) {
-  .sidebar {
-  width: 220px; background: linear-gradient(180deg, #7F0000 0%, #5D0000 100%); display: flex; flex-direction: column; flex-shrink: 0; overflow-y: auto;
-  box-shadow: 4px 0 24px rgba(127,0,0,0.3);
-}
-  .bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; height: var(--bottom-nav-h); background: linear-gradient(135deg, #7F0000, #5D0000); border-top: 1px solid rgba(255,255,255,0.1); z-index: 100; overflow-x: auto; scrollbar-width: none; box-shadow: 0 -4px 20px rgba(127,0,0,0.25); }
-  .hamburger { display: flex; }
-  .content { flex: 1; overflow-y: auto; padding: 22px 24px; background: transparent; -webkit-overflow-scrolling: touch; }
-  .kpi-grid { grid-template-columns: repeat(2,1fr); gap: 10px; }
-  .kpi-value { font-size: 28px; }
-  .table-desktop { display: none; }
-  .mobile-record { display: block; }
-  .chart-grid-2col { display: block; }
-  .chart-grid-2col .chart-card { margin-bottom: 14px; }
-  .insight-grid { flex-direction: column; }
-  .topbar {
-  height: 56px; display: flex; align-items: center; justify-content: space-between;
-  padding: 0 20px; border-bottom: 2px solid var(--red);
-  background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(20px);
-  box-shadow: 0 2px 16px rgba(183,28,28,0.1);
-  flex-shrink: 0;
-}
-}
+@keyframes spin { to{transform:rotate(360deg)} }
 </style>
 </head>
 <body>
 
-<!-- ══════════════ LANDING PAGE ══════════════ -->
+<!-- LANDING -->
 <div id="landingScreen">
   <div class="landing-bg">
     <div class="landing-orb orb1"></div>
@@ -375,11 +240,9 @@ body.force-desktop .insight-grid { flex-direction: row !important; }
   </div>
 </div>
 
-<!-- ══════════════ DASHBOARD ══════════════ -->
+<!-- DASHBOARD -->
 <div id="dashApp">
   <div class="app">
-
-    <!-- SIDEBAR -->
     <aside class="sidebar">
       <div class="sidebar-logo"><h1>🐔 SunFarm</h1><p>Breeding Management System</p></div>
       <nav class="sidebar-nav">
@@ -396,7 +259,6 @@ body.force-desktop .insight-grid { flex-direction: row !important; }
       <div class="sidebar-footer">SunFeed International Co., Ltd.<br><span id="footerDate"></span></div>
     </aside>
 
-    <!-- DRAWER OVERLAY -->
     <div class="drawer-overlay" id="dOverlay" onclick="closeDrawer()"></div>
     <div class="drawer" id="drawer">
       <div class="drawer-logo"><h1>🐔 SunFarm</h1><button class="drawer-close" onclick="closeDrawer()">✕</button></div>
@@ -413,14 +275,13 @@ body.force-desktop .insight-grid { flex-direction: row !important; }
       </nav>
     </div>
 
-    <!-- MAIN -->
     <div class="main">
       <div class="topbar">
         <div class="topbar-left">
           <button class="hamburger" onclick="openDrawer()">☰</button>
           <div>
             <div class="topbar-title" id="topbarTitle">ภาพรวมการเพาะพันธุ์</div>
-            <div class="topbar-meta">อัปเดต: <span id="lastUpdated">26/05/2569</span></div>
+            <div class="topbar-meta">อัปเดต: <span id="updatedTime">กำลังโหลด...</span></div>
           </div>
         </div>
         <div class="topbar-right">
@@ -431,189 +292,158 @@ body.force-desktop .insight-grid { flex-direction: row !important; }
 
       <div class="content">
 
-        <!-- ── OVERVIEW ── -->
+        <!-- OVERVIEW -->
         <div id="tab-overview" class="tab-content active">
-          <div class="section-header"><h2>📊 ภาพรวมการเพาะพันธุ์</h2><p>ข้อมูลจริงจาก SB_Tag.xlsx • อัปเดต พ.ค. 2569</p></div>
+          <div class="section-header"><h2>📊 ภาพรวมการเพาะพันธุ์</h2><p id="overviewSub">กำลังโหลดข้อมูล...</p></div>
           <div class="kpi-grid">
-            <div class="kpi-card" style="--accent:#6DB88A"><div class="kpi-icon">🥚</div><div class="kpi-label">ไข่รวม (เม.ย. 2569)</div><div class="kpi-value"><span id="kpi-eggs">10,344</span></div><div class="kpi-unit">ฟอง (SB8 G8 20 Family)</div><div class="kpi-sub">✓ สต็อกสะสม 4,821 ฟอง</div></div>
-            <div class="kpi-card" style="--accent:#6BA3D4"><div class="kpi-icon">🐣</div><div class="kpi-label">SF% เฉลี่ย SPL</div><div class="kpi-value">60.4</div><div class="kpi-unit">% (9 ล็อต)</div><div class="kpi-sub">✓ สูงสุด 79.0% (19 ก.พ.)</div></div>
-            <div class="kpi-card" style="--accent:#E89B5A"><div class="kpi-icon">🐓</div><div class="kpi-label">สายพันธุ์ทดลอง</div><div class="kpi-value" id="kpi-lines">5</div><div class="kpi-unit">สาย</div><div class="kpi-sub">SB8 / SPL / PD / AS / SM</div></div>
-            <div class="kpi-card" style="--accent:#9B84D4"><div class="kpi-icon">👨‍👩‍👦</div><div class="kpi-label">Family ทั้งหมด</div><div class="kpi-value" id="kpi-families">48</div><div class="kpi-unit">Family</div><div class="kpi-sub">SB8 G8 รุ่น 25&26: 40 Family</div></div>
-            <div class="kpi-card" style="--accent:#D97A94"><div class="kpi-icon">🌾</div><div class="kpi-label">ไข่ฟักรวม (SPL)</div><div class="kpi-value">121,200</div><div class="kpi-unit">ฟอง (11 ล็อต)</div><div class="kpi-sub">⏳ อยู่ระหว่างดำเนินการ</div></div>
-            <div class="kpi-card" style="--accent:#5EC4BB"><div class="kpi-icon">🐥</div><div class="kpi-label">ลูกไก่รวม (SPL)</div><div class="kpi-value">35,563</div><div class="kpi-unit">ตัว (9 ล็อตที่ฟักแล้ว)</div><div class="kpi-sub">✓ DIS% เฉลี่ย 9.8%</div></div>
+            <div class="kpi-card" style="--accent:#6DB88A"><div class="kpi-icon">🥚</div><div class="kpi-label">ไข่รวมทั้งหมด</div><div class="kpi-value" id="kpi-eggs">—</div><div class="kpi-unit">ฟอง</div></div>
+            <div class="kpi-card" style="--accent:#6BA3D4"><div class="kpi-icon">🐣</div><div class="kpi-label">ลูกไก่รวม</div><div class="kpi-value" id="kpi-chicks">—</div><div class="kpi-unit">ตัว</div></div>
+            <div class="kpi-card" style="--accent:#6DB88A"><div class="kpi-icon">🌾</div><div class="kpi-label">SE% เฉลี่ย</div><div class="kpi-value" id="kpi-se">—</div><div class="kpi-unit">%</div></div>
+            <div class="kpi-card" style="--accent:#E89B5A"><div class="kpi-icon">🐥</div><div class="kpi-label">SF% เฉลี่ย</div><div class="kpi-value" id="kpi-sf">—</div><div class="kpi-unit">%</div></div>
+            <div class="kpi-card" style="--accent:#D97A94"><div class="kpi-icon">💀</div><div class="kpi-label">DIS% เฉลี่ย</div><div class="kpi-value" id="kpi-dis">—</div><div class="kpi-unit">%</div></div>
+            <div class="kpi-card" style="--accent:#9B84D4"><div class="kpi-icon">👨‍👩‍👦</div><div class="kpi-label">Family ทั้งหมด</div><div class="kpi-value" id="kpi-families">—</div><div class="kpi-unit">Family</div></div>
+            <div class="kpi-card" style="--accent:#5EC4BB"><div class="kpi-icon">🐓</div><div class="kpi-label">ไก่ Active</div><div class="kpi-value" id="kpi-birds">—</div><div class="kpi-unit">ตัว</div></div>
+            <div class="kpi-card" style="--accent:#D4C050"><div class="kpi-icon">🔬</div><div class="kpi-label">สายพันธุ์ทดลอง</div><div class="kpi-value" id="kpi-lines">—</div><div class="kpi-unit">สาย</div></div>
           </div>
           <div class="chart-grid-2col">
-            <div class="chart-card"><div class="chart-title">SF% รายล็อต — SPL (Lohmann)</div><div class="chart-sub">อัตราฟักสำเร็จ 9 ล็อต ม.ค.–มี.ค. 2569</div><div class="chart-wrap"><canvas id="c1"></canvas></div></div>
-            <div class="chart-card"><div class="chart-title">สัดส่วนสายพันธุ์ทดลอง</div><div class="chart-sub">จำนวน Family แต่ละสายพันธุ์</div><div class="chart-wrap"><canvas id="c2"></canvas></div></div>
+            <div class="chart-card"><div class="chart-title">SF% รายล็อต</div><div class="chart-sub">อัตราฟักสำเร็จแต่ละล็อต</div><div class="chart-wrap"><canvas id="c1"></canvas></div></div>
+            <div class="chart-card"><div class="chart-title">สัดส่วน Family ต่อสายพันธุ์</div><div class="chart-sub">จำนวน lot แต่ละสายพันธุ์</div><div class="chart-wrap"><canvas id="c2"></canvas></div></div>
           </div>
-          <div class="chart-card"><div class="chart-title">เปรียบเทียบประสิทธิภาพฟักไข่แต่ละสายพันธุ์</div><div class="chart-sub">SE% / SF% / DIS% เฉลี่ย — SB8 G8 รุ่น26, PD มข., Lohmann SM</div><div class="chart-wrap" style="height:200px"><canvas id="c3"></canvas></div></div>
-          <div class="insight-section">
-            <div class="insight-title">📋 วิเคราะห์ภาพรวม</div>
-            <div class="insight-grid">
-              <div class="insight-card insight-positive"><span class="insight-icon">✅</span><div><strong>จุดเด่น</strong><p>SPL มี SF% สูงสุดที่ 79.0% (19 ก.พ.) และเฉลี่ย 60.4% ทั้ง 9 ล็อต แสดงว่าโปรแกรมผสมพันธุ์ SPL มีประสิทธิภาพดี</p></div></div>
-              <div class="insight-card insight-warning"><span class="insight-icon">⚠️</span><div><strong>จุดที่ควรติดตาม</strong><p>SB8 G8 รุ่น 26 มี SF% เฉลี่ยเพียง 56.7% และ DIS% สูง 42.7% ควรตรวจสอบสภาพแม่พันธุ์และเครื่องฟัก</p></div></div>
-              <div class="insight-card insight-neutral"><span class="insight-icon">💡</span><div><strong>ข้อสังเกต</strong><p>ประดู่หางดำ (PD) มข. มี DIS% สูง 48.7% ซึ่งอาจเกิดจากความหลากหลายทางพันธุกรรมต่ำในฝูงทดลอง</p></div></div>
-            </div>
-          </div>
+          <div class="chart-card"><div class="chart-title">เปรียบเทียบ SE% / SF% / DIS% ต่อสายพันธุ์</div><div class="chart-sub">ประสิทธิภาพฟักไข่แยกตาม Line</div><div class="chart-wrap" style="height:200px"><canvas id="c3"></canvas></div></div>
+          <div class="insight-section"><div class="insight-title">📋 วิเคราะห์ภาพรวม</div><div class="insight-grid">
+            <div class="insight-card insight-positive"><span class="insight-icon">✅</span><div><strong>จุดเด่น</strong><p id="ins-ov-pos">รอข้อมูลจาก Sheet...</p></div></div>
+            <div class="insight-card insight-warning"><span class="insight-icon">⚠️</span><div><strong>จุดที่ควรติดตาม</strong><p id="ins-ov-warn">รอข้อมูลจาก Sheet...</p></div></div>
+            <div class="insight-card insight-neutral"><span class="insight-icon">💡</span><div><strong>ข้อสังเกต</strong><p id="ins-ov-note">รอข้อมูลจาก Sheet...</p></div></div>
+          </div></div>
         </div>
 
-        <!-- ── EGGS ── -->
+        <!-- EGGS -->
         <div id="tab-eggs" class="tab-content">
-          <div class="section-header"><h2>🥚 ไข่รายวัน</h2><p>ข้อมูลจริงจาก SB_Tag.xlsx — ชีทไข่รายวัน • เม.ย. 2569</p></div>
+          <div class="section-header"><h2>🥚 ไข่รายวัน</h2><p id="eggsSub">กำลังโหลดข้อมูล...</p></div>
           <div class="kpi-grid">
-            <div class="kpi-card" style="--accent:#6DB88A"><div class="kpi-label">ไข่รวม เม.ย. (20 Family)</div><div class="kpi-value">10,344</div><div class="kpi-unit">ฟอง</div></div>
-            <div class="kpi-card" style="--accent:#6BA3D4"><div class="kpi-label">เฉลี่ยต่อ Family/วัน</div><div class="kpi-value">5.5</div><div class="kpi-unit">ฟอง</div></div>
-            <div class="kpi-card" style="--accent:#E89B5A"><div class="kpi-label">สต็อกสะสม (ยกมา)</div><div class="kpi-value">4,821</div><div class="kpi-unit">ฟอง</div></div>
-            <div class="kpi-card" style="--accent:#9B84D4"><div class="kpi-label">Family ที่บันทึก</div><div class="kpi-value">20</div><div class="kpi-unit">Family (SB8 G8 รุ่น26)</div></div>
+            <div class="kpi-card" style="--accent:#6DB88A"><div class="kpi-label">ไข่รวมทั้งหมด</div><div class="kpi-value" id="kpi-eggs2">—</div><div class="kpi-unit">ฟอง</div></div>
+            <div class="kpi-card" style="--accent:#6BA3D4"><div class="kpi-label">ไข่ใช้ได้รวม</div><div class="kpi-value" id="kpi-usable">—</div><div class="kpi-unit">ฟอง</div></div>
+            <div class="kpi-card" style="--accent:#E89B5A"><div class="kpi-label">ไข่สกปรก</div><div class="kpi-value" id="kpi-dirty">—</div><div class="kpi-unit">ฟอง</div></div>
+            <div class="kpi-card" style="--accent:#D97A94"><div class="kpi-label">ไข่แตก</div><div class="kpi-value" id="kpi-cracked">—</div><div class="kpi-unit">ฟอง</div></div>
           </div>
           <div class="chart-grid-2col">
-            <div class="chart-card"><div class="chart-title">ไข่รายวัน 20-30 เม.ย. 2569</div><div class="chart-sub">Family F01–F10 (SB8 G8 รุ่น 26)</div><div class="chart-wrap"><canvas id="c4"></canvas></div></div>
-            <div class="chart-card"><div class="chart-title">ปริมาณไข่สะสม Top 10 Family</div><div class="chart-sub">ยอดเม.ย. รวม 11 วัน</div><div class="chart-wrap"><canvas id="c5"></canvas></div></div>
+            <div class="chart-card"><div class="chart-title">ไข่รวมรายวัน (14 วันล่าสุด)</div><div class="chart-sub">ปริมาณไข่ทั้งหมดต่อวัน</div><div class="chart-wrap"><canvas id="c4"></canvas></div></div>
+            <div class="chart-card"><div class="chart-title">ไข่รวมต่อ Family (Top 10)</div><div class="chart-sub">Family ที่ให้ไข่มากสุด</div><div class="chart-wrap"><canvas id="c5"></canvas></div></div>
           </div>
           <div class="table-card">
-            <div class="table-header"><div class="table-title">ไข่รายวัน — SB8 G8 รุ่น 26 (Top 10 Family)</div><div class="table-count">20 Family</div></div>
-            <div class="table-scroll table-desktop"><table><thead><tr><th>Family Code</th><th>รหัสพ่อ</th><th>สต็อกยกมา</th><th>รวมเม.ย.</th><th>เฉลี่ย/วัน</th><th>สูงสุด/วัน</th></tr></thead><tbody>
-              <tr><td>SB-26-G8-F01</td><td>F01-M-001</td><td>50</td><td>63</td><td>5.7</td><td>8</td></tr>
-              <tr><td>SB-26-G8-F02</td><td>F01-M-002</td><td>45</td><td>55</td><td>5.0</td><td>10</td></tr>
-              <tr><td>SB-26-G8-F03</td><td>F01-M-003</td><td>43</td><td>70</td><td>6.4</td><td>9</td></tr>
-              <tr><td>SB-26-G8-F04</td><td>F01-M-004</td><td>36</td><td>66</td><td>6.0</td><td>10</td></tr>
-              <tr><td>SB-26-G8-F05</td><td>F01-M-005</td><td>23</td><td>50</td><td>4.5</td><td>9</td></tr>
-              <tr><td>SB-26-G8-F06</td><td>F01-M-006</td><td>26</td><td>65</td><td>5.9</td><td>8</td></tr>
-              <tr><td>SB-26-G8-F07</td><td>F01-M-007</td><td>22</td><td>69</td><td>6.3</td><td>8</td></tr>
-              <tr><td>SB-26-G8-F08</td><td>F01-M-008</td><td>27</td><td><b>75</b></td><td>6.8</td><td>9</td></tr>
-              <tr><td>SB-26-G8-F09</td><td>F01-M-009</td><td>26</td><td>56</td><td>5.1</td><td>6</td></tr>
-              <tr><td>SB-26-G8-F10</td><td>F01-M-010</td><td>23</td><td>50</td><td>4.5</td><td>7</td></tr>
-            </tbody></table></div>
-            <div class="mobile-record"><div class="mobile-record-title">SB-26-G8-F08 (สูงสุด)</div><div class="mobile-record-grid"><div class="mobile-field"><span class="mobile-field-label">รหัสพ่อ</span><span class="mobile-field-value">F01-M-008</span></div><div class="mobile-field"><span class="mobile-field-label">สต็อกยกมา</span><span class="mobile-field-value">27 ฟอง</span></div><div class="mobile-field"><span class="mobile-field-label">รวมเม.ย.</span><span class="mobile-field-value" style="color:#065f46;font-weight:700">75 ฟอง</span></div><div class="mobile-field"><span class="mobile-field-label">เฉลี่ย/วัน</span><span class="mobile-field-value">6.8 ฟอง</span></div></div></div>
-            <div class="mobile-record"><div class="mobile-record-title">SB-26-G8-F03</div><div class="mobile-record-grid"><div class="mobile-field"><span class="mobile-field-label">รหัสพ่อ</span><span class="mobile-field-value">F01-M-003</span></div><div class="mobile-field"><span class="mobile-field-label">สต็อกยกมา</span><span class="mobile-field-value">43 ฟอง</span></div><div class="mobile-field"><span class="mobile-field-label">รวมเม.ย.</span><span class="mobile-field-value" style="color:#065f46;font-weight:700">70 ฟอง</span></div><div class="mobile-field"><span class="mobile-field-label">เฉลี่ย/วัน</span><span class="mobile-field-value">6.4 ฟอง</span></div></div></div>
-            <div class="mobile-record"><div class="mobile-record-title">SB-26-G8-F07</div><div class="mobile-record-grid"><div class="mobile-field"><span class="mobile-field-label">รหัสพ่อ</span><span class="mobile-field-value">F01-M-007</span></div><div class="mobile-field"><span class="mobile-field-label">สต็อกยกมา</span><span class="mobile-field-value">22 ฟอง</span></div><div class="mobile-field"><span class="mobile-field-label">รวมเม.ย.</span><span class="mobile-field-value">69 ฟอง</span></div><div class="mobile-field"><span class="mobile-field-label">เฉลี่ย/วัน</span><span class="mobile-field-value">6.3 ฟอง</span></div></div></div>
+            <div class="table-header"><div class="table-title">บันทึกไข่รายวัน (50 แถวล่าสุด)</div><div class="table-count" id="eggs-count">0 แถว</div></div>
+            <div class="table-scroll table-desktop"><table><thead><tr><th>วันที่</th><th>Mating ID</th><th>Family Code</th><th>สายพันธุ์</th><th>ไข่รวม</th><th>สกปรก</th><th>แตก</th><th>ใช้ได้</th><th>บันทึกโดย</th></tr></thead>
+            <tbody id="eggs-tbody"><tr><td colspan="9" style="text-align:center;padding:32px;color:var(--gray-500)">กำลังโหลดข้อมูล...</td></tr></tbody></table></div>
+            <div id="eggs-mobile"></div>
           </div>
-          <div class="insight-section"><div class="insight-title">📋 วิเคราะห์ — ไข่รายวัน</div><div class="insight-grid"><div class="insight-card insight-positive"><span class="insight-icon">✅</span><div><strong>จุดเด่น</strong><p>F08 ให้ผลผลิตสูงสุด 75 ฟอง/11วัน (6.8/วัน) รองลงมาคือ F03 และ F07 — ควรนำ Family เหล่านี้เป็นต้นแบบ</p></div></div><div class="insight-card insight-warning"><span class="insight-icon">⚠️</span><div><strong>จุดที่ควรติดตาม</strong><p>F05, F10 ให้ผลผลิตต่ำสุดเพียง 50 ฟอง/11วัน (4.5/วัน) ควรตรวจสุขภาพแม่พันธุ์</p></div></div><div class="insight-card insight-neutral"><span class="insight-icon">💡</span><div><strong>ข้อสังเกต</strong><p>ยอดสต็อกสะสมรวม 4,821 ฟอง ซึ่งมากพอสำหรับเข้าฟักล็อตขนาดใหญ่ได้ทันที</p></div></div></div></div>
+          <div class="insight-section"><div class="insight-title">📋 วิเคราะห์ — ไข่รายวัน</div><div class="insight-grid">
+            <div class="insight-card insight-positive"><span class="insight-icon">✅</span><div><strong>จุดเด่น</strong><p id="ins-eg-pos">รอข้อมูล...</p></div></div>
+            <div class="insight-card insight-warning"><span class="insight-icon">⚠️</span><div><strong>จุดที่ควรติดตาม</strong><p id="ins-eg-warn">รอข้อมูล...</p></div></div>
+            <div class="insight-card insight-neutral"><span class="insight-icon">💡</span><div><strong>ข้อสังเกต</strong><p id="ins-eg-note">รอข้อมูล...</p></div></div>
+          </div></div>
         </div>
 
-        <!-- ── HATCH ── -->
+        <!-- HATCH -->
         <div id="tab-hatch" class="tab-content">
-          <div class="section-header"><h2>🐣 ผลการฟักไข่</h2><p>ข้อมูลจริงจาก SB_Tag.xlsx — ชีท on hand • ม.ค.–มี.ค. 2569</p></div>
+          <div class="section-header"><h2>🐣 ผลการฟักไข่</h2><p id="hatchSub">กำลังโหลดข้อมูล...</p></div>
           <div class="kpi-grid">
-            <div class="kpi-card" style="--accent:#6DB88A"><div class="kpi-label">ล็อตฟักที่สำเร็จ (SPL)</div><div class="kpi-value">9</div><div class="kpi-unit">ล็อต</div></div>
-            <div class="kpi-card" style="--accent:#6BA3D4"><div class="kpi-label">SF% สูงสุด (SPL)</div><div class="kpi-value">79.0</div><div class="kpi-unit">% (19 ก.พ. 2569)</div></div>
-            <div class="kpi-card" style="--accent:#6DB88A"><div class="kpi-label">SF% เฉลี่ย SPL</div><div class="kpi-value">60.4</div><div class="kpi-unit">%</div></div>
-            <div class="kpi-card" style="--accent:#5EC4BB"><div class="kpi-label">ลูกไก่ SPL รวม</div><div class="kpi-value">35,563</div><div class="kpi-unit">ตัว</div></div>
-            <div class="kpi-card" style="--accent:#E89B5A"><div class="kpi-label">DIS% เฉลี่ย SPL</div><div class="kpi-value">9.8</div><div class="kpi-unit">%</div></div>
-            <div class="kpi-card" style="--accent:#9B84D4"><div class="kpi-label">ไข่ฟัก SPL รวม</div><div class="kpi-value">67,200</div><div class="kpi-unit">ฟอง (9 ล็อต)</div></div>
+            <div class="kpi-card" style="--accent:#6DB88A"><div class="kpi-label">SF% เฉลี่ย</div><div class="kpi-value" id="kpi-sf2">—</div><div class="kpi-unit">%</div></div>
+            <div class="kpi-card" style="--accent:#6BA3D4"><div class="kpi-label">SE% เฉลี่ย</div><div class="kpi-value" id="kpi-se2">—</div><div class="kpi-unit">%</div></div>
+            <div class="kpi-card" style="--accent:#E89B5A"><div class="kpi-label">DIS% เฉลี่ย</div><div class="kpi-value" id="kpi-dis2">—</div><div class="kpi-unit">%</div></div>
+            <div class="kpi-card" style="--accent:#9B84D4"><div class="kpi-label">ไข่ฟักรวม</div><div class="kpi-value" id="kpi-eggsset">—</div><div class="kpi-unit">ฟอง</div></div>
+            <div class="kpi-card" style="--accent:#5EC4BB"><div class="kpi-label">ลูกไก่รวม</div><div class="kpi-value" id="kpi-chicks2">—</div><div class="kpi-unit">ตัว</div></div>
+            <div class="kpi-card" style="--accent:#D97A94"><div class="kpi-label">ตายในกก. รวม</div><div class="kpi-value" id="kpi-dis3">—</div><div class="kpi-unit">ตัว</div></div>
           </div>
           <div class="chart-grid-2col">
-            <div class="chart-card"><div class="chart-title">SF% รายล็อต SPL</div><div class="chart-sub">อัตราฟักสำเร็จ 9 ล็อต ม.ค.–มี.ค. 2569</div><div class="chart-wrap"><canvas id="c6"></canvas></div></div>
-            <div class="chart-card"><div class="chart-title">ลูกไก่ที่ได้รายล็อต SPL</div><div class="chart-sub">จำนวนลูกไก่ออกจากตู้ฟัก</div><div class="chart-wrap"><canvas id="c7"></canvas></div></div>
+            <div class="chart-card"><div class="chart-title">SF% และ DIS% รายล็อต</div><div class="chart-sub">แนวโน้มอัตราฟักและตายในกก.</div><div class="chart-wrap"><canvas id="c6"></canvas></div></div>
+            <div class="chart-card"><div class="chart-title">ลูกไก่ที่ได้รายล็อต</div><div class="chart-sub">จำนวนลูกไก่แต่ละล็อต</div><div class="chart-wrap"><canvas id="c7"></canvas></div></div>
           </div>
           <div class="table-card">
-            <div class="table-header"><div class="table-title">รายละเอียดทุกล็อตฟักไข่ (SPL)</div><div class="table-count">9 ล็อต</div></div>
-            <div class="table-scroll table-desktop"><table><thead><tr><th>วันฟักออก (PULLING)</th><th>สายพันธุ์</th><th>ไข่นำเข้า</th><th>ไข่ลม</th><th>ลูกไก่</th><th>SE%</th><th>SF%</th><th>DIS%</th></tr></thead><tbody>
-              <tr><td>15 ม.ค. 2569</td><td>SPL (Lohmann)</td><td>9,600</td><td>1,702</td><td><b>4,300</b></td><td>44.8</td><td>54.4</td><td>8.0</td></tr>
-              <tr><td>22 ม.ค. 2569</td><td>SPL (Lohmann)</td><td>9,600</td><td>1,205</td><td><b>3,900</b></td><td>40.6</td><td>46.5</td><td>6.7</td></tr>
-              <tr><td>29 ม.ค. 2569</td><td>SPL (Lohmann)</td><td>9,600</td><td>1,150</td><td><b>3,100</b></td><td>32.3</td><td>36.7</td><td>6.5</td></tr>
-              <tr><td>2 ก.พ. 2569</td><td>SPL (Lohmann)</td><td>4,800</td><td>981</td><td><b>2,970</b></td><td>61.9</td><td>77.8</td><td>8.7</td></tr>
-              <tr><td>12 ก.พ. 2569</td><td>SPL (Lohmann)</td><td>9,600</td><td>995</td><td><b>5,772</b></td><td>60.1</td><td>67.1</td><td>8.1</td></tr>
-              <tr><td>19 ก.พ. 2569</td><td>SPL (Lohmann)</td><td>4,800</td><td>705</td><td><b>3,236</b></td><td>67.4</td><td style="color:#065f46;font-weight:700">79.0</td><td>16.1</td></tr>
-              <tr><td>26 ก.พ. 2569</td><td>SPL (Lohmann)</td><td>4,800</td><td>657</td><td><b>2,433</b></td><td>50.7</td><td>58.7</td><td>11.3</td></tr>
-              <tr><td>3 มี.ค. 2569</td><td>SPL (Lohmann)</td><td>4,800</td><td>552</td><td><b>2,716</b></td><td>56.6</td><td>63.9</td><td>13.2</td></tr>
-              <tr><td>12 มี.ค. 2569</td><td>SPL (Lohmann)</td><td>4,800</td><td>788</td><td><b>2,136</b></td><td>44.5</td><td>53.2</td><td>3.6</td></tr>
-            </tbody></table></div>
-            <div class="mobile-record"><div class="mobile-record-title">19 ก.พ. 2569 — SF% สูงสุด</div><div class="mobile-record-grid"><div class="mobile-field"><span class="mobile-field-label">สายพันธุ์</span><span class="mobile-field-value">SPL (Lohmann)</span></div><div class="mobile-field"><span class="mobile-field-label">ไข่นำเข้า</span><span class="mobile-field-value">4,800 ฟอง</span></div><div class="mobile-field"><span class="mobile-field-label">ลูกไก่</span><span class="mobile-field-value" style="color:#065f46;font-weight:700">3,236 ตัว</span></div><div class="mobile-field"><span class="mobile-field-label">SF%</span><span class="mobile-field-value" style="color:#065f46;font-weight:700">79.0%</span></div><div class="mobile-field"><span class="mobile-field-label">SE%</span><span class="mobile-field-value">67.4%</span></div><div class="mobile-field"><span class="mobile-field-label">DIS%</span><span class="mobile-field-value">16.1%</span></div></div></div>
-            <div class="mobile-record"><div class="mobile-record-title">12 ก.พ. 2569 — ลูกไก่มากสุด</div><div class="mobile-record-grid"><div class="mobile-field"><span class="mobile-field-label">สายพันธุ์</span><span class="mobile-field-value">SPL (Lohmann)</span></div><div class="mobile-field"><span class="mobile-field-label">ไข่นำเข้า</span><span class="mobile-field-value">9,600 ฟอง</span></div><div class="mobile-field"><span class="mobile-field-label">ลูกไก่</span><span class="mobile-field-value" style="color:#065f46;font-weight:700">5,772 ตัว</span></div><div class="mobile-field"><span class="mobile-field-label">SF%</span><span class="mobile-field-value">67.1%</span></div></div></div>
+            <div class="table-header"><div class="table-title">รายละเอียดทุกล็อตฟักไข่</div><div class="table-count" id="hatch-count">0 ล็อต</div></div>
+            <div class="table-scroll table-desktop"><table><thead><tr><th>Hatch Lot ID</th><th>Family Code</th><th>สายพันธุ์</th><th>วันฟักออก</th><th>ไข่ฟัก</th><th>ไข่ลม</th><th>ลูกไก่</th><th>SE%</th><th>SF%</th><th>DIS%</th></tr></thead>
+            <tbody id="hatch-tbody"><tr><td colspan="10" style="text-align:center;padding:32px;color:var(--gray-500)">กำลังโหลดข้อมูล...</td></tr></tbody></table></div>
+            <div id="hatch-mobile"></div>
           </div>
-          <div class="insight-section"><div class="insight-title">📋 วิเคราะห์ — ผลฟักไข่</div><div class="insight-grid"><div class="insight-card insight-positive"><span class="insight-icon">✅</span><div><strong>จุดเด่น</strong><p>ล็อต 19 ก.พ. มี SF% สูงสุด 79.0% และล็อต 12 ก.พ. ได้ลูกไก่มากที่สุด 5,772 ตัว จากล็อตใหญ่ 9,600 ฟอง</p></div></div><div class="insight-card insight-warning"><span class="insight-icon">⚠️</span><div><strong>จุดที่ควรติดตาม</strong><p>ล็อต 29 ม.ค. SF% ต่ำสุดเพียง 36.7% ควรตรวจสอบเครื่องฟักและอุณหภูมิในช่วงนั้น</p></div></div><div class="insight-card insight-neutral"><span class="insight-icon">💡</span><div><strong>ข้อสังเกต</strong><p>ล็อตขนาด 4,800 ฟอง มักให้ SF% สูงกว่าล็อต 9,600 ฟอง เฉลี่ย 67% vs 45% อาจเกี่ยวกับความหนาแน่นในตู้ฟัก</p></div></div></div></div>
+          <div class="insight-section"><div class="insight-title">📋 วิเคราะห์ — ผลฟักไข่</div><div class="insight-grid">
+            <div class="insight-card insight-positive"><span class="insight-icon">✅</span><div><strong>จุดเด่น</strong><p id="ins-ha-pos">รอข้อมูล...</p></div></div>
+            <div class="insight-card insight-warning"><span class="insight-icon">⚠️</span><div><strong>จุดที่ควรติดตาม</strong><p id="ins-ha-warn">รอข้อมูล...</p></div></div>
+            <div class="insight-card insight-neutral"><span class="insight-icon">💡</span><div><strong>ข้อสังเกต</strong><p id="ins-ha-note">รอข้อมูล...</p></div></div>
+          </div></div>
         </div>
 
-        <!-- ── BIRDS ── -->
+        <!-- BIRDS -->
         <div id="tab-birds" class="tab-content">
-          <div class="section-header"><h2>🐓 ทะเบียนไก่ (Lockbook)</h2><p>ข้อมูลจริงจาก SB_Tag.xlsx — ชีท Lockbook • SB8 G8 รุ่น 26</p></div>
+          <div class="section-header"><h2>🐓 ทะเบียนไก่</h2><p id="birdsSub">กำลังโหลดข้อมูล...</p></div>
           <div class="kpi-grid">
-            <div class="kpi-card" style="--accent:#6DB88A"><div class="kpi-label">Family SB8 G8 รุ่น 26</div><div class="kpi-value">20</div><div class="kpi-unit">Family</div></div>
-            <div class="kpi-card" style="--accent:#6BA3D4"><div class="kpi-label">Family SB8 G8 รุ่น 25</div><div class="kpi-value">20</div><div class="kpi-unit">Family</div></div>
-            <div class="kpi-card" style="--accent:#E89B5A"><div class="kpi-label">รุ่นทดลอง (Generation)</div><div class="kpi-value">G8</div><div class="kpi-unit">รุ่นที่ 8</div></div>
-            <div class="kpi-card" style="--accent:#D97A94"><div class="kpi-label">แม่พันธุ์ต่อ Family</div><div class="kpi-value">10</div><div class="kpi-unit">ตัว</div></div>
+            <div class="kpi-card" style="--accent:#6DB88A"><div class="kpi-label">ไก่ทั้งหมด</div><div class="kpi-value" id="kpi-birds-total">—</div><div class="kpi-unit">ตัว</div></div>
+            <div class="kpi-card" style="--accent:#6BA3D4"><div class="kpi-label">สถานะ Active</div><div class="kpi-value" id="kpi-birds-active">—</div><div class="kpi-unit">ตัว</div></div>
+            <div class="kpi-card" style="--accent:#E89B5A"><div class="kpi-label">สถานะ Selected</div><div class="kpi-value" id="kpi-birds-sel">—</div><div class="kpi-unit">ตัว</div></div>
+            <div class="kpi-card" style="--accent:#9B84D4"><div class="kpi-label">Family ที่มีไก่</div><div class="kpi-value" id="kpi-birds-fam">—</div><div class="kpi-unit">Family</div></div>
           </div>
           <div class="table-card">
-            <div class="table-header"><div class="table-title">Lockbook — SB8 G8 รุ่น 26 (Family F01–F10)</div><div class="table-count">20 Family</div></div>
-            <div class="table-scroll table-desktop"><table><thead><tr><th>Family Code</th><th>รหัสพ่อ (Sire)</th><th>รหัสแม่ (1 ใน 10)</th><th>สีวงแหวน</th><th>เลขวงแหวน</th></tr></thead><tbody>
-              <tr><td>SB-26-G8-F01</td><td>SB-26-G8-F01-M-001</td><td>SB-26-G8-F01-F-001</td><td><span style="background:#fbbf24;color:#78350f;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700">เหลือง</span></td><td>1–10</td></tr>
-              <tr><td>SB-26-G8-F02</td><td>SB-26-G8-F01-M-002</td><td>SB-26-G8-F02-F-001</td><td><span style="background:#fbbf24;color:#78350f;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700">เหลือง</span></td><td>1–10</td></tr>
-              <tr><td>SB-26-G8-F03</td><td>SB-26-G8-F01-M-003</td><td>SB-26-G8-F03-F-001</td><td><span style="background:#fbbf24;color:#78350f;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700">เหลือง</span></td><td>1–10</td></tr>
-              <tr><td>SB-26-G8-F11</td><td>SB-26-G8-F01-M-011</td><td>SB-26-G8-F011-F-001</td><td><span style="background:#ef4444;color:#fff;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700">แดง</span></td><td>1–10</td></tr>
-              <tr><td>SB-26-G8-F12</td><td>SB-26-G8-F01-M-012</td><td>SB-26-G8-F012-F-001</td><td><span style="background:#ef4444;color:#fff;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700">แดง</span></td><td>1–10</td></tr>
-              <tr><td>SB-26-G8-F20</td><td>SB-26-G8-F01-M-020</td><td>SB-26-G8-F020-F-001</td><td><span style="background:#ef4444;color:#fff;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700">แดง</span></td><td>1–10</td></tr>
-            </tbody></table></div>
-            <div class="mobile-record"><div class="mobile-record-title">SB-26-G8-F01</div><div class="mobile-record-grid"><div class="mobile-field"><span class="mobile-field-label">รหัสพ่อ</span><span class="mobile-field-value">F01-M-001</span></div><div class="mobile-field"><span class="mobile-field-label">Generation</span><span class="mobile-field-value">G8 รุ่น 26</span></div><div class="mobile-field"><span class="mobile-field-label">วงแหวน</span><span class="mobile-field-value">🟡 เหลือง #1–10</span></div><div class="mobile-field"><span class="mobile-field-label">แม่พันธุ์</span><span class="mobile-field-value">10 ตัว</span></div></div></div>
-            <div class="mobile-record"><div class="mobile-record-title">SB-26-G8-F11</div><div class="mobile-record-grid"><div class="mobile-field"><span class="mobile-field-label">รหัสพ่อ</span><span class="mobile-field-value">F01-M-011</span></div><div class="mobile-field"><span class="mobile-field-label">Generation</span><span class="mobile-field-value">G8 รุ่น 26</span></div><div class="mobile-field"><span class="mobile-field-label">วงแหวน</span><span class="mobile-field-value">🔴 แดง #1–10</span></div><div class="mobile-field"><span class="mobile-field-label">แม่พันธุ์</span><span class="mobile-field-value">10 ตัว</span></div></div></div>
+            <div class="table-header"><div class="table-title">ทะเบียนไก่ (50 แถวล่าสุด)</div><div class="table-count" id="birds-count">0 ตัว</div></div>
+            <div class="table-scroll table-desktop"><table><thead><tr><th>Bird ID</th><th>Family Code</th><th>สายพันธุ์</th><th>Generation</th><th>เพศ</th><th>วันเกิด</th><th>สีวงแหวน</th><th>เลขวงแหวน</th><th>คอก</th><th>สถานะ</th></tr></thead>
+            <tbody id="birds-tbody"><tr><td colspan="10" style="text-align:center;padding:32px;color:var(--gray-500)">กำลังโหลดข้อมูล...</td></tr></tbody></table></div>
+            <div id="birds-mobile"></div>
           </div>
-          <div class="insight-section"><div class="insight-title">📋 วิเคราะห์ — ทะเบียนไก่</div><div class="insight-grid"><div class="insight-card insight-positive"><span class="insight-icon">✅</span><div><strong>จุดเด่น</strong><p>มี 40 Family รวมรุ่น 25 และ 26 — ระบบ Lockbook ใช้รหัสมาตรฐาน [สายพันธุ์-รุ่น-Generation-Family-เพศ-เลข] ทำให้ติดตามได้ง่าย</p></div></div><div class="insight-card insight-warning"><span class="insight-icon">⚠️</span><div><strong>จุดที่ควรติดตาม</strong><p>Family รุ่น 26 หลายตัวยังไม่มีรหัสข้อเท้า (เลขข้อเท้าว่าง) ควรกรอกให้ครบก่อนเข้าฤดูผสมพันธุ์</p></div></div><div class="insight-card insight-neutral"><span class="insight-icon">💡</span><div><strong>ข้อสังเกต</strong><p>วงแหวนสีเหลือง F01–F10, สีแดง F11–F20 — ระบบสีช่วยแยกแยะ Family ได้ง่ายในคอก</p></div></div></div></div>
+          <div class="insight-section"><div class="insight-title">📋 วิเคราะห์ — ทะเบียนไก่</div><div class="insight-grid">
+            <div class="insight-card insight-positive"><span class="insight-icon">✅</span><div><strong>จุดเด่น</strong><p id="ins-bi-pos">รอข้อมูล...</p></div></div>
+            <div class="insight-card insight-warning"><span class="insight-icon">⚠️</span><div><strong>จุดที่ควรติดตาม</strong><p id="ins-bi-warn">รอข้อมูล...</p></div></div>
+            <div class="insight-card insight-neutral"><span class="insight-icon">💡</span><div><strong>ข้อสังเกต</strong><p id="ins-bi-note">รอข้อมูล...</p></div></div>
+          </div></div>
         </div>
 
-        <!-- ── MATING ── -->
+        <!-- MATING -->
         <div id="tab-mating" class="tab-content">
-          <div class="section-header"><h2>💞 แผนผสมพันธุ์</h2><p>ข้อมูลจริงจาก SB_Tag.xlsx — ชีทแผนทดลอง</p></div>
+          <div class="section-header"><h2>💞 แผนผสมพันธุ์</h2><p id="matingSub">กำลังโหลดข้อมูล...</p></div>
           <div class="kpi-grid">
-            <div class="kpi-card" style="--accent:#9B84D4"><div class="kpi-label">สายพันธุ์ทดลองทั้งหมด</div><div class="kpi-value">5</div><div class="kpi-unit">สาย</div></div>
-            <div class="kpi-card" style="--accent:#6DB88A"><div class="kpi-label">แม่พันธุ์ SPL รวม</div><div class="kpi-value">1,100</div><div class="kpi-unit">ตัว (Pool Mating)</div></div>
-            <div class="kpi-card" style="--accent:#6BA3D4"><div class="kpi-label">แม่พันธุ์ SB8 รวม</div><div class="kpi-value">300</div><div class="kpi-unit">ตัว (Family Mating)</div></div>
-            <div class="kpi-card" style="--accent:#E89B5A"><div class="kpi-label">Family ที่กำหนดได้</div><div class="kpi-value">49</div><div class="kpi-unit">Family รวมทุกสาย</div></div>
+            <div class="kpi-card" style="--accent:#9B84D4"><div class="kpi-label">แผนผสมทั้งหมด</div><div class="kpi-value" id="kpi-mat-total">—</div><div class="kpi-unit">แผน</div></div>
+            <div class="kpi-card" style="--accent:#6DB88A"><div class="kpi-label">Active</div><div class="kpi-value" id="kpi-mat-active">—</div><div class="kpi-unit">แผน</div></div>
+            <div class="kpi-card" style="--accent:#6BA3D4"><div class="kpi-label">พ่อพันธุ์รวม</div><div class="kpi-value" id="kpi-mat-sire">—</div><div class="kpi-unit">ตัว</div></div>
+            <div class="kpi-card" style="--accent:#E89B5A"><div class="kpi-label">แม่พันธุ์รวม</div><div class="kpi-value" id="kpi-mat-dam">—</div><div class="kpi-unit">ตัว</div></div>
           </div>
           <div class="table-card">
-            <div class="table-header"><div class="table-title">แผนทดลองทุกสายพันธุ์</div><div class="table-count">10 แผน</div></div>
-            <div class="table-scroll table-desktop"><table><thead><tr><th>สายทดลอง</th><th>รหัสพ่อ</th><th>รหัสแม่</th><th>รหัสลูก</th><th>พ่อ (ตัว)</th><th>แม่ (ตัว)</th><th>Family</th><th>วิธีผสม</th></tr></thead><tbody>
-              <tr><td>SB8 รุ่น 25→26</td><td>SB8-25</td><td>SB8-25</td><td>SB8G0</td><td>10</td><td>100</td><td>10</td><td>Family</td></tr>
-              <tr><td>SB8 รุ่น 26→27</td><td>SB8-26</td><td>SB8-26</td><td>SB8G0</td><td>20</td><td>200</td><td>20</td><td>Family</td></tr>
-              <tr><td><b>SL สายตัวเมีย (SPL)</b></td><td>missex</td><td>SL</td><td>SPL</td><td>100</td><td>1,000</td><td>10</td><td>Pool</td></tr>
-              <tr><td>SL สายตัวเมีย (AU)</td><td>missex</td><td>SL</td><td>SPL</td><td>10</td><td>100</td><td>1</td><td>Pool</td></tr>
-              <tr><td>SL สายตัวผู้</td><td>missex</td><td>SL</td><td>SL</td><td>4</td><td>28</td><td>4</td><td>Pool</td></tr>
-              <tr><td>ประดู่หางดำ มข. (PD)</td><td>PD</td><td>PD</td><td>PD0</td><td>4</td><td>12</td><td>3</td><td>Family</td></tr>
-              <tr><td>ประดู่หางดำ ชุด1</td><td>PD</td><td>PD</td><td>PD-1</td><td>300</td><td>227</td><td>0</td><td>Pool</td></tr>
-              <tr><td>ประดู่หางดำ ชุด2</td><td>PD</td><td>PD</td><td>PD-2</td><td>301</td><td>—</td><td>0</td><td>Pool</td></tr>
-              <tr><td>ออสตาร์ลอป ชุด1 (AS)</td><td>AS</td><td>AS</td><td>AS0</td><td>2</td><td>8</td><td>1</td><td>Family</td></tr>
-              <tr><td>ออสตาร์ลอป ชุด2</td><td>AS</td><td>AS</td><td>AS1</td><td>8</td><td>12</td><td>0</td><td>Pool</td></tr>
-            </tbody></table></div>
-            <div class="mobile-record"><div class="mobile-record-title">SPL (SL สายตัวเมีย) — ใหญ่สุด</div><div class="mobile-record-grid"><div class="mobile-field"><span class="mobile-field-label">รหัสลูก</span><span class="mobile-field-value">SPL</span></div><div class="mobile-field"><span class="mobile-field-label">วิธีผสม</span><span class="mobile-field-value">Pool Mating</span></div><div class="mobile-field"><span class="mobile-field-label">แม่พันธุ์</span><span class="mobile-field-value" style="color:#065f46;font-weight:700">1,000 ตัว</span></div><div class="mobile-field"><span class="mobile-field-label">Family</span><span class="mobile-field-value">10 Family</span></div></div></div>
-            <div class="mobile-record"><div class="mobile-record-title">SB8 รุ่น 26→27</div><div class="mobile-record-grid"><div class="mobile-field"><span class="mobile-field-label">รหัสลูก</span><span class="mobile-field-value">SB8G0</span></div><div class="mobile-field"><span class="mobile-field-label">วิธีผสม</span><span class="mobile-field-value">Family Mating</span></div><div class="mobile-field"><span class="mobile-field-label">แม่พันธุ์</span><span class="mobile-field-value">200 ตัว</span></div><div class="mobile-field"><span class="mobile-field-label">Family</span><span class="mobile-field-value">20 Family</span></div></div></div>
+            <div class="table-header"><div class="table-title">แผนผสมพันธุ์ทั้งหมด</div><div class="table-count" id="mating-count">0 แผน</div></div>
+            <div class="table-scroll table-desktop"><table><thead><tr><th>Mating ID</th><th>สายพันธุ์</th><th>Family Code</th><th>รหัสพ่อ</th><th>พ่อ</th><th>แม่</th><th>วิธีผสม</th><th>วันเริ่ม</th><th>วันสิ้นสุด</th><th>คอก</th><th>สถานะ</th></tr></thead>
+            <tbody id="mating-tbody"><tr><td colspan="11" style="text-align:center;padding:32px;color:var(--gray-500)">กำลังโหลดข้อมูล...</td></tr></tbody></table></div>
+            <div id="mating-mobile"></div>
           </div>
-          <div class="insight-section"><div class="insight-title">📋 วิเคราะห์ — แผนผสมพันธุ์</div><div class="insight-grid"><div class="insight-card insight-positive"><span class="insight-icon">✅</span><div><strong>จุดเด่น</strong><p>SPL มีแม่พันธุ์มากสุด 1,000+ ตัว เป็น commercial line หลัก ส่วน SB8 ใช้ Family Mating แบบแยกครอบครัวเพื่อคัดพันธุ์แม่นยำ</p></div></div><div class="insight-card insight-warning"><span class="insight-icon">⚠️</span><div><strong>จุดที่ควรติดตาม</strong><p>ออสตาร์ลอปชุด2 และประดู่หางดำชุด1-2 มี Family = 0 ยังไม่ได้แยกครอบครัว ควรเร่งดำเนินการ</p></div></div><div class="insight-card insight-neutral"><span class="insight-icon">💡</span><div><strong>ข้อสังเกต</strong><p>มีทั้งหมด 5 สายพันธุ์ทดลอง — ปี 2570 มีแผนขยายโปรแกรม SPL เพิ่มเป็น Super Line</p></div></div></div></div>
+          <div class="insight-section"><div class="insight-title">📋 วิเคราะห์ — แผนผสมพันธุ์</div><div class="insight-grid">
+            <div class="insight-card insight-positive"><span class="insight-icon">✅</span><div><strong>จุดเด่น</strong><p id="ins-ma-pos">รอข้อมูล...</p></div></div>
+            <div class="insight-card insight-warning"><span class="insight-icon">⚠️</span><div><strong>จุดที่ควรติดตาม</strong><p id="ins-ma-warn">รอข้อมูล...</p></div></div>
+            <div class="insight-card insight-neutral"><span class="insight-icon">💡</span><div><strong>ข้อสังเกต</strong><p id="ins-ma-note">รอข้อมูล...</p></div></div>
+          </div></div>
         </div>
 
-        <!-- ── SELECTION ── -->
+        <!-- SELECTION -->
         <div id="tab-selection" class="tab-content">
-          <div class="section-header"><h2>⭐ ผลการคัดเลือก (SB8 G8 รุ่น 26)</h2><p>ข้อมูลจริงจาก SB_Tag.xlsx — ชีท on hand • ล็อต 25 มี.ค.–16 เม.ย. 2569</p></div>
+          <div class="section-header"><h2>⭐ ผลการคัดเลือก</h2><p id="selSub">กำลังโหลดข้อมูล...</p></div>
           <div class="kpi-grid">
-            <div class="kpi-card" style="--accent:#D4C050"><div class="kpi-label">Family ที่ประเมิน</div><div class="kpi-value">20</div><div class="kpi-unit">Family (รุ่น 26)</div></div>
-            <div class="kpi-card" style="--accent:#6DB88A"><div class="kpi-label">SE% สูงสุด</div><div class="kpi-value">29.0</div><div class="kpi-unit">% (F09)</div></div>
-            <div class="kpi-card" style="--accent:#6BA3D4"><div class="kpi-label">SF% สูงสุด</div><div class="kpi-value">70.3</div><div class="kpi-unit">% (F18)</div></div>
-            <div class="kpi-card" style="--accent:#E89B5A"><div class="kpi-label">DIS% ต่ำสุด</div><div class="kpi-value">29.7</div><div class="kpi-unit">% (F18)</div></div>
+            <div class="kpi-card" style="--accent:#D4C050"><div class="kpi-label">ไก่ที่ประเมิน</div><div class="kpi-value" id="kpi-sel-total">—</div><div class="kpi-unit">ตัว</div></div>
+            <div class="kpi-card" style="--accent:#6DB88A"><div class="kpi-label">ผ่านการคัดเลือก</div><div class="kpi-value" id="kpi-sel-pass">—</div><div class="kpi-unit">ตัว</div></div>
+            <div class="kpi-card" style="--accent:#D97A94"><div class="kpi-label">คัดออก</div><div class="kpi-value" id="kpi-sel-fail">—</div><div class="kpi-unit">ตัว</div></div>
+            <div class="kpi-card" style="--accent:#6BA3D4"><div class="kpi-label">คะแนนเฉลี่ย</div><div class="kpi-value" id="kpi-sel-score">—</div><div class="kpi-unit">คะแนน</div></div>
           </div>
           <div class="chart-grid-2col">
-            <div class="chart-card"><div class="chart-title">SF% รายครอบครัว — SB8 G8 รุ่น 26</div><div class="chart-sub">Top 10 Family จากล็อต 25 มี.ค.–16 เม.ย. 2569</div><div class="chart-wrap"><canvas id="c8"></canvas></div></div>
-            <div class="chart-card"><div class="chart-title">DIS% รายครอบครัว — SB8 G8 รุ่น 26</div><div class="chart-sub">ต่ำ = ดี, High = ควรตรวจสอบ</div><div class="chart-wrap"><canvas id="c9"></canvas></div></div>
+            <div class="chart-card"><div class="chart-title">คะแนนเฉลี่ยต่อ Family (Top 10)</div><div class="chart-sub">Final Score แยก Family</div><div class="chart-wrap"><canvas id="c8"></canvas></div></div>
+            <div class="chart-card"><div class="chart-title">สัดส่วนผลการคัดเลือก</div><div class="chart-sub">ผ่าน / คัดออก / รอประเมิน</div><div class="chart-wrap"><canvas id="c9"></canvas></div></div>
           </div>
           <div class="table-card">
-            <div class="table-header"><div class="table-title">ผลฟักแยก Family — SB8 G8 รุ่น 26 (ล็อต 1)</div><div class="table-count">20 Family</div></div>
-            <div class="table-scroll table-desktop"><table><thead><tr><th>Family Code</th><th>Egg Set</th><th>ไข่ลม</th><th>ลูกไก่</th><th>SE%</th><th>SF%</th><th>DIS%</th><th>ผลประเมิน</th></tr></thead><tbody>
-              <tr><td>SB-26-G8-F01</td><td>100</td><td>47</td><td>25</td><td>25.0</td><td>47.2</td><td>50.9</td><td><span class="status-badge" style="background:#fef3c7;color:#92400e">ปานกลาง</span></td></tr>
-              <tr><td>SB-26-G8-F02</td><td>100</td><td>52</td><td>28</td><td>28.0</td><td>58.3</td><td>41.7</td><td><span class="status-badge status-active">ดี</span></td></tr>
-              <tr><td>SB-26-G8-F09</td><td>100</td><td>51</td><td>29</td><td><b>29.0</b></td><td>59.2</td><td>40.8</td><td><span class="status-badge status-active">ดี</span></td></tr>
-              <tr><td>SB-26-G8-F10</td><td>100</td><td>65</td><td>24</td><td>24.0</td><td>68.6</td><td>31.4</td><td><span class="status-badge status-active">ดี</span></td></tr>
-              <tr><td>SB-26-G8-F15</td><td>100</td><td>61</td><td>27</td><td>27.0</td><td>69.2</td><td>30.8</td><td><span class="status-badge status-active">ดี</span></td></tr>
-              <tr><td>SB-26-G8-F18</td><td>100</td><td>63</td><td>26</td><td>26.0</td><td style="color:#065f46;font-weight:700">70.3</td><td style="color:#065f46;font-weight:700">29.7</td><td><span class="status-badge status-active">ดีที่สุด</span></td></tr>
-              <tr><td>SB-26-G8-F08</td><td>100</td><td>57</td><td>20</td><td>20.0</td><td>46.5</td><td>53.5</td><td><span class="status-badge" style="background:#fee2e2;color:#991b1b">ต่ำ</span></td></tr>
-              <tr><td>SB-26-G8-F13</td><td>100</td><td>52</td><td>22</td><td>22.0</td><td>45.8</td><td>54.2</td><td><span class="status-badge" style="background:#fee2e2;color:#991b1b">ต่ำ</span></td></tr>
-            </tbody></table></div>
-            <div class="mobile-record"><div class="mobile-record-title">F18 — ดีที่สุด SF% 70.3%</div><div class="mobile-record-grid"><div class="mobile-field"><span class="mobile-field-label">Egg Set</span><span class="mobile-field-value">100 ฟอง</span></div><div class="mobile-field"><span class="mobile-field-label">ลูกไก่</span><span class="mobile-field-value" style="color:#065f46;font-weight:700">26 ตัว</span></div><div class="mobile-field"><span class="mobile-field-label">SF%</span><span class="mobile-field-value" style="color:#065f46;font-weight:700">70.3%</span></div><div class="mobile-field"><span class="mobile-field-label">DIS%</span><span class="mobile-field-value" style="color:#065f46;font-weight:700">29.7% (ต่ำสุด)</span></div></div></div>
-            <div class="mobile-record"><div class="mobile-record-title">F15 — SF% 69.2%</div><div class="mobile-record-grid"><div class="mobile-field"><span class="mobile-field-label">Egg Set</span><span class="mobile-field-value">100 ฟอง</span></div><div class="mobile-field"><span class="mobile-field-label">ลูกไก่</span><span class="mobile-field-value">27 ตัว</span></div><div class="mobile-field"><span class="mobile-field-label">SF%</span><span class="mobile-field-value" style="color:#065f46;font-weight:700">69.2%</span></div><div class="mobile-field"><span class="mobile-field-label">DIS%</span><span class="mobile-field-value">30.8%</span></div></div></div>
+            <div class="table-header"><div class="table-title">ผลการคัดเลือก (50 แถวล่าสุด)</div><div class="table-count" id="sel-count">0 ตัว</div></div>
+            <div class="table-scroll table-desktop"><table><thead><tr><th>Bird ID</th><th>Family Code</th><th>เพศ</th><th>น้ำหนัก</th><th>สรีระ</th><th>สุขภาพ</th><th>การผลิต</th><th>คะแนนรวม</th><th>ผล</th><th>วันที่</th></tr></thead>
+            <tbody id="sel-tbody"><tr><td colspan="10" style="text-align:center;padding:32px;color:var(--gray-500)">กำลังโหลดข้อมูล...</td></tr></tbody></table></div>
+            <div id="sel-mobile"></div>
           </div>
-          <div class="insight-section"><div class="insight-title">📋 วิเคราะห์ — คัดเลือก SB8 G8 รุ่น 26</div><div class="insight-grid"><div class="insight-card insight-positive"><span class="insight-icon">✅</span><div><strong>จุดเด่น</strong><p>F18 มี SF% สูงสุด 70.3% และ DIS% ต่ำสุด 29.7% — แนะนำให้คัด F18, F15, F10 เป็นพ่อ-แม่พันธุ์รุ่นถัดไป</p></div></div><div class="insight-card insight-warning"><span class="insight-icon">⚠️</span><div><strong>จุดที่ควรติดตาม</strong><p>F08, F13 มี DIS% สูงกว่า 50% ควรพิจารณาคัดออกหรือตรวจสอบสุขภาพก่อนล็อตถัดไป</p></div></div><div class="insight-card insight-neutral"><span class="insight-icon">💡</span><div><strong>ข้อสังเกต</strong><p>SF% เฉลี่ย SB8 G8 รุ่น 26 อยู่ที่ 56.7% ซึ่งต่ำกว่า SPL (60.4%) — ยังมีพื้นที่ปรับปรุงพันธุกรรม</p></div></div></div></div>
+          <div class="insight-section"><div class="insight-title">📋 วิเคราะห์ — คัดเลือก</div><div class="insight-grid">
+            <div class="insight-card insight-positive"><span class="insight-icon">✅</span><div><strong>จุดเด่น</strong><p id="ins-se-pos">รอข้อมูล...</p></div></div>
+            <div class="insight-card insight-warning"><span class="insight-icon">⚠️</span><div><strong>จุดที่ควรติดตาม</strong><p id="ins-se-warn">รอข้อมูล...</p></div></div>
+            <div class="insight-card insight-neutral"><span class="insight-icon">💡</span><div><strong>ข้อสังเกต</strong><p id="ins-se-note">รอข้อมูล...</p></div></div>
+          </div></div>
         </div>
 
       </div><!-- /content -->
     </div><!-- /main -->
 
-    <!-- BOTTOM NAV -->
     <nav class="bottom-nav">
       <div class="bottom-nav-inner">
         <button class="bnav-item active" id="bn-overview" onclick="showTab('overview',this)"><div class="bnav-icon">📊</div><div class="bnav-label">ภาพรวม</div></button>
@@ -624,160 +454,39 @@ body.force-desktop .insight-grid { flex-direction: row !important; }
         <button class="bnav-item" id="bn-selection" onclick="showTab('selection',this)"><div class="bnav-icon">⭐</div><div class="bnav-label">คัดเลือก</div></button>
       </div>
     </nav>
+  </div>
+</div>
 
-  </div><!-- /app -->
-</div><!-- /dashApp -->
+<!-- Loading -->
+<div id="loadingOverlay" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(250,245,245,0.9);backdrop-filter:blur(8px);flex-direction:column;gap:12px;align-items:center;justify-content:center">
+  <div style="font-size:40px;animation:spin .8s linear infinite">🔄</div>
+  <div style="font-family:'Kanit',sans-serif;font-size:16px;color:#B71C1C;font-weight:600">กำลังโหลดข้อมูลจาก Google Sheet...</div>
+</div>
 
 <script>
-/* ══ SCRIPT URL ══ */
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzggCv-AkPuRMQULU00bBdg6_R3swpb2Xe5mQAI_vDbiXAUkIrAenrqDpW2RZNEIQYynw/exec';
-let dashData = null;
-
-/* ══ LOAD DATA FROM GOOGLE SHEET ══ */
-async function loadDashboardData() {
-  const loading = document.getElementById('loadingOverlay');
-  const errorBox = document.getElementById('errorBox');
-  if (loading) loading.style.display = 'flex';
-  if (errorBox) errorBox.style.display = 'none';
-  try {
-    const res = await fetch(SCRIPT_URL + '?action=dashboard', { mode: 'no-cors' });
-    // no-cors ไม่สามารถอ่าน response ได้ — ใช้ JSONP แทน
-    throw new Error('use_jsonp');
-  } catch(e) {
-    // ใช้ JSONP approach ผ่าน script tag
-    loadViaJSONP();
-  }
-}
-
-function loadViaJSONP() {
-  window._sfCallback = function(data) {
-    dashData = data;
-    renderDashboardData(data);
-    const loading = document.getElementById('loadingOverlay');
-    if (loading) loading.style.display = 'none';
-    const updated = document.getElementById('updatedTime');
-    if (updated && data.updated) updated.textContent = 'อัพเดต: ' + data.updated;
-  };
-  const s = document.createElement('script');
-  s.src = SCRIPT_URL + '?action=dashboard&callback=_sfCallback';
-  s.onerror = function() {
-    // Fallback: load mock data
-    renderMockData();
-    const loading = document.getElementById('loadingOverlay');
-    if (loading) loading.style.display = 'none';
-  };
-  document.head.appendChild(s);
-}
-
-function renderMockData() {
-  // ข้อมูลสมมุติสำหรับ demo เมื่อไม่มี connection
-  const mock = {
-    status: 'mock',
-    updated: 'ข้อมูลสมมุติ (ยังไม่ได้เชื่อม Sheet)',
-    kpi: {
-      total_eggs: 1240, total_chicks: 430, total_eggs_set: 800,
-      active_birds: 45, selected_birds: 12, total_families: 8,
-      total_lines: 3, se_pct: '72.5', sf_pct: '53.8', dis_pct: '18.4'
-    },
-    by_line: {
-      'SB8 G8': { eggs: 400, chicks: 210, fertile: 300, dis: 55 },
-      'SPL': { eggs: 280, chicks: 150, fertile: 200, dis: 30 },
-      'ประดู่หางดำ': { eggs: 120, chicks: 70, fertile: 90, dis: 15 }
-    },
-    eggs_by_date: {
-      '2026-05-20': 45, '2026-05-21': 52, '2026-05-22': 48,
-      '2026-05-23': 55, '2026-05-24': 50, '2026-05-25': 58, '2026-05-26': 60
-    },
-    raw: { eggs: [], hatch: [], birds: [], mating: [], select: [] }
-  };
-  dashData = mock;
-  renderDashboardData(mock);
-  const updated = document.getElementById('updatedTime');
-  if (updated) updated.textContent = mock.updated;
-}
-
-function renderDashboardData(data) {
-  if (!data || !data.kpi) return;
-  const k = data.kpi;
-
-  // ── KPI Cards ──
-  setEl('kpi-eggs',    fmtNum(k.total_eggs) + ' ฟอง');
-  setEl('kpi-chicks',  fmtNum(k.total_chicks) + ' ตัว');
-  setEl('kpi-se',      k.se_pct + '%');
-  setEl('kpi-sf',      k.sf_pct + '%');
-  setEl('kpi-dis',     k.dis_pct + '%');
-  setEl('kpi-birds',   fmtNum(k.active_birds) + ' ตัว');
-  setEl('kpi-selected',fmtNum(k.selected_birds) + ' ตัว');
-  setEl('kpi-families',fmtNum(k.total_families) + ' Family');
-  setEl('kpi-lines',   fmtNum(k.total_lines) + ' สาย');
-
-  // ── Charts (update after init) ──
-  updateCharts(data);
-}
-
-function setEl(id, val) {
-  const el = document.getElementById(id);
-  if (el) el.textContent = val;
-}
-
-function fmtNum(n) {
-  return Number(n).toLocaleString('th-TH');
-}
-
-function updateCharts(data) {
-  // Update chart data if charts already initialized
-  if (typeof Chart === 'undefined' || !window._charts) return;
-  const lines = Object.keys(data.by_line || {});
-  const lineData = lines.map(l => data.by_line[l]);
-
-  // Bar chart: SE/SF/DIS by line
-  if (window._charts.c3) {
-    window._charts.c3.data.labels = lines;
-    window._charts.c3.data.datasets[0].data = lines.map(l => {
-      const d = data.by_line[l];
-      return d.eggs > 0 ? +(d.fertile/d.eggs*100).toFixed(1) : 0;
-    });
-    window._charts.c3.data.datasets[1].data = lines.map(l => {
-      const d = data.by_line[l];
-      return d.fertile > 0 ? +(d.chicks/d.fertile*100).toFixed(1) : 0;
-    });
-    window._charts.c3.data.datasets[2].data = lines.map(l => {
-      const d = data.by_line[l];
-      return d.fertile > 0 ? +(d.dis/d.fertile*100).toFixed(1) : 0;
-    });
-    window._charts.c3.update();
-  }
-
-  // Line chart: eggs by date
-  if (window._charts.c4 && data.eggs_by_date) {
-    const dates = Object.keys(data.eggs_by_date).sort().slice(-14);
-    window._charts.c4.data.labels = dates.map(d => d.slice(5));
-    window._charts.c4.data.datasets[0].data = dates.map(d => data.eggs_by_date[d]);
-    window._charts.c4.update();
-  }
-}
-
-
 Chart.register(ChartDataLabels);
 
-/* ── PIN removed — direct mode select ── */
-/* ── MODE SELECT ── */
+/* ════════════════════════════════════════
+   CONFIG — แก้แค่บรรทัดนี้บรรทัดเดียว
+════════════════════════════════════════ */
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzggCv-AkPuRMQULU00bBdg6_R3swpb2Xe5mQAI_vDbiXAUkIrAenrqDpW2RZNEIQYynw/exec';
+
+const CC = ['#6DB88A','#6BA3D4','#E89B5A','#D97A94','#9B84D4','#D4C050','#5EC4BB','#C9A06A'];
 let curMode = null;
+let chartsInited = false;
+window._charts = {};
+
+/* ── MODE ── */
 function selectMode(m) {
   document.getElementById('landingScreen').classList.add('gone');
-  const da = document.getElementById('dashApp');
-  da.style.display = 'block';
+  document.getElementById('dashApp').style.display = 'block';
   applyMode(m);
-  if (!chartsInited) { initCharts(); chartsInited = true; }
-  loadDashboardData();
-  const fd = document.getElementById('footerDate');
-  // Auto-detect device
   const ad = document.getElementById('autoDetect');
-  if (ad) {
-    const mob = window.innerWidth <= 768;
-    ad.textContent = 'ตรวจพบอุปกรณ์: ' + (mob ? '📱 มือถือ' : '🖥️ คอมพิวเตอร์');
-  }
+  if (ad) ad.textContent = 'ตรวจพบ: ' + (window.innerWidth <= 768 ? '📱 มือถือ' : '🖥️ คอมพิวเตอร์');
+  const fd = document.getElementById('footerDate');
   if (fd) fd.textContent = new Date().toLocaleDateString('th-TH',{year:'numeric',month:'long',day:'numeric'});
+  if (!chartsInited) { initCharts(); chartsInited = true; }
+  loadData();
 }
 function applyMode(m) {
   curMode = m;
@@ -790,97 +499,457 @@ function toggleMode() { applyMode(curMode === 'mobile' ? 'desktop' : 'mobile'); 
 
 /* ── TABS ── */
 const TABS = ['overview','eggs','hatch','birds','mating','selection'];
-const TITLES = { overview:'ภาพรวมการเพาะพันธุ์', eggs:'ไข่รายวัน', hatch:'ผลการฟักไข่', birds:'ทะเบียนไก่', mating:'แผนผสมพันธุ์', selection:'ผลการคัดเลือก' };
+const TITLES = {overview:'ภาพรวมการเพาะพันธุ์',eggs:'ไข่รายวัน',hatch:'ผลการฟักไข่',birds:'ทะเบียนไก่',mating:'แผนผสมพันธุ์',selection:'ผลการคัดเลือก'};
 function showTab(name, el) {
   TABS.forEach(t => document.getElementById('tab-'+t).classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.querySelectorAll('.bnav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('tab-'+name).classList.add('active');
   document.getElementById('topbarTitle').textContent = TITLES[name] || '';
-  const bn = document.getElementById('bn-'+name);
+  var bn = document.getElementById('bn-'+name);
   if (bn) bn.classList.add('active');
   if (el && el.classList.contains('nav-item')) el.classList.add('active');
   document.querySelector('.content').scrollTop = 0;
 }
-
-/* ── DRAWER ── */
 function openDrawer() { document.getElementById('drawer').classList.add('open'); document.getElementById('dOverlay').classList.add('open'); }
 function closeDrawer() { document.getElementById('drawer').classList.remove('open'); document.getElementById('dOverlay').classList.remove('open'); }
 
-/* ── CHARTS ── */
-let chartsInited = false;
-window._charts = {};
+/* ── INIT CHARTS (ว่างทั้งหมด) ── */
 function initCharts() {
-  const mkBar = (id, labels, datasets, opts={}) => new Chart(document.getElementById(id),{type:'bar',data:{labels,datasets},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:11},boxWidth:12}},datalabels:{}},...opts}});
-  const mkDonut = (id, labels, data, colors) => new Chart(document.getElementById(id),{type:'doughnut',data:{labels,datasets:[{data,backgroundColor:colors,borderWidth:2,borderColor:'#fff',datalabels:{color:'#fff',font:{size:11,weight:'700'},formatter:(v,ctx)=>{const t=ctx.chart.data.datasets[0].data.reduce((a,b)=>a+b,0);return((v/t)*100).toFixed(0)+'%';}}}]},options:{responsive:true,maintainAspectRatio:false,cutout:'58%',plugins:{legend:{position:'bottom',labels:{font:{size:11},boxWidth:12}},datalabels:{}}}});
-  const mkLine = (id, labels, datasets) => new Chart(document.getElementById(id),{type:'line',data:{labels,datasets},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:11},boxWidth:12}},datalabels:{display:false}},scales:{y:{beginAtZero:true,grid:{color:'#f3f4f6'}},x:{grid:{display:false}}}}});
-
-  // c1 - SF% SPL ราย lot (overview)
-  mkBar('c1',['15ม.ค.','22ม.ค.','29ม.ค.','2ก.พ.','12ก.พ.','19ก.พ.','26ก.พ.','3มี.ค.','12มี.ค.'],[
-    {label:'SF%',data:[54.4,46.5,36.7,77.8,67.1,79.0,58.7,63.9,53.2],
-     backgroundColor:['#6BA3D4','#6BA3D4','#D97A94','#6DB88A','#6DB88A','#6DB88A','#6BA3D4','#6BA3D4','#6BA3D4'],
-     borderRadius:6,datalabels:{anchor:'end',align:'end',color:'#374151',font:{size:9,weight:'700'},formatter:v=>v+'%'}}
-  ],{plugins:{legend:{display:false},datalabels:{}},scales:{y:{beginAtZero:true,max:100,grid:{color:'#f3f4f6'}},x:{grid:{display:false}}}});
-
-  // c2 - สัดส่วน Family ต่อสายพันธุ์ (overview)
-  mkDonut('c2',['SB8 G8 รุ่น26 (20)','SB8 G8 รุ่น25 (20)','SPL (11)','PD มข. (3)','AS (1)'],[20,20,11,3,1],['#6DB88A','#6BA3D4','#E89B5A','#9B84D4','#5EC4BB']);
-
-  // c3 - เปรียบเทียบ SE/SF/DIS ต่อสาย (overview)
-  mkBar('c3',['SB8 G8 รุ่น26','ประดู่หางดำ PD','Lohmann SM'],[
-    {label:'SE%',data:[24.2,32.7,23.1],backgroundColor:'#6DB88A',borderRadius:6,datalabels:{anchor:'end',align:'end',color:'#374151',font:{size:10,weight:'700'},formatter:v=>v+'%'}},
-    {label:'SF%',data:[56.7,48.7,37.9],backgroundColor:'#6BA3D4',borderRadius:6,datalabels:{anchor:'end',align:'end',color:'#374151',font:{size:10,weight:'700'},formatter:v=>v+'%'}},
-    {label:'DIS%',data:[42.7,48.7,57.8],backgroundColor:'#D97A94',borderRadius:6,datalabels:{anchor:'end',align:'end',color:'#374151',font:{size:10,weight:'700'},formatter:v=>v+'%'}}
-  ],{scales:{y:{beginAtZero:true,max:85,grid:{color:'#f3f4f6'}},x:{grid:{display:false}}}});
-
-  // c4 - ไข่รายวัน 20-30 เม.ย. F01-F10 (eggs tab)
-  mkLine('c4',['20/4','21/4','22/4','23/4','24/4','25/4','26/4','27/4','28/4','29/4','30/4'],[
-    {label:'F01',data:[5,6,5,4,5,7,5,6,6,8,6],borderColor:'#6DB88A',backgroundColor:'#6DB88A20',pointBackgroundColor:'#6DB88A',tension:0.3},
-    {label:'F08',data:[9,5,6,7,6,5,8,6,6,9,8],borderColor:'#E89B5A',backgroundColor:'#E89B5A20',pointBackgroundColor:'#E89B5A',tension:0.3},
-    {label:'F03',data:[6,6,7,7,8,5,5,5,5,9,7],borderColor:'#6BA3D4',backgroundColor:'#6BA3D420',pointBackgroundColor:'#6BA3D4',tension:0.3}
+  function mkBar(id, multi) {
+    var datasets = multi
+      ? multi.map(function(d,i){ return {label:d,data:[],backgroundColor:CC[i],borderRadius:6,datalabels:{anchor:'end',align:'end',color:'#374151',font:{size:9,weight:'700'},formatter:function(v){return v+'%'}}}; })
+      : [{data:[],backgroundColor:CC[0],borderRadius:6,datalabels:{anchor:'end',align:'end',color:'#374151',font:{size:9,weight:'700'},formatter:function(v){return v}}}];
+    window._charts[id] = new Chart(document.getElementById(id), {
+      type:'bar', data:{labels:[],datasets:datasets},
+      options:{responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:!!multi,position:'bottom',labels:{font:{size:11},boxWidth:12}},datalabels:{}},
+        scales:{y:{beginAtZero:true,grid:{color:'#f3f4f6'}},x:{grid:{display:false}}}}
+    });
+  }
+  function mkDonut(id) {
+    window._charts[id] = new Chart(document.getElementById(id), {
+      type:'doughnut', data:{labels:[],datasets:[{data:[],backgroundColor:CC,borderWidth:2,borderColor:'#fff',
+        datalabels:{color:'#fff',font:{size:11,weight:'700'},
+          formatter:function(v,ctx){var t=ctx.chart.data.datasets[0].data.reduce(function(a,b){return a+b;},0);return t>0?((v/t)*100).toFixed(0)+'%':'';}}
+      }]},
+      options:{responsive:true,maintainAspectRatio:false,cutout:'58%',
+        plugins:{legend:{position:'bottom',labels:{font:{size:11},boxWidth:12}},datalabels:{}}}
+    });
+  }
+  function mkLine(id, dsConf) {
+    var datasets = dsConf.map(function(d){ return Object.assign({data:[],tension:0.4,datalabels:{display:false}},d); });
+    window._charts[id] = new Chart(document.getElementById(id), {
+      type:'line', data:{labels:[],datasets:datasets},
+      options:{responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{position:'bottom',labels:{font:{size:11},boxWidth:12}},datalabels:{display:false}},
+        scales:{y:{beginAtZero:true,grid:{color:'#f3f4f6'}},x:{grid:{display:false}}}}
+    });
+  }
+  mkBar('c1');
+  mkDonut('c2');
+  mkBar('c3', ['SE%','SF%','DIS%']);
+  mkLine('c4', [{label:'ไข่รวม',borderColor:CC[0],backgroundColor:CC[0]+'20',pointBackgroundColor:CC[0]}]);
+  mkBar('c5');
+  mkLine('c6', [
+    {label:'SF%',borderColor:CC[0],backgroundColor:CC[0]+'20',pointBackgroundColor:CC[0]},
+    {label:'DIS%',borderColor:CC[3],backgroundColor:CC[3]+'20',pointBackgroundColor:CC[3]}
   ]);
+  mkBar('c7');
+  mkBar('c8');
+  mkDonut('c9');
+}
 
-  // c5 - ปริมาณไข่ top 10 family เม.ย. (eggs tab)
-  mkBar('c5',['F08','F03','F07','F04','F06','F12','F01','F19','F11','F16'],[
-    {label:'ไข่รวมเม.ย.',data:[75,70,69,66,65,65,63,67,63,62],
-     backgroundColor:'#6DB88A',borderRadius:6,
-     datalabels:{anchor:'end',align:'end',color:'#374151',font:{size:9,weight:'700'},formatter:v=>v}}
-  ],{plugins:{legend:{display:false},datalabels:{}},scales:{y:{beginAtZero:true,max:85,grid:{color:'#f3f4f6'}},x:{grid:{display:false}}}});
+/* ── LOAD DATA ── */
+function loadData() {
+  var ov = document.getElementById('loadingOverlay');
+  if (ov) ov.style.display = 'flex';
+  window._sfCallback = function(data) {
+    if (ov) ov.style.display = 'none';
+    render(data);
+  };
+  var s = document.createElement('script');
+  s.src = SCRIPT_URL + '?action=dashboard&callback=_sfCallback&t=' + Date.now();
+  s.onerror = function() {
+    if (ov) ov.style.display = 'none';
+    setEl('updatedTime', '❌ โหลดไม่ได้ — ตรวจสอบ Apps Script Deploy');
+  };
+  document.head.appendChild(s);
+}
 
-  // c6 - SF% SPL ราย lot (hatch tab) — line chart
-  mkLine('c6',['15ม.ค.','22ม.ค.','29ม.ค.','2ก.พ.','12ก.พ.','19ก.พ.','26ก.พ.','3มี.ค.','12มี.ค.'],[
-    {label:'SF%',data:[54.4,46.5,36.7,77.8,67.1,79.0,58.7,63.9,53.2],borderColor:'#6DB88A',backgroundColor:'#6DB88A20',pointBackgroundColor:'#6DB88A',tension:0.4},
-    {label:'DIS%',data:[8.0,6.7,6.5,8.7,8.1,16.1,11.3,13.2,3.6],borderColor:'#D97A94',backgroundColor:'#D97A9420',pointBackgroundColor:'#D97A94',tension:0.4}
-  ]);
+/* ── RENDER ── */
+function render(data) {
+  if (!data) return;
+  var k = data.kpi || {};
+  var raw = data.raw || {};
+  var now = data.updated || '—';
+  var eggsAll   = raw.eggs    || [];
+  var hatchAll  = raw.hatch   || [];
+  var birdsAll  = raw.birds   || [];
+  var matingAll = raw.mating  || [];
+  var selAll    = raw.select  || [];
 
-  // c7 - ลูกไก่ราย lot SPL (hatch tab)
-  mkBar('c7',['15ม.ค.','22ม.ค.','29ม.ค.','2ก.พ.','12ก.พ.','19ก.พ.','26ก.พ.','3มี.ค.','12มี.ค.'],[
-    {label:'ลูกไก่ (ตัว)',data:[4300,3900,3100,2970,5772,3236,2433,2716,2136],
-     backgroundColor:['#6BA3D4','#6BA3D4','#D97A94','#6DB88A','#6DB88A','#6DB88A','#6BA3D4','#6BA3D4','#6BA3D4'],
-     borderRadius:6,datalabels:{anchor:'end',align:'end',color:'#374151',font:{size:8,weight:'600'},formatter:v=>v.toLocaleString()}}
-  ],{plugins:{legend:{display:false},datalabels:{}},scales:{y:{beginAtZero:true,grid:{color:'#f3f4f6'}},x:{grid:{display:false}}}});
+  setEl('updatedTime', now);
 
-  // c8 - SF% by family SB8 G8 รุ่น26 top 10 (selection tab)
-  mkBar('c8',['F18','F15','F10','F02','F09','F03','F14','F17','F19','F04'],[
-    {label:'SF%',data:[70.3,69.2,68.6,58.3,59.2,62.9,65.0,62.5,65.7,57.1],
-     backgroundColor:['#6DB88A','#6DB88A','#6DB88A','#6BA3D4','#6BA3D4','#6BA3D4','#6BA3D4','#6BA3D4','#6BA3D4','#6BA3D4'],
-     borderRadius:6,datalabels:{anchor:'end',align:'end',color:'#374151',font:{size:9,weight:'700'},formatter:v=>v+'%'}}
-  ],{plugins:{legend:{display:false},datalabels:{}},scales:{y:{beginAtZero:true,max:90,grid:{color:'#f3f4f6'}},x:{grid:{display:false}}}});
+  /* KPI overview */
+  setEl('kpi-eggs',     fmtN(k.total_eggs));
+  setEl('kpi-chicks',   fmtN(k.total_chicks));
+  setEl('kpi-se',       fmt1(k.se_pct));
+  setEl('kpi-sf',       fmt1(k.sf_pct));
+  setEl('kpi-dis',      fmt1(k.dis_pct));
+  setEl('kpi-families', fmtN(k.total_families));
+  setEl('kpi-birds',    fmtN(k.active_birds));
+  setEl('kpi-lines',    fmtN(k.total_lines));
 
-  // c9 - DIS% by family (selection tab, lower=better)
-  mkBar('c9',['F18','F15','F10','F09','F02','F03','F04','F16','F01','F08'],[
-    {label:'DIS%',data:[29.7,30.8,31.4,40.8,41.7,31.4,42.9,47.9,50.9,53.5],
-     backgroundColor:['#6DB88A','#6DB88A','#6DB88A','#6BA3D4','#6BA3D4','#6DB88A','#6BA3D4','#E89B5A','#D97A94','#D97A94'],
-     borderRadius:6,datalabels:{anchor:'end',align:'end',color:'#374151',font:{size:9,weight:'700'},formatter:v=>v+'%'}}
-  ],{plugins:{legend:{display:false},datalabels:{}},scales:{y:{beginAtZero:true,max:70,grid:{color:'#f3f4f6'}},x:{grid:{display:false}}}});
+  /* KPI eggs */
+  var eTotal = eggsAll.reduce(function(s,r){return s+(+r.Eggs_Collected||0);},0);
+  var eUsable= eggsAll.reduce(function(s,r){return s+(+r.Eggs_Usable||0);},0);
+  var eDirty = eggsAll.reduce(function(s,r){return s+(+r.Dirty_Eggs||0);},0);
+  var eCrack = eggsAll.reduce(function(s,r){return s+(+r.Cracked_Eggs||0);},0);
+  setEl('kpi-eggs2', fmtN(eTotal)); setEl('kpi-usable', fmtN(eUsable));
+  setEl('kpi-dirty', fmtN(eDirty)); setEl('kpi-cracked', fmtN(eCrack));
+
+  /* KPI hatch */
+  var hSet  = hatchAll.reduce(function(s,r){return s+(+r.Eggs_Set||0);},0);
+  var hFert = hatchAll.reduce(function(s,r){return s+(+r.Fertile_Eggs||0);},0);
+  var hChk  = hatchAll.reduce(function(s,r){return s+(+r.Chicks_Hatched||0);},0);
+  var hDIS  = hatchAll.reduce(function(s,r){return s+(+r.Dead_In_Shell||0);},0);
+  var hSE = hSet>0?(hFert/hSet*100).toFixed(1):0;
+  var hSF = hFert>0?(hChk/hFert*100).toFixed(1):0;
+  var hDS = hFert>0?(hDIS/hFert*100).toFixed(1):0;
+  setEl('kpi-se2',hSE); setEl('kpi-sf2',hSF); setEl('kpi-dis2',hDS);
+  setEl('kpi-eggsset',fmtN(hSet)); setEl('kpi-chicks2',fmtN(hChk)); setEl('kpi-dis3',fmtN(hDIS));
+
+  /* KPI birds */
+  var bActive = birdsAll.filter(function(r){return r.Status==='Active';}).length;
+  var bSel    = birdsAll.filter(function(r){return r.Status==='Selected';}).length;
+  var bFams   = new Set(birdsAll.map(function(r){return r.Family_Code;}).filter(Boolean)).size;
+  setEl('kpi-birds-total',fmtN(birdsAll.length)); setEl('kpi-birds-active',fmtN(bActive));
+  setEl('kpi-birds-sel',fmtN(bSel)); setEl('kpi-birds-fam',fmtN(bFams));
+
+  /* KPI mating */
+  var mAct  = matingAll.filter(function(r){return r.Status==='Active';}).length;
+  var mSire = matingAll.reduce(function(s,r){return s+(+r.Sire_Count||0);},0);
+  var mDam  = matingAll.reduce(function(s,r){return s+(+r.Dam_Count||0);},0);
+  setEl('kpi-mat-total',fmtN(matingAll.length)); setEl('kpi-mat-active',fmtN(mAct));
+  setEl('kpi-mat-sire',fmtN(mSire)); setEl('kpi-mat-dam',fmtN(mDam));
+
+  /* KPI selection */
+  var sPass = selAll.filter(function(r){return /select|ผ่าน|คัดได้/i.test(String(r.Decision));}).length;
+  var sFail = selAll.filter(function(r){return /reject|คัดออก|ไม่ผ่าน/i.test(String(r.Decision));}).length;
+  var sAvg  = selAll.length>0?(selAll.reduce(function(s,r){return s+(+r.Final_Score||0);},0)/selAll.length).toFixed(1):0;
+  setEl('kpi-sel-total',fmtN(selAll.length)); setEl('kpi-sel-pass',fmtN(sPass));
+  setEl('kpi-sel-fail',fmtN(sFail)); setEl('kpi-sel-score',sAvg);
+
+  /* Subtitles */
+  setEl('overviewSub',  'ข้อมูลจาก Google Sheet • อัปเดต ' + now);
+  setEl('eggsSub',      'บันทึกไข่ ' + eggsAll.length + ' แถว • อัปเดต ' + now);
+  setEl('hatchSub',     'ผลฟักไข่ ' + hatchAll.length + ' ล็อต • อัปเดต ' + now);
+  setEl('birdsSub',     'ทะเบียนไก่ ' + birdsAll.length + ' ตัว • อัปเดต ' + now);
+  setEl('matingSub',    'แผนผสม ' + matingAll.length + ' แผน • อัปเดต ' + now);
+  setEl('selSub',       'ผลคัดเลือก ' + selAll.length + ' ตัว • อัปเดต ' + now);
+
+  /* Tables */
+  renderEggs(eggsAll); renderHatch(hatchAll);
+  renderBirds(birdsAll); renderMating(matingAll); renderSel(selAll);
+
+  /* Charts */
+  updateCharts(data, eggsAll, hatchAll, selAll);
+
+  /* Insights */
+  renderInsights(k, hatchAll, eggsAll, birdsAll, matingAll, selAll);
+}
+
+/* ── CHARTS UPDATE ── */
+function updateCharts(data, eggsAll, hatchAll, selAll) {
+  var byLine = data.by_line || {};
+  var lines  = Object.keys(byLine);
+
+  /* c1 SF% รายล็อต */
+  if (window._charts.c1 && hatchAll.length) {
+    var lots = hatchAll.slice(-12);
+    var c1 = window._charts.c1;
+    c1.data.labels = lots.map(function(r){return shortDate(r.Hatch_Date||r.Hatch_Lot_ID);});
+    c1.data.datasets[0].data = lots.map(function(r){return +r.SF_pct||0;});
+    c1.data.datasets[0].backgroundColor = lots.map(function(r){var v=+r.SF_pct||0; return v>=60?CC[0]:v>=45?CC[1]:CC[3];});
+    c1.data.datasets[0].datalabels = {anchor:'end',align:'end',color:'#374151',font:{size:9,weight:'700'},formatter:function(v){return v+'%';}};
+    c1.update();
+  }
+
+  /* c2 สัดส่วน Family */
+  if (window._charts.c2 && hatchAll.length) {
+    var famC = {};
+    hatchAll.forEach(function(r){var l=r.Line_Name||'Unknown'; famC[l]=(famC[l]||0)+1;});
+    window._charts.c2.data.labels = Object.keys(famC);
+    window._charts.c2.data.datasets[0].data = Object.values(famC);
+    window._charts.c2.update();
+  }
+
+  /* c3 SE/SF/DIS by Line */
+  if (window._charts.c3 && lines.length) {
+    var c3 = window._charts.c3;
+    c3.data.labels = lines;
+    c3.data.datasets[0].data = lines.map(function(l){var d=byLine[l]; return d.eggs>0?(d.fertile/d.eggs*100).toFixed(1):0;});
+    c3.data.datasets[1].data = lines.map(function(l){var d=byLine[l]; return d.fertile>0?(d.chicks/d.fertile*100).toFixed(1):0;});
+    c3.data.datasets[2].data = lines.map(function(l){var d=byLine[l]; return d.fertile>0?(d.dis/d.fertile*100).toFixed(1):0;});
+    c3.update();
+  }
+
+  /* c4 ไข่รายวัน */
+  if (window._charts.c4 && data.eggs_by_date) {
+    var dates = Object.keys(data.eggs_by_date).sort().slice(-14);
+    var c4 = window._charts.c4;
+    c4.data.labels = dates.map(function(d){return d.slice(5);});
+    c4.data.datasets[0].data = dates.map(function(d){return data.eggs_by_date[d];});
+    c4.update();
+  }
+
+  /* c5 Top Family eggs */
+  if (window._charts.c5 && eggsAll.length) {
+    var fE = {};
+    eggsAll.forEach(function(r){var f=r.Family_Code||'Unknown'; fE[f]=(fE[f]||0)+(+r.Eggs_Collected||0);});
+    var sorted = Object.entries(fE).sort(function(a,b){return b[1]-a[1];}).slice(0,10);
+    var c5 = window._charts.c5;
+    c5.data.labels = sorted.map(function(x){return x[0];});
+    c5.data.datasets[0].data = sorted.map(function(x){return x[1];});
+    c5.data.datasets[0].backgroundColor = CC[0];
+    c5.data.datasets[0].datalabels = {anchor:'end',align:'end',color:'#374151',font:{size:9,weight:'700'},formatter:function(v){return fmtN(v);}};
+    c5.update();
+  }
+
+  /* c6 SF/DIS line */
+  if (window._charts.c6 && hatchAll.length) {
+    var lots6 = hatchAll.slice(-12);
+    var c6 = window._charts.c6;
+    c6.data.labels = lots6.map(function(r){return shortDate(r.Hatch_Date||r.Hatch_Lot_ID);});
+    c6.data.datasets[0].data = lots6.map(function(r){return +r.SF_pct||0;});
+    c6.data.datasets[1].data = lots6.map(function(r){return +r.DIS_pct||0;});
+    c6.update();
+  }
+
+  /* c7 ลูกไก่ราย lot */
+  if (window._charts.c7 && hatchAll.length) {
+    var lots7 = hatchAll.slice(-12);
+    var c7 = window._charts.c7;
+    c7.data.labels = lots7.map(function(r){return shortDate(r.Hatch_Date||r.Hatch_Lot_ID);});
+    c7.data.datasets[0].data = lots7.map(function(r){return +r.Chicks_Hatched||0;});
+    c7.data.datasets[0].backgroundColor = CC[1];
+    c7.data.datasets[0].datalabels = {anchor:'end',align:'end',color:'#374151',font:{size:8,weight:'600'},formatter:function(v){return fmtN(v);}};
+    c7.update();
+  }
+
+  /* c8 Score by Family */
+  if (window._charts.c8 && selAll.length) {
+    var fScore={}, fCount={};
+    selAll.forEach(function(r){var f=r.Family_Code||'Unknown'; fScore[f]=(fScore[f]||0)+(+r.Final_Score||0); fCount[f]=(fCount[f]||0)+1;});
+    var sorted8 = Object.keys(fScore).map(function(f){return [f,(fScore[f]/fCount[f]).toFixed(1)];}).sort(function(a,b){return b[1]-a[1];}).slice(0,10);
+    var c8 = window._charts.c8;
+    c8.data.labels = sorted8.map(function(x){return x[0];});
+    c8.data.datasets[0].data = sorted8.map(function(x){return +x[1];});
+    c8.data.datasets[0].backgroundColor = sorted8.map(function(_,i){return i<3?CC[0]:CC[1];});
+    c8.data.datasets[0].datalabels = {anchor:'end',align:'end',color:'#374151',font:{size:9,weight:'700'},formatter:function(v){return v;}};
+    c8.update();
+  }
+
+  /* c9 สัดส่วนคัดเลือก */
+  if (window._charts.c9 && selAll.length) {
+    var sp = selAll.filter(function(r){return /select|ผ่าน|คัดได้/i.test(String(r.Decision));}).length;
+    var sf = selAll.filter(function(r){return /reject|คัดออก|ไม่ผ่าน/i.test(String(r.Decision));}).length;
+    var spe = selAll.length - sp - sf;
+    var c9 = window._charts.c9;
+    c9.data.labels = ['ผ่านการคัดเลือก','คัดออก','รอประเมิน'];
+    c9.data.datasets[0].data = [sp, sf, spe];
+    c9.update();
+  }
+}
+
+/* ── TABLES ── */
+function renderEggs(rows) {
+  setEl('eggs-count', rows.length + ' แถว');
+  var tb = document.getElementById('eggs-tbody');
+  if (!tb) return;
+  if (!rows.length) { tb.innerHTML = emptyRow(9,'ยังไม่มีข้อมูลไข่รายวันใน Sheet'); return; }
+  tb.innerHTML = rows.slice(-50).reverse().map(function(r) {
+    return '<tr><td>'+esc(r.Record_Date)+'</td><td>'+esc(r.Mating_ID)+'</td><td>'+esc(r.Family_Code)+'</td><td>'+esc(r.Line_Name)+'</td>'+
+      '<td style="font-weight:700">'+fmtN(r.Eggs_Collected)+'</td><td>'+fmtN(r.Dirty_Eggs)+'</td><td>'+fmtN(r.Cracked_Eggs)+'</td>'+
+      '<td style="color:#065f46;font-weight:700">'+fmtN(r.Eggs_Usable)+'</td><td>'+esc(r.Recorded_By)+'</td></tr>';
+  }).join('');
+  var mob = document.getElementById('eggs-mobile');
+  if (mob) mob.innerHTML = rows.slice(-5).reverse().map(function(r) {
+    return '<div class="mobile-record"><div class="mobile-record-title">'+esc(r.Family_Code)+' — '+esc(r.Record_Date)+'</div>'+
+      '<div class="mobile-record-grid">'+
+      '<div class="mobile-field"><span class="mobile-field-label">ไข่รวม</span><span class="mobile-field-value">'+fmtN(r.Eggs_Collected)+' ฟอง</span></div>'+
+      '<div class="mobile-field"><span class="mobile-field-label">ไข่ใช้ได้</span><span class="mobile-field-value" style="color:#065f46">'+fmtN(r.Eggs_Usable)+' ฟอง</span></div>'+
+      '<div class="mobile-field"><span class="mobile-field-label">สกปรก</span><span class="mobile-field-value">'+fmtN(r.Dirty_Eggs)+'</span></div>'+
+      '<div class="mobile-field"><span class="mobile-field-label">แตก</span><span class="mobile-field-value">'+fmtN(r.Cracked_Eggs)+'</span></div>'+
+      '</div></div>';
+  }).join('');
+}
+
+function renderHatch(rows) {
+  setEl('hatch-count', rows.length + ' ล็อต');
+  var tb = document.getElementById('hatch-tbody');
+  if (!tb) return;
+  if (!rows.length) { tb.innerHTML = emptyRow(10,'ยังไม่มีข้อมูลฟักไข่ใน Sheet'); return; }
+  tb.innerHTML = rows.slice().reverse().map(function(r) {
+    var sf = +r.SF_pct||0;
+    var sfC = sf>=70?'#065f46':sf>=50?'#374151':'#991b1b';
+    return '<tr><td>'+esc(r.Hatch_Lot_ID)+'</td><td>'+esc(r.Family_Code)+'</td><td>'+esc(r.Line_Name)+'</td><td>'+esc(r.Hatch_Date)+'</td>'+
+      '<td>'+fmtN(r.Eggs_Set)+'</td><td>'+fmtN(r.Infertile)+'</td>'+
+      '<td style="font-weight:700;color:var(--navy)">'+fmtN(r.Chicks_Hatched)+'</td>'+
+      '<td>'+fmt1(r.Fertility_pct)+'%</td>'+
+      '<td style="font-weight:700;color:'+sfC+'">'+fmt1(r.SF_pct)+'%</td>'+
+      '<td>'+fmt1(r.DIS_pct)+'%</td></tr>';
+  }).join('');
+  var mob = document.getElementById('hatch-mobile');
+  if (mob) mob.innerHTML = rows.slice(-3).reverse().map(function(r) {
+    return '<div class="mobile-record"><div class="mobile-record-title">'+esc(r.Hatch_Lot_ID)+' — '+esc(r.Hatch_Date)+'</div>'+
+      '<div class="mobile-record-grid">'+
+      '<div class="mobile-field"><span class="mobile-field-label">ไข่ฟัก</span><span class="mobile-field-value">'+fmtN(r.Eggs_Set)+'</span></div>'+
+      '<div class="mobile-field"><span class="mobile-field-label">ลูกไก่</span><span class="mobile-field-value" style="color:#065f46;font-weight:700">'+fmtN(r.Chicks_Hatched)+'</span></div>'+
+      '<div class="mobile-field"><span class="mobile-field-label">SF%</span><span class="mobile-field-value">'+fmt1(r.SF_pct)+'%</span></div>'+
+      '<div class="mobile-field"><span class="mobile-field-label">DIS%</span><span class="mobile-field-value">'+fmt1(r.DIS_pct)+'%</span></div>'+
+      '</div></div>';
+  }).join('');
+}
+
+function renderBirds(rows) {
+  setEl('birds-count', rows.length + ' ตัว');
+  var tb = document.getElementById('birds-tbody');
+  if (!tb) return;
+  if (!rows.length) { tb.innerHTML = emptyRow(10,'ยังไม่มีข้อมูลทะเบียนไก่ใน Sheet'); return; }
+  tb.innerHTML = rows.slice(-50).reverse().map(function(r) {
+    var st = String(r.Status||'');
+    var sc = st==='Active'?'status-active':st==='Selected'?'status-selected':'status-planning';
+    return '<tr><td>'+esc(r.Bird_ID)+'</td><td>'+esc(r.Family_Code)+'</td><td>'+esc(r.Line_Name)+'</td>'+
+      '<td>'+esc(r.Generation)+'</td><td>'+esc(r.Sex)+'</td><td>'+esc(r.Hatch_Date)+'</td>'+
+      '<td>'+esc(r.Ring_Color)+'</td><td>'+esc(r.Ring_Number)+'</td><td>'+esc(r.Pen_Location)+'</td>'+
+      '<td><span class="status-badge '+sc+'">'+esc(r.Status)+'</span></td></tr>';
+  }).join('');
+  var mob = document.getElementById('birds-mobile');
+  if (mob) mob.innerHTML = rows.slice(-5).reverse().map(function(r) {
+    return '<div class="mobile-record"><div class="mobile-record-title">'+esc(r.Bird_ID)+'</div>'+
+      '<div class="mobile-record-grid">'+
+      '<div class="mobile-field"><span class="mobile-field-label">Family</span><span class="mobile-field-value">'+esc(r.Family_Code)+'</span></div>'+
+      '<div class="mobile-field"><span class="mobile-field-label">เพศ</span><span class="mobile-field-value">'+esc(r.Sex)+'</span></div>'+
+      '<div class="mobile-field"><span class="mobile-field-label">วงแหวน</span><span class="mobile-field-value">'+esc(r.Ring_Color)+' #'+esc(r.Ring_Number)+'</span></div>'+
+      '<div class="mobile-field"><span class="mobile-field-label">สถานะ</span><span class="mobile-field-value">'+esc(r.Status)+'</span></div>'+
+      '</div></div>';
+  }).join('');
+}
+
+function renderMating(rows) {
+  setEl('mating-count', rows.length + ' แผน');
+  var tb = document.getElementById('mating-tbody');
+  if (!tb) return;
+  if (!rows.length) { tb.innerHTML = emptyRow(11,'ยังไม่มีข้อมูลแผนผสมพันธุ์ใน Sheet'); return; }
+  tb.innerHTML = rows.map(function(r) {
+    var st = String(r.Status||'');
+    var sc = st==='Active'?'status-active':st==='Planning'?'status-planning':'';
+    return '<tr><td>'+esc(r.Mating_ID)+'</td><td>'+esc(r.Line_Name)+'</td><td>'+esc(r.Family_Code)+'</td>'+
+      '<td>'+esc(r.Sire_ID)+'</td><td>'+fmtN(r.Sire_Count)+'</td><td>'+fmtN(r.Dam_Count)+'</td>'+
+      '<td>'+esc(r.Mating_Type)+'</td><td>'+esc(r.Start_Date)+'</td><td>'+esc(r.End_Date)+'</td>'+
+      '<td>'+esc(r.Pen_Location)+'</td>'+
+      '<td><span class="status-badge '+sc+'">'+esc(r.Status)+'</span></td></tr>';
+  }).join('');
+  var mob = document.getElementById('mating-mobile');
+  if (mob) mob.innerHTML = rows.slice(0,5).map(function(r) {
+    return '<div class="mobile-record"><div class="mobile-record-title">'+esc(r.Mating_ID)+' — '+esc(r.Line_Name)+'</div>'+
+      '<div class="mobile-record-grid">'+
+      '<div class="mobile-field"><span class="mobile-field-label">วิธีผสม</span><span class="mobile-field-value">'+esc(r.Mating_Type)+'</span></div>'+
+      '<div class="mobile-field"><span class="mobile-field-label">สถานะ</span><span class="mobile-field-value">'+esc(r.Status)+'</span></div>'+
+      '<div class="mobile-field"><span class="mobile-field-label">พ่อ</span><span class="mobile-field-value">'+fmtN(r.Sire_Count)+' ตัว</span></div>'+
+      '<div class="mobile-field"><span class="mobile-field-label">แม่</span><span class="mobile-field-value">'+fmtN(r.Dam_Count)+' ตัว</span></div>'+
+      '</div></div>';
+  }).join('');
+}
+
+function renderSel(rows) {
+  setEl('sel-count', rows.length + ' ตัว');
+  var tb = document.getElementById('sel-tbody');
+  if (!tb) return;
+  if (!rows.length) { tb.innerHTML = emptyRow(10,'ยังไม่มีข้อมูลผลคัดเลือกใน Sheet'); return; }
+  tb.innerHTML = rows.slice(-50).reverse().map(function(r) {
+    var dec = String(r.Decision||'');
+    var dc = /select|ผ่าน|คัดได้/i.test(dec)?'#065f46':/reject|คัดออก|ไม่ผ่าน/i.test(dec)?'#991b1b':'#374151';
+    return '<tr><td>'+esc(r.Bird_ID)+'</td><td>'+esc(r.Family_Code)+'</td><td>'+esc(r.Sex)+'</td>'+
+      '<td>'+fmt1(r.Weight_Score)+'</td><td>'+fmt1(r.Conformation_Score)+'</td>'+
+      '<td>'+fmt1(r.Health_Score)+'</td><td>'+fmt1(r.Production_Score)+'</td>'+
+      '<td style="font-weight:700;color:var(--navy)">'+fmt1(r.Final_Score)+'</td>'+
+      '<td style="font-weight:700;color:'+dc+'">'+esc(r.Decision)+'</td>'+
+      '<td>'+esc(r.Selection_Date)+'</td></tr>';
+  }).join('');
+  var mob = document.getElementById('sel-mobile');
+  if (mob) mob.innerHTML = rows.slice(-5).reverse().map(function(r) {
+    return '<div class="mobile-record"><div class="mobile-record-title">'+esc(r.Bird_ID)+'</div>'+
+      '<div class="mobile-record-grid">'+
+      '<div class="mobile-field"><span class="mobile-field-label">Family</span><span class="mobile-field-value">'+esc(r.Family_Code)+'</span></div>'+
+      '<div class="mobile-field"><span class="mobile-field-label">คะแนน</span><span class="mobile-field-value">'+fmt1(r.Final_Score)+'</span></div>'+
+      '<div class="mobile-field"><span class="mobile-field-label">ผล</span><span class="mobile-field-value">'+esc(r.Decision)+'</span></div>'+
+      '<div class="mobile-field"><span class="mobile-field-label">เพศ</span><span class="mobile-field-value">'+esc(r.Sex)+'</span></div>'+
+      '</div></div>';
+  }).join('');
+}
+
+/* ── INSIGHTS ── */
+function renderInsights(k, hatchAll, eggsAll, birdsAll, matingAll, selAll) {
+  var bestLot  = hatchAll.length ? hatchAll.reduce(function(a,b){return (+b.SF_pct||0)>(+a.SF_pct||0)?b:a;}) : null;
+  var worstLot = hatchAll.length ? hatchAll.reduce(function(a,b){return (+b.SF_pct||0)<(+a.SF_pct||0)?b:a;}) : null;
+  var hDIS = +k.dis_pct||0;
+
+  setEl('ins-ov-pos', bestLot ? 'ล็อตดีสุด: '+esc(bestLot.Hatch_Lot_ID||bestLot.Hatch_Date)+' SF% '+fmt1(bestLot.SF_pct)+'% ลูกไก่ '+fmtN(bestLot.Chicks_Hatched)+' ตัว' : 'ยังไม่มีข้อมูลล็อตฟัก');
+  setEl('ins-ov-warn', hDIS>15 ? 'DIS% เฉลี่ย '+hDIS+'% สูงกว่าเกณฑ์ 15% — ควรตรวจสอบตู้ฟักและสุขภาพแม่พันธุ์' : 'DIS% เฉลี่ย '+hDIS+'% อยู่ในเกณฑ์ปกติ');
+  setEl('ins-ov-note', 'ฟักไข่ '+hatchAll.length+' ล็อต, ไก่ในระบบ '+fmtN(birdsAll.length)+' ตัว, แผนผสม '+fmtN(matingAll.length)+' แผน');
+
+  var eTotal = eggsAll.reduce(function(s,r){return s+(+r.Eggs_Collected||0);},0);
+  var eUsable= eggsAll.reduce(function(s,r){return s+(+r.Eggs_Usable||0);},0);
+  var uRatio = eTotal>0?((eUsable/eTotal)*100).toFixed(1):0;
+  var famE={};
+  eggsAll.forEach(function(r){var f=r.Family_Code||'Unknown'; famE[f]=(famE[f]||0)+(+r.Eggs_Collected||0);});
+  var topFam = Object.entries(famE).sort(function(a,b){return b[1]-a[1];})[0];
+  setEl('ins-eg-pos', 'ไข่ใช้ได้ '+fmtN(eUsable)+' ฟอง ('+uRatio+'%) จากทั้งหมด '+fmtN(eTotal)+' ฟอง');
+  setEl('ins-eg-warn', +uRatio<85 && eTotal>0 ? 'ไข่ใช้ได้ต่ำกว่า 85% — ควรตรวจสอบการจัดการไข่และสุขภาพแม่พันธุ์' : 'สัดส่วนไข่ใช้ได้อยู่ในเกณฑ์ดี ('+uRatio+'%)');
+  setEl('ins-eg-note', topFam ? 'Family ให้ไข่มากสุด: '+topFam[0]+' รวม '+fmtN(topFam[1])+' ฟอง' : '—');
+
+  setEl('ins-ha-pos', bestLot ? 'ล็อตดีสุด '+esc(bestLot.Hatch_Lot_ID||bestLot.Hatch_Date)+': SF% '+fmt1(bestLot.SF_pct)+'%, ลูกไก่ '+fmtN(bestLot.Chicks_Hatched)+' ตัว' : 'รอข้อมูล');
+  setEl('ins-ha-warn', worstLot ? 'ล็อตต่ำสุด '+esc(worstLot.Hatch_Lot_ID||worstLot.Hatch_Date)+': SF% '+fmt1(worstLot.SF_pct)+'% ควรตรวจสอบสาเหตุ' : 'รอข้อมูล');
+  setEl('ins-ha-note', 'ล็อตขนาดเล็กมักให้ SF% สูงกว่า เนื่องจากความหนาแน่นในตู้ฟัก');
+
+  var activePct = birdsAll.length>0?((birdsAll.filter(function(r){return r.Status==='Active';}).length/birdsAll.length)*100).toFixed(0):0;
+  var noRing = birdsAll.filter(function(r){return !r.Ring_Number||r.Ring_Number===''||r.Ring_Number==='0';}).length;
+  var gens = Array.from(new Set(birdsAll.map(function(r){return r.Generation;}).filter(Boolean)));
+  setEl('ins-bi-pos', 'ไก่ Active '+activePct+'% ของทะเบียนทั้งหมด '+fmtN(birdsAll.length)+' ตัว');
+  setEl('ins-bi-warn', noRing>0 ? 'ไก่ '+fmtN(noRing)+' ตัวยังไม่มีเลขวงแหวน ควรกรอกให้ครบก่อนผสมพันธุ์' : 'ข้อมูลวงแหวนครบถ้วน');
+  setEl('ins-bi-note', 'Generation ที่มี: '+(gens.join(', ')||'—'));
+
+  var activeMat = matingAll.filter(function(r){return r.Status==='Active';}).length;
+  var noFam = matingAll.filter(function(r){return !r.Family_Code||r.Family_Code==='0';}).length;
+  var types = Array.from(new Set(matingAll.map(function(r){return r.Mating_Type;}).filter(Boolean)));
+  setEl('ins-ma-pos', 'แผน Active '+fmtN(activeMat)+' แผน จาก '+fmtN(matingAll.length)+' แผนทั้งหมด');
+  setEl('ins-ma-warn', noFam>0 ? 'แผนผสม '+fmtN(noFam)+' แผนยังไม่มี Family Code' : 'ทุกแผนมี Family Code');
+  setEl('ins-ma-note', 'วิธีผสม: '+(types.join(', ')||'—'));
+
+  var sPass = selAll.filter(function(r){return /select|ผ่าน|คัดได้/i.test(String(r.Decision));}).length;
+  var passRate = selAll.length>0?((sPass/selAll.length)*100).toFixed(0):0;
+  var topSel = selAll.length ? selAll.reduce(function(a,b){return (+b.Final_Score||0)>(+a.Final_Score||0)?b:a;}) : null;
+  var avgSc = selAll.length>0?(selAll.reduce(function(s,r){return s+(+r.Final_Score||0);},0)/selAll.length).toFixed(1):0;
+  setEl('ins-se-pos', 'ผ่านการคัดเลือก '+passRate+'% ('+fmtN(sPass)+'/'+fmtN(selAll.length)+' ตัว)');
+  setEl('ins-se-warn', topSel ? 'คะแนนสูงสุด: '+esc(topSel.Bird_ID)+' ('+esc(topSel.Family_Code)+') รวม '+fmt1(topSel.Final_Score)+' คะแนน' : 'รอข้อมูล');
+  setEl('ins-se-note', 'คะแนนเฉลี่ย '+avgSc+' คะแนน จาก '+fmtN(selAll.length)+' ตัวที่ประเมิน');
+}
+
+/* ── HELPERS ── */
+function setEl(id,val) { var el=document.getElementById(id); if(el) el.textContent=val; }
+function fmtN(n) { var v=Number(n); return isNaN(v)?'—':v.toLocaleString('th-TH'); }
+function fmt1(n) { var v=Number(n); if(isNaN(v)||v===0) return '—'; return typeof v.toFixed==='function'?v.toFixed(1):v; }
+function esc(v) { return String(v||'—').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function emptyRow(cols,msg) { return '<tr><td colspan="'+cols+'" style="text-align:center;padding:32px;color:var(--gray-500)">'+msg+'</td></tr>'; }
+function shortDate(d) {
+  if (!d) return '—';
+  var s=String(d);
+  if (s.includes('-')) { var p=s.slice(0,10).split('-'); return p[1]+'/'+p[2]; }
+  return s.slice(0,10);
 }
 </script>
-
-<!-- Loading Overlay -->
-<div id="loadingOverlay" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(250,245,245,0.9);backdrop-filter:blur(8px);align-items:center;justify-content:center;flex-direction:column;gap:12px">
-  <div style="font-size:40px;animation:spin .8s linear infinite">🔄</div>
-  <div style="font-family:'Kanit',sans-serif;font-size:16px;color:#B71C1C;font-weight:600">กำลังโหลดข้อมูลจาก Google Sheet...</div>
-</div>
-<style>@keyframes spin{to{transform:rotate(360deg)}}</style>
-
 </body>
 </html>
