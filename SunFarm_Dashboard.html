@@ -179,8 +179,10 @@ body.force-mobile .kpi-label{font-size:10px !important}
 body.force-mobile .table-card{display:none !important}
 body.force-mobile .chart-grid-2col{display:flex !important;flex-direction:column !important;gap:12px !important}
 body.force-mobile .chart-grid-2col .chart-card{margin-bottom:0 !important}
-body.force-mobile .chart-card{padding:14px !important;margin-bottom:12px !important}
-body.force-mobile .chart-wrap{height:200px !important}
+body.force-mobile .chart-card{padding:12px !important;margin-bottom:12px !important}
+body.force-mobile .chart-wrap{height:180px !important}
+body.force-mobile .chart-title{font-size:13px !important}
+body.force-mobile .chart-sub{font-size:10px !important;margin-bottom:10px !important}
 body.force-mobile .content{padding:12px !important;padding-bottom:calc(var(--bottom-nav-h) + 16px) !important}
 body.force-mobile .section-header{margin-bottom:12px}
 body.force-mobile .section-header h2{font-size:16px !important}
@@ -205,8 +207,10 @@ body.force-desktop .chart-grid-2col .chart-card{margin-bottom:0 !important}
   .table-card{display:none}
   .chart-grid-2col{display:flex;flex-direction:column;gap:12px}
   .chart-grid-2col .chart-card{margin-bottom:0}
-  .chart-card{padding:14px;margin-bottom:12px}
-  .chart-wrap{height:200px}
+  .chart-card{padding:12px;margin-bottom:12px}
+  .chart-wrap{height:180px}
+  .chart-title{font-size:13px}
+  .chart-sub{font-size:10px;margin-bottom:10px}
   .content{padding:12px;padding-bottom:calc(var(--bottom-nav-h) + 16px)}
   .section-header{margin-bottom:12px}
   .section-header h2{font-size:16px}
@@ -585,35 +589,92 @@ setInterval(updateClock, 1000);
 
 /* ── INIT CHARTS ── */
 function initCharts() {
+  var isMob = window.innerWidth <= 768;
+
   function mkBar(id, multi) {
+    var dl = isMob
+      ? {display:false}
+      : {anchor:'end',align:'end',color:'#374151',font:{size:9,weight:'700'},formatter:function(v){return v}};
+    var dlPct = isMob
+      ? {display:false}
+      : {anchor:'end',align:'end',color:'#374151',font:{size:9,weight:'700'},formatter:function(v){return v+'%'}};
     var ds = multi
-      ? multi.map(function(d,i){ return {label:d,data:[],backgroundColor:CC[i],borderRadius:6,datalabels:{anchor:'end',align:'end',color:'#374151',font:{size:9,weight:'700'},formatter:function(v){return v+'%'}}}; })
-      : [{data:[],backgroundColor:CC[0],borderRadius:6,datalabels:{anchor:'end',align:'end',color:'#374151',font:{size:9,weight:'700'},formatter:function(v){return v}}}];
+      ? multi.map(function(d,i){ return {label:d,data:[],backgroundColor:CC[i],borderRadius:4,datalabels:dlPct}; })
+      : [{data:[],backgroundColor:CC[0],borderRadius:4,datalabels:dl}];
     window._charts[id] = new Chart(document.getElementById(id),{
       type:'bar',data:{labels:[],datasets:ds},
-      options:{responsive:true,maintainAspectRatio:false,
-        plugins:{legend:{display:!!multi,position:'bottom',labels:{font:{size:11},boxWidth:12}},datalabels:{}},
-        scales:{y:{beginAtZero:true,grid:{color:'#f3f4f6'}},x:{grid:{display:false}}}}
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        layout:{padding:{top: isMob?4:20}},
+        plugins:{
+          legend:{display:!!multi,position:'bottom',labels:{font:{size:isMob?9:11},boxWidth:10}},
+          datalabels:{}
+        },
+        scales:{
+          y:{beginAtZero:true,grid:{color:'#f3f4f6'},ticks:{font:{size:isMob?9:11},maxTicksLimit:5}},
+          x:{grid:{display:false},ticks:{
+            font:{size:isMob?8:11},
+            maxRotation: isMob?45:0,
+            callback:function(val,idx){
+              var lbl = this.getLabelForValue(val);
+              if(isMob && lbl && lbl.length>8) return lbl.slice(0,8)+'…';
+              return lbl;
+            }
+          }}
+        }
+      }
     });
   }
+
   function mkDonut(id) {
+    var isMob2 = window.innerWidth <= 768;
     window._charts[id] = new Chart(document.getElementById(id),{
       type:'doughnut',data:{labels:[],datasets:[{data:[],backgroundColor:CC,borderWidth:2,borderColor:'#fff',
-        datalabels:{color:'#fff',font:{size:11,weight:'700'},
-          formatter:function(v,ctx){var t=ctx.chart.data.datasets[0].data.reduce(function(a,b){return a+b;},0);return t>0?((v/t)*100).toFixed(0)+'%':'';}
+        datalabels:{
+          color:'#fff',
+          font:{size:isMob2?9:11,weight:'700'},
+          formatter:function(v,ctx){
+            var t=ctx.chart.data.datasets[0].data.reduce(function(a,b){return a+b;},0);
+            var pct = t>0?((v/t)*100):0;
+            return pct>=5?pct.toFixed(0)+'%':''; /* ซ่อน label ถ้าชิ้นเล็กเกิน */
+          }
         }
       }]},
-      options:{responsive:true,maintainAspectRatio:false,cutout:'58%',
-        plugins:{legend:{position:'bottom',labels:{font:{size:11},boxWidth:12}},datalabels:{}}}
+      options:{
+        responsive:true,maintainAspectRatio:false,cutout:'55%',
+        plugins:{
+          legend:{position:'bottom',labels:{font:{size:isMob2?9:11},boxWidth:10,padding:6}},
+          datalabels:{}
+        }
+      }
     });
   }
+
   function mkLine(id, dsConf) {
-    var ds = dsConf.map(function(d){ return Object.assign({data:[],tension:0.4,datalabels:{display:false}},d); });
+    var isMob3 = window.innerWidth <= 768;
+    var ds = dsConf.map(function(d){ return Object.assign({data:[],tension:0.4,datalabels:{display:false},pointRadius:isMob3?2:4,pointHoverRadius:isMob3?4:6},d); });
     window._charts[id] = new Chart(document.getElementById(id),{
       type:'line',data:{labels:[],datasets:ds},
-      options:{responsive:true,maintainAspectRatio:false,
-        plugins:{legend:{position:'bottom',labels:{font:{size:11},boxWidth:12}},datalabels:{display:false}},
-        scales:{y:{beginAtZero:true,grid:{color:'#f3f4f6'}},x:{grid:{display:false}}}}
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        plugins:{
+          legend:{position:'bottom',labels:{font:{size:isMob3?9:11},boxWidth:10}},
+          datalabels:{display:false}
+        },
+        scales:{
+          y:{beginAtZero:true,grid:{color:'#f3f4f6'},ticks:{font:{size:isMob3?9:11},maxTicksLimit:5}},
+          x:{grid:{display:false},ticks:{
+            font:{size:isMob3?8:11},
+            maxRotation: isMob3?45:0,
+            maxTicksLimit: isMob3?7:14,
+            callback:function(val,idx){
+              /* บน mobile แสดงแค่ทุก 2 label */
+              if(isMob3 && idx%2!==0) return '';
+              return this.getLabelForValue(val);
+            }
+          }}
+        }
+      }
     });
   }
   mkBar('c1'); mkDonut('c2'); mkBar('c3',['SE%','SF%','DIS%']);
