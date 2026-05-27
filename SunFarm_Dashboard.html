@@ -5,222 +5,256 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>SunFarm — ระบบติดตามการเพาะพันธุ์ไก่</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&family=Sarabun:wght@400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --navy:#7F0000; --navy2:#5D0000; --sky:#EF5350;
-  --red:#B71C1C;
-  --bg:#FAF5F5;
-  --white:#FFFFFF;
-  --gray-50:#FFF8F8; --gray-100:#F5ECEC; --gray-200:#EED8D8; --gray-300:#E0BFBF;
-  --gray-400:#C49A9A; --gray-500:#8A5A5A; --gray-700:#3D1A1A; --gray-900:#1A0A0A;
-  --green:#2E7D32;
-  --border:#F0DADA;
+  --navy:#7F0000; --sky:#EF5350; --red:#B71C1C;
+  --gray-50:#FFF8F8; --gray-100:#F5ECEC; --gray-200:#EED8D8;
+  --gray-500:#8A5A5A; --gray-700:#3D1A1A; --gray-900:#1A0A0A;
   --bottom-nav-h:64px;
 }
-html, body { height:100%; background:#FAF5F5; font-family:'Sarabun',sans-serif; color:var(--gray-900); -webkit-text-size-adjust:100%; background-image:radial-gradient(ellipse 70% 40% at 50% 0%, rgba(183,28,28,0.07) 0%, transparent 55%); }
+html,body{height:100%;background:#FAF5F5;font-family:'Sarabun',sans-serif;color:var(--gray-900);-webkit-text-size-adjust:100%;background-image:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(183,28,28,0.07) 0%,transparent 55%)}
 
-/* LANDING */
-#landingScreen { position:fixed; inset:0; z-index:2000; display:flex; align-items:center; justify-content:center; padding:24px; background:rgba(250,245,245,0.95); backdrop-filter:blur(20px); }
-#landingScreen.gone { display:none; }
-.landing-bg { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
-.landing-orb { position:absolute; border-radius:50%; filter:blur(60px); opacity:0.25; }
-.orb1 { width:500px; height:500px; background:#B71C1C; top:-150px; right:-100px; }
-.orb2 { width:400px; height:400px; background:#D32F2F; bottom:-120px; left:-80px; }
-.orb3 { width:300px; height:300px; background:#EF9A9A; top:40%; left:40%; }
-.landing-box { position:relative; z-index:1; width:100%; max-width:480px; background:#FFF; border:1px solid rgba(183,28,28,0.15); border-top:3px solid #B71C1C; border-radius:20px; padding:44px 36px 40px; box-shadow:0 20px 60px rgba(183,28,28,0.15),0 4px 20px rgba(0,0,0,0.06); text-align:center; animation:landingIn .5s cubic-bezier(.22,1,.36,1) both; }
-@keyframes landingIn { from{opacity:0;transform:translateY(24px) scale(.97)} to{opacity:1;transform:none} }
-.landing-logo { font-size:56px; margin-bottom:10px; }
-.landing-brand { font-family:'Kanit',sans-serif; font-size:30px; font-weight:700; color:#B71C1C; letter-spacing:3px; margin-bottom:4px; }
-.landing-sub { font-size:12.5px; color:#8A5A5A; letter-spacing:.5px; }
-.landing-divider { height:1px; background:rgba(183,28,28,0.15); margin:24px 0; }
-.landing-label { font-size:11px; font-weight:700; color:#8A5A5A; letter-spacing:1.2px; text-transform:uppercase; margin-bottom:18px; }
-.device-cards { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:20px; }
-.device-card { background:#FFF; border:1.5px solid rgba(183,28,28,0.15); border-radius:14px; padding:24px 16px 20px; cursor:pointer; box-shadow:0 2px 12px rgba(183,28,28,0.08); transition:transform .2s,border-color .2s,box-shadow .2s; }
-.device-card:hover { border-color:rgba(183,28,28,0.4); background:#FFF5F5; transform:translateY(-4px); box-shadow:0 8px 32px rgba(183,28,28,0.18); }
-.device-card:active { transform:scale(.97); }
-.device-icon { font-size:44px; margin-bottom:12px; display:block; }
-.device-title { font-family:'Kanit',sans-serif; font-size:17px; font-weight:700; color:#1A0A0A; margin-bottom:8px; }
-.device-desc { font-size:11.5px; color:#8A5A5A; line-height:1.65; margin-bottom:12px; }
-.device-badge { display:inline-block; padding:3px 12px; border-radius:99px; font-size:10px; font-weight:700; }
-.badge-m { background:rgba(74,144,217,0.2); color:#6BB3E8; border:1px solid rgba(74,144,217,0.3); }
-.badge-d { background:rgba(109,184,138,0.2); color:#7DCFA0; border:1px solid rgba(109,184,138,0.3); }
-.auto-detect { font-size:12px; color:#8A5A5A; min-height:18px; }
-@media (max-width:420px) { .landing-brand{font-size:26px} .device-icon{font-size:36px} .device-title{font-size:15px} }
+/* ── SHARED LOGIN/LANDING BACKGROUND ── */
+.screen-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.landing-orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:.25}
+.orb1{width:500px;height:500px;background:#B71C1C;top:-150px;right:-100px}
+.orb2{width:400px;height:400px;background:#D32F2F;bottom:-120px;left:-80px}
+.orb3{width:300px;height:300px;background:#EF9A9A;top:40%;left:40%}
 
-/* DASHBOARD */
-#dashApp { display:none; height:100dvh; }
-.app { display:flex; height:100%; overflow:hidden; }
+/* ── SHARED CARD STYLE ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
+.screen-card{position:relative;z-index:1;width:100%;background:#FFF;border:1px solid rgba(183,28,28,0.15);border-top:3px solid #B71C1C;border-radius:20px;box-shadow:0 20px 60px rgba(183,28,28,0.15),0 4px 20px rgba(0,0,0,0.06);text-align:center;animation:fadeUp .5s cubic-bezier(.22,1,.36,1) both}
+.brand-logo{font-size:56px;margin-bottom:10px}
+.brand-name{font-family:'Kanit',sans-serif;font-size:30px;font-weight:700;color:#B71C1C;letter-spacing:3px;margin-bottom:4px}
+.brand-sub{font-size:12.5px;color:#8A5A5A;letter-spacing:.5px}
+.divider{height:1px;background:rgba(183,28,28,0.15);margin:24px 0}
+
+/* ── LOGIN SCREEN ── */
+#loginScreen{position:fixed;inset:0;z-index:3000;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(250,245,245,0.97);backdrop-filter:blur(20px)}
+#loginScreen.gone{display:none}
+.login-card{max-width:360px;padding:36px 28px 32px}
+.login-label{font-size:13px;font-weight:600;color:#8A5A5A;margin-bottom:20px}
+.pin-dots{display:flex;justify-content:center;gap:16px;margin-bottom:8px}
+.pin-dot{width:16px;height:16px;border-radius:50%;border:2px solid #E0BFBF;background:transparent;transition:background .15s,border-color .15s}
+.pin-dot.filled{background:#B71C1C;border-color:#B71C1C}
+@keyframes pinShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
+.pin-dot.shake{animation:pinShake .4s ease}
+.pin-error{font-size:12px;color:#B71C1C;font-weight:600;min-height:20px;margin-bottom:14px}
+.pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pin-btn{padding:16px 8px;border:1.5px solid #F0DADA;border-radius:12px;background:#FFF;color:#1A0A0A;font-family:'Kanit',sans-serif;font-size:20px;font-weight:600;cursor:pointer;transition:background .12s,transform .08s,border-color .12s}
+.pin-btn:hover{background:#FFF5F5;border-color:#D32F2F}
+.pin-btn:active{transform:scale(.93);background:#FFEBEE}
+.pin-btn-sm{font-size:13px;color:#8A5A5A}
+
+/* ── LANDING SCREEN ── */
+#landingScreen{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(250,245,245,0.95);backdrop-filter:blur(20px)}
+#landingScreen.gone{display:none}
+.landing-card{max-width:480px;padding:44px 36px 40px}
+.landing-label{font-size:11px;font-weight:700;color:#8A5A5A;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:18px}
+.device-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+.device-card{background:#FFF;border:1.5px solid rgba(183,28,28,0.15);border-radius:14px;padding:24px 16px 20px;cursor:pointer;box-shadow:0 2px 12px rgba(183,28,28,0.08);transition:transform .2s,border-color .2s,box-shadow .2s}
+.device-card:hover{border-color:rgba(183,28,28,0.4);background:#FFF5F5;transform:translateY(-4px);box-shadow:0 8px 32px rgba(183,28,28,0.18)}
+.device-card:active{transform:scale(.97)}
+.device-icon{font-size:44px;margin-bottom:12px;display:block}
+.device-title{font-family:'Kanit',sans-serif;font-size:17px;font-weight:700;color:#1A0A0A;margin-bottom:8px}
+.device-desc{font-size:11.5px;color:#8A5A5A;line-height:1.65;margin-bottom:12px}
+.device-badge{display:inline-block;padding:3px 12px;border-radius:99px;font-size:10px;font-weight:700}
+.badge-m{background:rgba(74,144,217,0.2);color:#6BB3E8;border:1px solid rgba(74,144,217,0.3)}
+.badge-d{background:rgba(109,184,138,0.2);color:#7DCFA0;border:1px solid rgba(109,184,138,0.3)}
+@media(max-width:420px){.brand-name{font-size:26px}.device-icon{font-size:36px}.device-title{font-size:15px}}
+
+/* ── DASHBOARD ── */
+#dashApp{display:none;height:100dvh}
+.app{display:flex;height:100%;overflow:hidden}
 
 /* SIDEBAR */
-.sidebar { width:220px; background:linear-gradient(180deg,#7F0000 0%,#5D0000 100%); display:flex; flex-direction:column; flex-shrink:0; overflow-y:auto; box-shadow:4px 0 24px rgba(127,0,0,0.3); }
-.sidebar-logo { padding:24px 20px 20px; border-bottom:1px solid rgba(255,255,255,0.08); }
-.sidebar-logo h1 { font-family:'Kanit',sans-serif; font-size:22px; font-weight:700; color:#fff; letter-spacing:1px; }
-.sidebar-logo p { font-size:11px; color:rgba(255,255,255,0.4); margin-top:2px; }
-.sidebar-nav { padding:16px 0; flex:1; }
-.nav-section { padding:10px 16px 4px; font-size:10px; font-weight:700; color:rgba(255,255,255,0.3); letter-spacing:1.5px; text-transform:uppercase; }
-.nav-item { display:flex; align-items:center; gap:10px; padding:11px 20px; color:rgba(255,255,255,0.6); cursor:pointer; font-size:14px; font-weight:500; transition:all 0.15s; border-left:3px solid transparent; }
-.nav-item:hover { color:#fff; background:rgba(255,255,255,0.07); }
-.nav-item.active { color:#fff; background:rgba(74,144,217,0.18); border-left-color:var(--sky); }
-.nav-icon { font-size:16px; width:20px; text-align:center; }
-.sidebar-footer { padding:16px 20px; border-top:1px solid rgba(255,255,255,0.08); font-size:11px; color:rgba(255,255,255,0.25); line-height:1.6; }
+.sidebar{width:220px;background:linear-gradient(180deg,#7F0000 0%,#5D0000 100%);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;box-shadow:4px 0 24px rgba(127,0,0,0.3)}
+.sidebar-logo{padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.sidebar-logo h1{font-family:'Kanit',sans-serif;font-size:22px;font-weight:700;color:#fff;letter-spacing:1px}
+.sidebar-logo p{font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px}
+.sidebar-nav{padding:16px 0;flex:1}
+.nav-section{padding:10px 16px 4px;font-size:10px;font-weight:700;color:rgba(255,255,255,0.3);letter-spacing:1.5px;text-transform:uppercase}
+.nav-item{display:flex;align-items:center;gap:10px;padding:11px 20px;color:rgba(255,255,255,0.6);cursor:pointer;font-size:14px;font-weight:500;transition:all .15s;border-left:3px solid transparent}
+.nav-item:hover{color:#fff;background:rgba(255,255,255,0.07)}
+.nav-item.active{color:#fff;background:rgba(74,144,217,0.18);border-left-color:var(--sky)}
+.nav-icon{font-size:16px;width:20px;text-align:center}
+.sidebar-footer{padding:16px 20px;border-top:1px solid rgba(255,255,255,0.08);font-size:11px;color:rgba(255,255,255,0.25);line-height:1.6}
 
 /* MAIN */
-.main { flex:1; display:flex; flex-direction:column; overflow:hidden; min-width:0; }
-.topbar { height:56px; display:flex; align-items:center; justify-content:space-between; padding:0 20px; border-bottom:2px solid var(--red); background:rgba(255,255,255,0.92); backdrop-filter:blur(20px); box-shadow:0 2px 16px rgba(183,28,28,0.1); flex-shrink:0; }
-.topbar-left { display:flex; align-items:center; gap:10px; min-width:0; }
-.hamburger { display:none; background:none; border:none; cursor:pointer; padding:4px; color:var(--navy); font-size:22px; flex-shrink:0; }
-.topbar-title { font-family:'Kanit',sans-serif; font-size:17px; font-weight:600; color:var(--navy); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.topbar-meta { font-size:11px; color:var(--gray-500); }
-.topbar-right { display:flex; align-items:center; gap:10px; flex-shrink:0; }
-.badge-live { display:flex; align-items:center; gap:5px; background:#ecfdf5; color:#065f46; padding:4px 12px; border-radius:20px; font-size:11px; font-weight:700; border:1px solid #bbf7d0; }
-.badge-live::before { content:''; width:6px; height:6px; border-radius:50%; background:#10b981; animation:pulse 2s infinite; }
-@keyframes pulse { 0%,100%{opacity:1}50%{opacity:.4} }
-.btn-mode { cursor:pointer; background:var(--gray-100); color:var(--navy); border:1.5px solid rgba(127,0,0,0.2); padding:6px 14px; border-radius:8px; font-size:12px; font-weight:700; font-family:'Sarabun',sans-serif; white-space:nowrap; transition:all 0.15s; }
-.btn-mode:hover { background:var(--gray-200); }
-.content { flex:1; overflow-y:auto; padding:22px 24px; background:transparent; -webkit-overflow-scrolling:touch; }
-.content::-webkit-scrollbar { width:5px; }
-.content::-webkit-scrollbar-thumb { background:var(--gray-200); border-radius:3px; }
-.tab-content { display:none; }
-.tab-content.active { display:block; }
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.topbar{height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:2px solid var(--red);background:rgba(255,255,255,0.92);backdrop-filter:blur(20px);box-shadow:0 2px 16px rgba(183,28,28,0.1);flex-shrink:0}
+.topbar-left{display:flex;align-items:center;gap:10px;min-width:0}
+.topbar-title{font-family:'Kanit',sans-serif;font-size:17px;font-weight:600;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar-meta{font-size:11px;color:var(--gray-500)}
+.topbar-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+
+/* CLOCK */
+.badge-clock{display:flex;align-items:center;gap:6px;background:#ecfdf5;color:#065f46;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:700;border:1px solid #bbf7d0;font-family:'Kanit',sans-serif;letter-spacing:.5px;white-space:nowrap}
+.badge-clock::before{content:'';width:6px;height:6px;border-radius:50%;background:#10b981;flex-shrink:0;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* BUTTONS */
+.btn-refresh{cursor:pointer;background:var(--gray-100);color:var(--navy);border:1.5px solid rgba(127,0,0,0.2);padding:6px 12px;border-radius:8px;font-size:12px;font-weight:700;font-family:'Sarabun',sans-serif;white-space:nowrap;transition:all .15s}
+.btn-refresh:hover{background:var(--gray-200)}
+.btn-refresh:disabled{opacity:.6;cursor:not-allowed}
+.btn-logout{cursor:pointer;background:transparent;color:#B71C1C;border:1.5px solid rgba(183,28,28,0.35);padding:6px 12px;border-radius:8px;font-size:12px;font-weight:700;font-family:'Sarabun',sans-serif;white-space:nowrap;transition:all .15s}
+.btn-logout:hover{background:#FFF0F0;border-color:#B71C1C}
+
+/* CONTENT */
+.content{flex:1;overflow-y:auto;padding:22px 24px;-webkit-overflow-scrolling:touch}
+.content::-webkit-scrollbar{width:5px}
+.content::-webkit-scrollbar-thumb{background:var(--gray-200);border-radius:3px}
+.tab-content{display:none}
+.tab-content.active{display:block}
 
 /* SECTION HEADER */
-.section-header { margin-bottom:18px; }
-.section-header h2 { font-family:'Kanit',sans-serif; font-size:19px; font-weight:700; color:var(--navy); }
-.section-header p { font-size:12px; color:var(--gray-500); margin-top:3px; }
+.section-header{margin-bottom:18px}
+.section-header h2{font-family:'Kanit',sans-serif;font-size:19px;font-weight:700;color:var(--navy)}
+.section-header p{font-size:12px;color:var(--gray-500);margin-top:3px}
 
 /* KPI */
-.kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:14px; margin-bottom:18px; }
-.kpi-card { background:#fff; border-radius:14px; padding:18px 20px; border:1px solid rgba(0,0,0,0.06); position:relative; overflow:hidden; box-shadow:0 4px 16px rgba(0,0,0,0.08),0 1px 4px rgba(0,0,0,0.05); transition:box-shadow 0.2s,transform 0.2s; }
-.kpi-card:hover { box-shadow:0 8px 28px rgba(0,0,0,0.12); transform:translateY(-1px); }
-.kpi-card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:var(--accent,var(--sky)); }
-.kpi-label { font-size:11px; color:var(--gray-500); font-weight:600; margin-bottom:8px; line-height:1.3; text-transform:uppercase; letter-spacing:0.3px; }
-.kpi-value { font-family:'Bebas Neue',sans-serif; font-size:38px; color:var(--navy); line-height:1; }
-.kpi-unit { font-size:11px; color:var(--gray-500); margin-top:4px; }
-.kpi-sub { font-size:11px; color:var(--green); font-weight:700; margin-top:6px; }
-.kpi-icon { position:absolute; right:14px; top:16px; font-size:22px; opacity:0.1; }
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:18px}
+.kpi-card{background:#fff;border-radius:14px;padding:18px 20px;border:1px solid rgba(0,0,0,0.06);position:relative;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.08),0 1px 4px rgba(0,0,0,0.05);transition:box-shadow .2s,transform .2s}
+.kpi-card:hover{box-shadow:0 8px 28px rgba(0,0,0,0.12);transform:translateY(-1px)}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--accent,var(--sky))}
+.kpi-label{font-size:11px;color:var(--gray-500);font-weight:600;margin-bottom:8px;line-height:1.3;text-transform:uppercase;letter-spacing:.3px}
+.kpi-value{font-family:'Bebas Neue',sans-serif;font-size:38px;color:var(--navy);line-height:1}
+.kpi-unit{font-size:11px;color:var(--gray-500);margin-top:4px}
+.kpi-icon{position:absolute;right:14px;top:16px;font-size:22px;opacity:.1}
 
 /* CHARTS */
-.chart-grid-2col { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
-.chart-card { background:#fff; border-radius:14px; padding:20px; border:1px solid rgba(0,0,0,0.06); box-shadow:0 4px 16px rgba(0,0,0,0.08),0 1px 4px rgba(0,0,0,0.04); margin-bottom:16px; }
-.chart-grid-2col .chart-card { margin-bottom:0; }
-.chart-title { font-family:'Kanit',sans-serif; font-size:14px; font-weight:700; color:var(--navy); margin-bottom:3px; }
-.chart-sub { font-size:11px; color:var(--gray-500); margin-bottom:16px; }
-.chart-wrap { position:relative; height:230px; }
+.chart-grid-2col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.chart-card{background:#fff;border-radius:14px;padding:20px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 4px 16px rgba(0,0,0,0.08),0 1px 4px rgba(0,0,0,0.04);margin-bottom:16px}
+.chart-grid-2col .chart-card{margin-bottom:0}
+.chart-title{font-family:'Kanit',sans-serif;font-size:14px;font-weight:700;color:var(--navy);margin-bottom:3px}
+.chart-sub{font-size:11px;color:var(--gray-500);margin-bottom:16px}
+.chart-wrap{position:relative;height:230px}
 
 /* TABLES */
-.table-card { background:#fff; border-radius:14px; border:1px solid rgba(0,0,0,0.06); overflow:hidden; margin-bottom:16px; box-shadow:0 4px 16px rgba(0,0,0,0.08),0 1px 4px rgba(0,0,0,0.04); }
-.table-header { padding:14px 18px; border-bottom:1px solid var(--gray-100); display:flex; align-items:center; justify-content:space-between; }
-.table-title { font-family:'Kanit',sans-serif; font-size:14px; font-weight:700; color:var(--navy); }
-.table-count { font-size:11px; color:var(--gray-500); background:var(--gray-100); padding:2px 8px; border-radius:10px; font-weight:600; }
-.table-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; }
-table { width:100%; border-collapse:collapse; min-width:480px; }
-th { background:var(--gray-100); color:var(--navy); font-size:11px; font-weight:700; padding:10px 14px; text-align:left; font-family:'Kanit',sans-serif; white-space:nowrap; letter-spacing:0.3px; }
-td { padding:10px 14px; font-size:12px; color:var(--gray-700); border-bottom:1px solid var(--gray-100); white-space:nowrap; }
-tr:last-child td { border-bottom:none; }
-tr:hover td { background:var(--gray-50); }
-.mobile-record { display:none; padding:14px 16px; border-bottom:1px solid var(--gray-100); }
-.mobile-record:last-child { border-bottom:none; }
-.mobile-record-title { font-family:'Kanit',sans-serif; font-size:13px; font-weight:700; color:var(--navy); margin-bottom:10px; }
-.mobile-record-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px 14px; }
-.mobile-field { display:flex; flex-direction:column; gap:2px; }
-.mobile-field-label { font-size:9px; color:var(--gray-500); font-weight:700; text-transform:uppercase; letter-spacing:0.6px; }
-.mobile-field-value { font-size:13px; color:var(--gray-700); font-weight:600; }
-.status-badge { display:inline-block; padding:3px 10px; border-radius:20px; font-size:10px; font-weight:700; }
-.status-active { background:#ecfdf5; color:#065f46; }
-.status-planning { background:#eff6ff; color:#1e40af; }
-.status-selected { background:#fef3c7; color:#92400e; }
-
-/* INSIGHT */
-.insight-section { margin-top:4px; padding:18px 20px; border-radius:14px; background:#fff; border:1px solid rgba(0,0,0,0.06); margin-bottom:8px; box-shadow:0 4px 16px rgba(0,0,0,0.07); }
-.insight-title { font-family:'Kanit',sans-serif; font-size:14px; font-weight:700; color:var(--navy); margin-bottom:14px; }
-.insight-grid { display:flex; gap:12px; }
-.insight-card { flex:1; display:flex; align-items:flex-start; gap:10px; padding:14px; border-radius:10px; }
-.insight-card strong { display:block; font-size:10px; margin-bottom:4px; color:var(--gray-700); font-weight:700; text-transform:uppercase; letter-spacing:0.4px; }
-.insight-card p { margin:0; color:#4b5563; font-size:12px; line-height:1.6; }
-.insight-icon { font-size:16px; flex-shrink:0; margin-top:1px; }
-.insight-positive { background:#ecfdf5; border:1px solid #bbf7d0; }
-.insight-warning  { background:#fffbeb; border:1px solid #fde68a; }
-.insight-neutral  { background:#eff6ff; border:1px solid #bfdbfe; }
+.table-card{background:#fff;border-radius:14px;border:1px solid rgba(0,0,0,0.06);overflow:hidden;margin-bottom:16px;box-shadow:0 4px 16px rgba(0,0,0,0.08),0 1px 4px rgba(0,0,0,0.04)}
+.table-header{padding:14px 18px;border-bottom:1px solid var(--gray-100);display:flex;align-items:center;justify-content:space-between}
+.table-title{font-family:'Kanit',sans-serif;font-size:14px;font-weight:700;color:var(--navy)}
+.table-count{font-size:11px;color:var(--gray-500);background:var(--gray-100);padding:2px 8px;border-radius:10px;font-weight:600}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;min-width:480px}
+th{background:var(--gray-100);color:var(--navy);font-size:11px;font-weight:700;padding:10px 14px;text-align:left;font-family:'Kanit',sans-serif;white-space:nowrap;letter-spacing:.3px}
+td{padding:10px 14px;font-size:12px;color:var(--gray-700);border-bottom:1px solid var(--gray-100);white-space:nowrap}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--gray-50)}
+.status-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700}
+.status-active{background:#ecfdf5;color:#065f46}
+.status-planning{background:#eff6ff;color:#1e40af}
+.status-selected{background:#fef3c7;color:#92400e}
 
 /* BOTTOM NAV */
-.bottom-nav { display:none; position:fixed; bottom:0; left:0; right:0; height:var(--bottom-nav-h); background:linear-gradient(135deg,#7F0000,#5D0000); border-top:1px solid rgba(255,255,255,0.1); z-index:100; overflow-x:auto; scrollbar-width:none; box-shadow:0 -4px 20px rgba(127,0,0,0.25); }
-.bottom-nav::-webkit-scrollbar { display:none; }
-.bottom-nav-inner { display:flex; height:100%; min-width:max-content; padding:0 8px; }
-.bnav-item { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; padding:0 14px; cursor:pointer; color:rgba(255,255,255,0.45); transition:color 0.15s; min-width:64px; border:none; background:none; -webkit-tap-highlight-color:transparent; }
-.bnav-item.active { color:#fff; }
-.bnav-icon { font-size:20px; width:38px; height:34px; display:flex; align-items:center; justify-content:center; border-radius:10px; transition:background 0.15s; }
-.bnav-item.active .bnav-icon { background:rgba(74,144,217,0.28); }
-.bnav-label { font-size:10px; font-weight:700; white-space:nowrap; }
+.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;height:var(--bottom-nav-h);background:linear-gradient(135deg,#7F0000,#5D0000);border-top:1px solid rgba(255,255,255,0.1);z-index:100;overflow-x:auto;scrollbar-width:none;box-shadow:0 -4px 20px rgba(127,0,0,0.25)}
+.bottom-nav::-webkit-scrollbar{display:none}
+.bottom-nav-inner{display:flex;height:100%;min-width:max-content;padding:0 8px}
+.bnav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:0 14px;cursor:pointer;color:rgba(255,255,255,0.45);transition:color .15s;min-width:64px;border:none;background:none;-webkit-tap-highlight-color:transparent}
+.bnav-item.active{color:#fff}
+.bnav-icon{font-size:20px;width:38px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:10px;transition:background .15s}
+.bnav-item.active .bnav-icon{background:rgba(74,144,217,0.28)}
+.bnav-label{font-size:10px;font-weight:700;white-space:nowrap}
 
-/* DRAWER */
-.drawer-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:200; }
-.drawer-overlay.open { display:block; }
-.drawer { position:fixed; top:0; left:-260px; width:260px; height:100%; background:var(--navy); z-index:201; transition:left 0.25s ease; display:flex; flex-direction:column; overflow-y:auto; box-shadow:4px 0 24px rgba(0,0,0,0.3); }
-.drawer.open { left:0; }
-.drawer-logo { padding:20px; border-bottom:1px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:space-between; }
-.drawer-logo h1 { font-family:'Kanit',sans-serif; font-size:20px; font-weight:700; color:#fff; }
-.drawer-close { background:none; border:none; color:rgba(255,255,255,0.5); font-size:22px; cursor:pointer; padding:4px; }
+/* MOBILE */
+body.force-mobile .sidebar{display:none}
+body.force-mobile .bottom-nav{display:flex !important}
+body.force-mobile .kpi-grid{grid-template-columns:repeat(2,1fr) !important;gap:10px !important}
+body.force-mobile .kpi-value{font-size:28px !important}
+body.force-mobile .kpi-card{padding:12px 14px !important}
+body.force-mobile .kpi-label{font-size:10px !important}
+body.force-mobile .table-card{display:none !important}
+body.force-mobile .chart-grid-2col{display:flex !important;flex-direction:column !important;gap:12px !important}
+body.force-mobile .chart-grid-2col .chart-card{margin-bottom:0 !important}
+body.force-mobile .chart-card{padding:14px !important;margin-bottom:12px !important}
+body.force-mobile .chart-wrap{height:200px !important}
+body.force-mobile .content{padding:12px !important;padding-bottom:calc(var(--bottom-nav-h) + 16px) !important}
+body.force-mobile .section-header{margin-bottom:12px}
+body.force-mobile .section-header h2{font-size:16px !important}
 
-/* FORCE MOBILE */
-body.force-mobile .sidebar { display:none; }
-body.force-mobile .bottom-nav { display:flex !important; }
-body.force-mobile .hamburger { display:flex !important; }
-body.force-mobile .kpi-grid { grid-template-columns:repeat(2,1fr) !important; gap:10px !important; }
-body.force-mobile .kpi-value { font-size:28px !important; }
-body.force-mobile .table-desktop { display:none !important; }
-body.force-mobile .mobile-record { display:block !important; }
-body.force-mobile .chart-grid-2col { display:block !important; }
-body.force-mobile .chart-grid-2col .chart-card { margin-bottom:14px !important; }
-body.force-mobile .insight-grid { flex-direction:column !important; }
-body.force-mobile .content { padding-bottom:calc(var(--bottom-nav-h) + 16px) !important; }
-
-/* FORCE DESKTOP */
-body.force-desktop .sidebar { display:flex !important; }
-body.force-desktop .bottom-nav { display:none !important; }
-body.force-desktop .hamburger { display:none !important; }
-body.force-desktop .kpi-grid { grid-template-columns:repeat(auto-fit,minmax(170px,1fr)) !important; }
-body.force-desktop .kpi-value { font-size:38px !important; }
-body.force-desktop .table-desktop { display:block !important; }
-body.force-desktop .mobile-record { display:none !important; }
-body.force-desktop .chart-grid-2col { display:grid !important; grid-template-columns:1fr 1fr !important; gap:16px !important; }
-body.force-desktop .chart-grid-2col .chart-card { margin-bottom:0 !important; }
-body.force-desktop .insight-grid { flex-direction:row !important; }
+/* DESKTOP */
+body.force-desktop .sidebar{display:flex !important}
+body.force-desktop .bottom-nav{display:none !important}
+body.force-desktop .kpi-grid{grid-template-columns:repeat(auto-fit,minmax(170px,1fr)) !important}
+body.force-desktop .kpi-value{font-size:38px !important}
+body.force-desktop .table-card{display:block !important}
+body.force-desktop .chart-grid-2col{display:grid !important;grid-template-columns:1fr 1fr !important;gap:16px !important}
+body.force-desktop .chart-grid-2col .chart-card{margin-bottom:0 !important}
 
 /* RESPONSIVE */
-@media (max-width:768px) {
-  .sidebar { display:none; }
-  .bottom-nav { display:flex; }
-  .hamburger { display:flex; }
-  .kpi-grid { grid-template-columns:repeat(2,1fr); gap:10px; }
-  .kpi-value { font-size:28px; }
-  .table-desktop { display:none; }
-  .mobile-record { display:block; }
-  .chart-grid-2col { display:block; }
-  .chart-grid-2col .chart-card { margin-bottom:14px; }
-  .insight-grid { flex-direction:column; }
-  .content { padding-bottom:calc(var(--bottom-nav-h) + 16px); }
+@media(max-width:768px){
+  .sidebar{display:none}
+  .bottom-nav{display:flex}
+  .kpi-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .kpi-value{font-size:28px}
+  .kpi-card{padding:12px 14px}
+  .kpi-label{font-size:10px}
+  .table-card{display:none}
+  .chart-grid-2col{display:flex;flex-direction:column;gap:12px}
+  .chart-grid-2col .chart-card{margin-bottom:0}
+  .chart-card{padding:14px;margin-bottom:12px}
+  .chart-wrap{height:200px}
+  .content{padding:12px;padding-bottom:calc(var(--bottom-nav-h) + 16px)}
+  .section-header{margin-bottom:12px}
+  .section-header h2{font-size:16px}
 }
-@keyframes spin { to{transform:rotate(360deg)} }
 </style>
 </head>
 <body>
 
-<!-- LANDING -->
-<div id="landingScreen">
-  <div class="landing-bg">
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="screen-bg">
     <div class="landing-orb orb1"></div>
     <div class="landing-orb orb2"></div>
     <div class="landing-orb orb3"></div>
   </div>
-  <div class="landing-box">
-    <div class="landing-logo">🐔</div>
-    <div class="landing-brand">SunFarm</div>
-    <div class="landing-sub">Breeding Management System</div>
-    <div class="landing-divider"></div>
+  <div class="screen-card login-card">
+    <div class="brand-logo">🐔</div>
+    <div class="brand-name">SunFarm</div>
+    <div class="brand-sub">Breeding Management System</div>
+    <div class="divider"></div>
+    <div class="login-label">กรุณาใส่รหัสผ่าน</div>
+    <div class="pin-dots">
+      <div class="pin-dot" id="d0"></div>
+      <div class="pin-dot" id="d1"></div>
+      <div class="pin-dot" id="d2"></div>
+      <div class="pin-dot" id="d3"></div>
+    </div>
+    <div class="pin-error" id="pinError"></div>
+    <div class="pin-pad">
+      <button class="pin-btn" onclick="pinPress('1')">1</button>
+      <button class="pin-btn" onclick="pinPress('2')">2</button>
+      <button class="pin-btn" onclick="pinPress('3')">3</button>
+      <button class="pin-btn" onclick="pinPress('4')">4</button>
+      <button class="pin-btn" onclick="pinPress('5')">5</button>
+      <button class="pin-btn" onclick="pinPress('6')">6</button>
+      <button class="pin-btn" onclick="pinPress('7')">7</button>
+      <button class="pin-btn" onclick="pinPress('8')">8</button>
+      <button class="pin-btn" onclick="pinPress('9')">9</button>
+      <button class="pin-btn pin-btn-sm" onclick="pinClear()">ล้าง</button>
+      <button class="pin-btn" onclick="pinPress('0')">0</button>
+      <button class="pin-btn pin-btn-sm" onclick="pinDel()">⌫</button>
+    </div>
+  </div>
+</div>
+
+<!-- LANDING -->
+<div id="landingScreen" class="gone">
+  <div class="screen-bg">
+    <div class="landing-orb orb1"></div>
+    <div class="landing-orb orb2"></div>
+    <div class="landing-orb orb3"></div>
+  </div>
+  <div class="screen-card landing-card">
+    <div class="brand-logo">🐔</div>
+    <div class="brand-name">SunFarm</div>
+    <div class="brand-sub">Breeding Management System</div>
+    <div class="divider"></div>
     <div class="landing-label">เลือกอุปกรณ์ที่คุณใช้งาน</div>
     <div class="device-cards">
       <div class="device-card" onclick="selectMode('mobile')">
@@ -236,7 +270,6 @@ body.force-desktop .insight-grid { flex-direction:row !important; }
         <div class="device-badge badge-d">Desktop UI</div>
       </div>
     </div>
-    <div class="auto-detect" id="autoDetect"></div>
   </div>
 </div>
 
@@ -259,34 +292,18 @@ body.force-desktop .insight-grid { flex-direction:row !important; }
       <div class="sidebar-footer">SunFeed International Co., Ltd.<br><span id="footerDate"></span></div>
     </aside>
 
-    <div class="drawer-overlay" id="dOverlay" onclick="closeDrawer()"></div>
-    <div class="drawer" id="drawer">
-      <div class="drawer-logo"><h1>🐔 SunFarm</h1><button class="drawer-close" onclick="closeDrawer()">✕</button></div>
-      <nav class="sidebar-nav">
-        <div class="nav-section">ภาพรวม</div>
-        <div class="nav-item" onclick="showTab('overview',this);closeDrawer()"><span class="nav-icon">📊</span> ภาพรวมทั้งหมด</div>
-        <div class="nav-section">ข้อมูลรายวัน</div>
-        <div class="nav-item" onclick="showTab('eggs',this);closeDrawer()"><span class="nav-icon">🥚</span> ไข่รายวัน</div>
-        <div class="nav-item" onclick="showTab('hatch',this);closeDrawer()"><span class="nav-icon">🐣</span> ผลฟักไข่</div>
-        <div class="nav-section">การจัดการ</div>
-        <div class="nav-item" onclick="showTab('birds',this);closeDrawer()"><span class="nav-icon">🐓</span> ทะเบียนไก่</div>
-        <div class="nav-item" onclick="showTab('mating',this);closeDrawer()"><span class="nav-icon">💞</span> แผนผสมพันธุ์</div>
-        <div class="nav-item" onclick="showTab('selection',this);closeDrawer()"><span class="nav-icon">⭐</span> คัดเลือก</div>
-      </nav>
-    </div>
-
     <div class="main">
       <div class="topbar">
         <div class="topbar-left">
-          <button class="hamburger" onclick="openDrawer()">☰</button>
           <div>
             <div class="topbar-title" id="topbarTitle">ภาพรวมการเพาะพันธุ์</div>
             <div class="topbar-meta">อัปเดต: <span id="updatedTime">กำลังโหลด...</span></div>
           </div>
         </div>
         <div class="topbar-right">
-          <div class="badge-live">Live</div>
-          <button class="btn-mode" id="modeSwitchBtn" onclick="toggleMode()">📱 สลับ Mobile</button>
+          <div class="badge-clock" id="realtime-clock">--:--:--</div>
+          <button class="btn-refresh" id="refreshBtn" onclick="refreshData()">🔄 รีเฟรช</button>
+          <button class="btn-logout" onclick="doLogout()">🚪 ออกจากระบบ</button>
         </div>
       </div>
 
@@ -310,11 +327,6 @@ body.force-desktop .insight-grid { flex-direction:row !important; }
             <div class="chart-card"><div class="chart-title">สัดส่วน Family ต่อสายพันธุ์</div><div class="chart-sub">จำนวน lot แต่ละสายพันธุ์</div><div class="chart-wrap"><canvas id="c2"></canvas></div></div>
           </div>
           <div class="chart-card"><div class="chart-title">เปรียบเทียบ SE% / SF% / DIS% ต่อสายพันธุ์</div><div class="chart-sub">ประสิทธิภาพฟักไข่แยกตาม Line</div><div class="chart-wrap" style="height:200px"><canvas id="c3"></canvas></div></div>
-          <div class="insight-section"><div class="insight-title">📋 วิเคราะห์ภาพรวม</div><div class="insight-grid">
-            <div class="insight-card insight-positive"><span class="insight-icon">✅</span><div><strong>จุดเด่น</strong><p id="ins-ov-pos">รอข้อมูลจาก Sheet...</p></div></div>
-            <div class="insight-card insight-warning"><span class="insight-icon">⚠️</span><div><strong>จุดที่ควรติดตาม</strong><p id="ins-ov-warn">รอข้อมูลจาก Sheet...</p></div></div>
-            <div class="insight-card insight-neutral"><span class="insight-icon">💡</span><div><strong>ข้อสังเกต</strong><p id="ins-ov-note">รอข้อมูลจาก Sheet...</p></div></div>
-          </div></div>
         </div>
 
         <!-- EGGS -->
@@ -332,15 +344,9 @@ body.force-desktop .insight-grid { flex-direction:row !important; }
           </div>
           <div class="table-card">
             <div class="table-header"><div class="table-title">บันทึกไข่รายวัน (50 แถวล่าสุด)</div><div class="table-count" id="eggs-count">0 แถว</div></div>
-            <div class="table-scroll table-desktop"><table><thead><tr><th>วันที่</th><th>Mating ID</th><th>Family Code</th><th>สายพันธุ์</th><th>ไข่รวม</th><th>สกปรก</th><th>แตก</th><th>ใช้ได้</th><th>บันทึกโดย</th></tr></thead>
+            <div class="table-scroll"><table><thead><tr><th>วันที่</th><th>Mating ID</th><th>Family Code</th><th>สายพันธุ์</th><th>ไข่รวม</th><th>สกปรก</th><th>แตก</th><th>ใช้ได้</th><th>บันทึกโดย</th></tr></thead>
             <tbody id="eggs-tbody"><tr><td colspan="9" style="text-align:center;padding:32px;color:var(--gray-500)">กำลังโหลดข้อมูล...</td></tr></tbody></table></div>
-            <div id="eggs-mobile"></div>
           </div>
-          <div class="insight-section"><div class="insight-title">📋 วิเคราะห์ — ไข่รายวัน</div><div class="insight-grid">
-            <div class="insight-card insight-positive"><span class="insight-icon">✅</span><div><strong>จุดเด่น</strong><p id="ins-eg-pos">รอข้อมูล...</p></div></div>
-            <div class="insight-card insight-warning"><span class="insight-icon">⚠️</span><div><strong>จุดที่ควรติดตาม</strong><p id="ins-eg-warn">รอข้อมูล...</p></div></div>
-            <div class="insight-card insight-neutral"><span class="insight-icon">💡</span><div><strong>ข้อสังเกต</strong><p id="ins-eg-note">รอข้อมูล...</p></div></div>
-          </div></div>
         </div>
 
         <!-- HATCH -->
@@ -360,15 +366,9 @@ body.force-desktop .insight-grid { flex-direction:row !important; }
           </div>
           <div class="table-card">
             <div class="table-header"><div class="table-title">รายละเอียดทุกล็อตฟักไข่</div><div class="table-count" id="hatch-count">0 ล็อต</div></div>
-            <div class="table-scroll table-desktop"><table><thead><tr><th>Hatch Lot ID</th><th>Family Code</th><th>สายพันธุ์</th><th>วันฟักออก</th><th>ไข่ฟัก</th><th>ไข่ลม</th><th>ลูกไก่</th><th>SE%</th><th>SF%</th><th>DIS%</th></tr></thead>
+            <div class="table-scroll"><table><thead><tr><th>Hatch Lot ID</th><th>Family Code</th><th>สายพันธุ์</th><th>วันฟักออก</th><th>ไข่ฟัก</th><th>ไข่ลม</th><th>ลูกไก่</th><th>SE%</th><th>SF%</th><th>DIS%</th></tr></thead>
             <tbody id="hatch-tbody"><tr><td colspan="10" style="text-align:center;padding:32px;color:var(--gray-500)">กำลังโหลดข้อมูล...</td></tr></tbody></table></div>
-            <div id="hatch-mobile"></div>
           </div>
-          <div class="insight-section"><div class="insight-title">📋 วิเคราะห์ — ผลฟักไข่</div><div class="insight-grid">
-            <div class="insight-card insight-positive"><span class="insight-icon">✅</span><div><strong>จุดเด่น</strong><p id="ins-ha-pos">รอข้อมูล...</p></div></div>
-            <div class="insight-card insight-warning"><span class="insight-icon">⚠️</span><div><strong>จุดที่ควรติดตาม</strong><p id="ins-ha-warn">รอข้อมูล...</p></div></div>
-            <div class="insight-card insight-neutral"><span class="insight-icon">💡</span><div><strong>ข้อสังเกต</strong><p id="ins-ha-note">รอข้อมูล...</p></div></div>
-          </div></div>
         </div>
 
         <!-- BIRDS -->
@@ -382,15 +382,9 @@ body.force-desktop .insight-grid { flex-direction:row !important; }
           </div>
           <div class="table-card">
             <div class="table-header"><div class="table-title">ทะเบียนไก่ (50 แถวล่าสุด)</div><div class="table-count" id="birds-count">0 ตัว</div></div>
-            <div class="table-scroll table-desktop"><table><thead><tr><th>Bird ID</th><th>Family Code</th><th>สายพันธุ์</th><th>Generation</th><th>เพศ</th><th>วันเกิด</th><th>สีวงแหวน</th><th>เลขวงแหวน</th><th>คอก</th><th>สถานะ</th></tr></thead>
+            <div class="table-scroll"><table><thead><tr><th>Bird ID</th><th>Family Code</th><th>สายพันธุ์</th><th>Generation</th><th>เพศ</th><th>วันเกิด</th><th>สีวงแหวน</th><th>เลขวงแหวน</th><th>คอก</th><th>สถานะ</th></tr></thead>
             <tbody id="birds-tbody"><tr><td colspan="10" style="text-align:center;padding:32px;color:var(--gray-500)">กำลังโหลดข้อมูล...</td></tr></tbody></table></div>
-            <div id="birds-mobile"></div>
           </div>
-          <div class="insight-section"><div class="insight-title">📋 วิเคราะห์ — ทะเบียนไก่</div><div class="insight-grid">
-            <div class="insight-card insight-positive"><span class="insight-icon">✅</span><div><strong>จุดเด่น</strong><p id="ins-bi-pos">รอข้อมูล...</p></div></div>
-            <div class="insight-card insight-warning"><span class="insight-icon">⚠️</span><div><strong>จุดที่ควรติดตาม</strong><p id="ins-bi-warn">รอข้อมูล...</p></div></div>
-            <div class="insight-card insight-neutral"><span class="insight-icon">💡</span><div><strong>ข้อสังเกต</strong><p id="ins-bi-note">รอข้อมูล...</p></div></div>
-          </div></div>
         </div>
 
         <!-- MATING -->
@@ -404,15 +398,9 @@ body.force-desktop .insight-grid { flex-direction:row !important; }
           </div>
           <div class="table-card">
             <div class="table-header"><div class="table-title">แผนผสมพันธุ์ทั้งหมด</div><div class="table-count" id="mating-count">0 แผน</div></div>
-            <div class="table-scroll table-desktop"><table><thead><tr><th>Mating ID</th><th>สายพันธุ์</th><th>Family Code</th><th>รหัสพ่อ</th><th>พ่อ</th><th>แม่</th><th>วิธีผสม</th><th>วันเริ่ม</th><th>วันสิ้นสุด</th><th>คอก</th><th>สถานะ</th></tr></thead>
+            <div class="table-scroll"><table><thead><tr><th>Mating ID</th><th>สายพันธุ์</th><th>Family Code</th><th>รหัสพ่อ</th><th>พ่อ</th><th>แม่</th><th>วิธีผสม</th><th>วันเริ่ม</th><th>วันสิ้นสุด</th><th>คอก</th><th>สถานะ</th></tr></thead>
             <tbody id="mating-tbody"><tr><td colspan="11" style="text-align:center;padding:32px;color:var(--gray-500)">กำลังโหลดข้อมูล...</td></tr></tbody></table></div>
-            <div id="mating-mobile"></div>
           </div>
-          <div class="insight-section"><div class="insight-title">📋 วิเคราะห์ — แผนผสมพันธุ์</div><div class="insight-grid">
-            <div class="insight-card insight-positive"><span class="insight-icon">✅</span><div><strong>จุดเด่น</strong><p id="ins-ma-pos">รอข้อมูล...</p></div></div>
-            <div class="insight-card insight-warning"><span class="insight-icon">⚠️</span><div><strong>จุดที่ควรติดตาม</strong><p id="ins-ma-warn">รอข้อมูล...</p></div></div>
-            <div class="insight-card insight-neutral"><span class="insight-icon">💡</span><div><strong>ข้อสังเกต</strong><p id="ins-ma-note">รอข้อมูล...</p></div></div>
-          </div></div>
         </div>
 
         <!-- SELECTION -->
@@ -430,19 +418,26 @@ body.force-desktop .insight-grid { flex-direction:row !important; }
           </div>
           <div class="table-card">
             <div class="table-header"><div class="table-title">ผลการคัดเลือก (50 แถวล่าสุด)</div><div class="table-count" id="sel-count">0 ตัว</div></div>
-            <div class="table-scroll table-desktop"><table><thead><tr><th>Bird ID</th><th>Family Code</th><th>เพศ</th><th>น้ำหนัก</th><th>สรีระ</th><th>สุขภาพ</th><th>การผลิต</th><th>คะแนนรวม</th><th>ผล</th><th>วันที่</th></tr></thead>
+            <div class="table-scroll"><table><thead><tr><th>Bird ID</th><th>Family Code</th><th>เพศ</th><th>น้ำหนัก</th><th>สรีระ</th><th>สุขภาพ</th><th>การผลิต</th><th>คะแนนรวม</th><th>ผล</th><th>วันที่</th></tr></thead>
             <tbody id="sel-tbody"><tr><td colspan="10" style="text-align:center;padding:32px;color:var(--gray-500)">กำลังโหลดข้อมูล...</td></tr></tbody></table></div>
-            <div id="sel-mobile"></div>
           </div>
-          <div class="insight-section"><div class="insight-title">📋 วิเคราะห์ — คัดเลือก</div><div class="insight-grid">
-            <div class="insight-card insight-positive"><span class="insight-icon">✅</span><div><strong>จุดเด่น</strong><p id="ins-se-pos">รอข้อมูล...</p></div></div>
-            <div class="insight-card insight-warning"><span class="insight-icon">⚠️</span><div><strong>จุดที่ควรติดตาม</strong><p id="ins-se-warn">รอข้อมูล...</p></div></div>
-            <div class="insight-card insight-neutral"><span class="insight-icon">💡</span><div><strong>ข้อสังเกต</strong><p id="ins-se-note">รอข้อมูล...</p></div></div>
-          </div></div>
         </div>
 
-      </div><!-- /content -->
-    </div><!-- /main -->
+      <!-- GLOSSARY NOTE -->
+      <div style="margin:8px 0 16px;padding:14px 18px;background:#FFF8F8;border:1px solid #F0DADA;border-left:4px solid #B71C1C;border-radius:10px;font-size:12px;color:#3D1A1A;line-height:1.9">
+        <div style="font-family:'Kanit',sans-serif;font-size:13px;font-weight:700;color:#7F0000;margin-bottom:8px">📖 คำอธิบายตัวย่อ</div>
+        <div style="display:grid;grid-template-columns:auto 1fr;gap:2px 12px;align-items:baseline">
+          <span style="font-weight:700;color:#B71C1C;white-space:nowrap">SE%</span>
+          <span><b>Setter Efficiency</b> — อัตราการฟักออก คิดจาก (ไข่มีเชื้อ ÷ ไข่ทั้งหมดที่เข้าฟัก) × 100 ยิ่งสูงยิ่งดี</span>
+          <span style="font-weight:700;color:#B71C1C;white-space:nowrap">SF%</span>
+          <span><b>Setter Fertility</b> — อัตราฟักสำเร็จ คิดจาก (ลูกไก่ที่ได้ ÷ ไข่มีเชื้อ) × 100 บอกประสิทธิภาพการฟักจากไข่มีเชื้อ</span>
+          <span style="font-weight:700;color:#B71C1C;white-space:nowrap">DIS%</span>
+          <span><b>Dead In Shell</b> — อัตราตายในไข่ คิดจาก (ตายในกก. ÷ ไข่มีเชื้อ) × 100 ยิ่งต่ำยิ่งดี</span>
+        </div>
+      </div>
+
+      </div>
+    </div>
 
     <nav class="bottom-nav">
       <div class="bottom-nav-inner">
@@ -457,53 +452,73 @@ body.force-desktop .insight-grid { flex-direction:row !important; }
   </div>
 </div>
 
-<!-- Loading -->
+<!-- Loading Overlay -->
 <div id="loadingOverlay" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(250,245,245,0.9);backdrop-filter:blur(8px);flex-direction:column;gap:12px;align-items:center;justify-content:center">
   <div style="font-size:40px;animation:spin .8s linear infinite">🔄</div>
   <div style="font-family:'Kanit',sans-serif;font-size:16px;color:#B71C1C;font-weight:600">กำลังโหลดข้อมูลจาก Google Sheet...</div>
 </div>
+<style>@keyframes spin{to{transform:rotate(360deg)}}</style>
 
 <script>
 Chart.register(ChartDataLabels);
 
-/* ════════════════════════════════════════
-   CONFIG — แก้แค่บรรทัดนี้บรรทัดเดียว
-════════════════════════════════════════ */
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzggCv-AkPuRMQULU00bBdg6_R3swpb2Xe5mQAI_vDbiXAUkIrAenrqDpW2RZNEIQYynw/exec';
-
-const CC = ['#6DB88A','#6BA3D4','#E89B5A','#D97A94','#9B84D4','#D4C050','#5EC4BB','#C9A06A'];
-let curMode = null;
-let chartsInited = false;
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyW_4-xkVDJp961ci-zcarOyeSAY5GC1Nck-3eyklXkqCbyLmj-hjrdQPr2ztxL168Viw/exec';
+var CC = ['#6DB88A','#6BA3D4','#E89B5A','#D97A94','#9B84D4','#D4C050','#5EC4BB','#C9A06A'];
+var chartsInited = false;
 window._charts = {};
 
-/* ── MODE ── */
+/* ── PIN LOGIN ── */
+var PIN_CORRECT = '1234';
+var pinVal = '';
+
+function pinPress(d) {
+  if (pinVal.length >= 4) return;
+  pinVal += d;
+  updateDots();
+  if (pinVal.length === 4) setTimeout(checkPin, 120);
+}
+function pinDel() { pinVal = pinVal.slice(0,-1); updateDots(); setEl('pinError',''); }
+function pinClear() { pinVal = ''; updateDots(); setEl('pinError',''); }
+function updateDots() {
+  for (var i=0;i<4;i++) {
+    var dot = document.getElementById('d'+i);
+    if (dot) dot.classList.toggle('filled', i < pinVal.length);
+  }
+}
+function checkPin() {
+  if (pinVal === PIN_CORRECT) {
+    document.getElementById('loginScreen').classList.add('gone');
+    document.getElementById('landingScreen').classList.remove('gone');
+  } else {
+    setEl('pinError','❌ รหัสผ่านไม่ถูกต้อง');
+    document.querySelectorAll('.pin-dot').forEach(function(d) {
+      d.classList.add('shake');
+      setTimeout(function(){ d.classList.remove('shake'); }, 450);
+    });
+    pinVal = '';
+    setTimeout(updateDots, 400);
+  }
+}
+
+/* ── MODE SELECT ── */
 function selectMode(m) {
   document.getElementById('landingScreen').classList.add('gone');
   document.getElementById('dashApp').style.display = 'block';
-  applyMode(m);
-  const ad = document.getElementById('autoDetect');
-  if (ad) ad.textContent = 'ตรวจพบ: ' + (window.innerWidth <= 768 ? '📱 มือถือ' : '🖥️ คอมพิวเตอร์');
-  const fd = document.getElementById('footerDate');
+  document.body.classList.toggle('force-mobile', m === 'mobile');
+  document.body.classList.toggle('force-desktop', m === 'desktop');
+  var fd = document.getElementById('footerDate');
   if (fd) fd.textContent = new Date().toLocaleDateString('th-TH',{year:'numeric',month:'long',day:'numeric'});
   if (!chartsInited) { initCharts(); chartsInited = true; }
   loadData();
 }
-function applyMode(m) {
-  curMode = m;
-  document.body.classList.toggle('force-mobile', m === 'mobile');
-  document.body.classList.toggle('force-desktop', m === 'desktop');
-  const btn = document.getElementById('modeSwitchBtn');
-  if (btn) btn.textContent = m === 'mobile' ? '🖥️ สลับ Desktop' : '📱 สลับ Mobile';
-}
-function toggleMode() { applyMode(curMode === 'mobile' ? 'desktop' : 'mobile'); }
 
 /* ── TABS ── */
-const TABS = ['overview','eggs','hatch','birds','mating','selection'];
-const TITLES = {overview:'ภาพรวมการเพาะพันธุ์',eggs:'ไข่รายวัน',hatch:'ผลการฟักไข่',birds:'ทะเบียนไก่',mating:'แผนผสมพันธุ์',selection:'ผลการคัดเลือก'};
+var TABS = ['overview','eggs','hatch','birds','mating','selection'];
+var TITLES = {overview:'ภาพรวมการเพาะพันธุ์',eggs:'ไข่รายวัน',hatch:'ผลการฟักไข่',birds:'ทะเบียนไก่',mating:'แผนผสมพันธุ์',selection:'ผลการคัดเลือก'};
 function showTab(name, el) {
-  TABS.forEach(t => document.getElementById('tab-'+t).classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.querySelectorAll('.bnav-item').forEach(n => n.classList.remove('active'));
+  TABS.forEach(function(t){ document.getElementById('tab-'+t).classList.remove('active'); });
+  document.querySelectorAll('.nav-item').forEach(function(n){ n.classList.remove('active'); });
+  document.querySelectorAll('.bnav-item').forEach(function(n){ n.classList.remove('active'); });
   document.getElementById('tab-'+name).classList.add('active');
   document.getElementById('topbarTitle').textContent = TITLES[name] || '';
   var bn = document.getElementById('bn-'+name);
@@ -511,53 +526,75 @@ function showTab(name, el) {
   if (el && el.classList.contains('nav-item')) el.classList.add('active');
   document.querySelector('.content').scrollTop = 0;
 }
-function openDrawer() { document.getElementById('drawer').classList.add('open'); document.getElementById('dOverlay').classList.add('open'); }
-function closeDrawer() { document.getElementById('drawer').classList.remove('open'); document.getElementById('dOverlay').classList.remove('open'); }
 
-/* ── INIT CHARTS (ว่างทั้งหมด) ── */
+/* ── REFRESH & LOGOUT ── */
+function refreshData() {
+  var btn = document.getElementById('refreshBtn');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ กำลังโหลด...'; }
+  loadData();
+  setTimeout(function() {
+    if (btn) { btn.disabled = false; btn.textContent = '🔄 รีเฟรช'; }
+  }, 3000);
+}
+function doLogout() {
+  document.getElementById('dashApp').style.display = 'none';
+  document.getElementById('landingScreen').classList.add('gone');
+  document.getElementById('loginScreen').classList.remove('gone');
+  pinVal = ''; updateDots(); setEl('pinError','');
+}
+
+/* ── REAL-TIME CLOCK ── */
+function updateClock() {
+  var n = new Date();
+  var pad = function(x){ return String(x).padStart(2,'0'); };
+  var txt = pad(n.getDate())+'/'+pad(n.getMonth()+1)+'/'+n.getFullYear()+' '+pad(n.getHours())+':'+pad(n.getMinutes())+':'+pad(n.getSeconds());
+  var el = document.getElementById('realtime-clock');
+  if (el) el.textContent = txt;
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+/* ── INIT CHARTS ── */
 function initCharts() {
   function mkBar(id, multi) {
-    var datasets = multi
+    var ds = multi
       ? multi.map(function(d,i){ return {label:d,data:[],backgroundColor:CC[i],borderRadius:6,datalabels:{anchor:'end',align:'end',color:'#374151',font:{size:9,weight:'700'},formatter:function(v){return v+'%'}}}; })
       : [{data:[],backgroundColor:CC[0],borderRadius:6,datalabels:{anchor:'end',align:'end',color:'#374151',font:{size:9,weight:'700'},formatter:function(v){return v}}}];
-    window._charts[id] = new Chart(document.getElementById(id), {
-      type:'bar', data:{labels:[],datasets:datasets},
+    window._charts[id] = new Chart(document.getElementById(id),{
+      type:'bar',data:{labels:[],datasets:ds},
       options:{responsive:true,maintainAspectRatio:false,
         plugins:{legend:{display:!!multi,position:'bottom',labels:{font:{size:11},boxWidth:12}},datalabels:{}},
         scales:{y:{beginAtZero:true,grid:{color:'#f3f4f6'}},x:{grid:{display:false}}}}
     });
   }
   function mkDonut(id) {
-    window._charts[id] = new Chart(document.getElementById(id), {
-      type:'doughnut', data:{labels:[],datasets:[{data:[],backgroundColor:CC,borderWidth:2,borderColor:'#fff',
+    window._charts[id] = new Chart(document.getElementById(id),{
+      type:'doughnut',data:{labels:[],datasets:[{data:[],backgroundColor:CC,borderWidth:2,borderColor:'#fff',
         datalabels:{color:'#fff',font:{size:11,weight:'700'},
-          formatter:function(v,ctx){var t=ctx.chart.data.datasets[0].data.reduce(function(a,b){return a+b;},0);return t>0?((v/t)*100).toFixed(0)+'%':'';}}
+          formatter:function(v,ctx){var t=ctx.chart.data.datasets[0].data.reduce(function(a,b){return a+b;},0);return t>0?((v/t)*100).toFixed(0)+'%':'';}
+        }
       }]},
       options:{responsive:true,maintainAspectRatio:false,cutout:'58%',
         plugins:{legend:{position:'bottom',labels:{font:{size:11},boxWidth:12}},datalabels:{}}}
     });
   }
   function mkLine(id, dsConf) {
-    var datasets = dsConf.map(function(d){ return Object.assign({data:[],tension:0.4,datalabels:{display:false}},d); });
-    window._charts[id] = new Chart(document.getElementById(id), {
-      type:'line', data:{labels:[],datasets:datasets},
+    var ds = dsConf.map(function(d){ return Object.assign({data:[],tension:0.4,datalabels:{display:false}},d); });
+    window._charts[id] = new Chart(document.getElementById(id),{
+      type:'line',data:{labels:[],datasets:ds},
       options:{responsive:true,maintainAspectRatio:false,
         plugins:{legend:{position:'bottom',labels:{font:{size:11},boxWidth:12}},datalabels:{display:false}},
         scales:{y:{beginAtZero:true,grid:{color:'#f3f4f6'}},x:{grid:{display:false}}}}
     });
   }
-  mkBar('c1');
-  mkDonut('c2');
-  mkBar('c3', ['SE%','SF%','DIS%']);
-  mkLine('c4', [{label:'ไข่รวม',borderColor:CC[0],backgroundColor:CC[0]+'20',pointBackgroundColor:CC[0]}]);
+  mkBar('c1'); mkDonut('c2'); mkBar('c3',['SE%','SF%','DIS%']);
+  mkLine('c4',[{label:'ไข่รวม',borderColor:CC[0],backgroundColor:CC[0]+'20',pointBackgroundColor:CC[0]}]);
   mkBar('c5');
-  mkLine('c6', [
+  mkLine('c6',[
     {label:'SF%',borderColor:CC[0],backgroundColor:CC[0]+'20',pointBackgroundColor:CC[0]},
     {label:'DIS%',borderColor:CC[3],backgroundColor:CC[3]+'20',pointBackgroundColor:CC[3]}
   ]);
-  mkBar('c7');
-  mkBar('c8');
-  mkDonut('c9');
+  mkBar('c7'); mkBar('c8'); mkDonut('c9');
 }
 
 /* ── LOAD DATA ── */
@@ -572,7 +609,7 @@ function loadData() {
   s.src = SCRIPT_URL + '?action=dashboard&callback=_sfCallback&t=' + Date.now();
   s.onerror = function() {
     if (ov) ov.style.display = 'none';
-    setEl('updatedTime', '❌ โหลดไม่ได้ — ตรวจสอบ Apps Script Deploy');
+    setEl('updatedTime','❌ โหลดไม่ได้ — ตรวจสอบ Apps Script Deploy');
   };
   document.head.appendChild(s);
 }
@@ -583,15 +620,14 @@ function render(data) {
   var k = data.kpi || {};
   var raw = data.raw || {};
   var now = data.updated || '—';
-  var eggsAll   = raw.eggs    || [];
-  var hatchAll  = raw.hatch   || [];
-  var birdsAll  = raw.birds   || [];
-  var matingAll = raw.mating  || [];
-  var selAll    = raw.select  || [];
+  var eggsAll   = raw.eggs   || [];
+  var hatchAll  = raw.hatch  || [];
+  var birdsAll  = raw.birds  || [];
+  var matingAll = raw.mating || [];
+  var selAll    = raw.select || [];
 
   setEl('updatedTime', now);
 
-  /* KPI overview */
   setEl('kpi-eggs',     fmtN(k.total_eggs));
   setEl('kpi-chicks',   fmtN(k.total_chicks));
   setEl('kpi-se',       fmt1(k.se_pct));
@@ -601,63 +637,50 @@ function render(data) {
   setEl('kpi-birds',    fmtN(k.active_birds));
   setEl('kpi-lines',    fmtN(k.total_lines));
 
-  /* KPI eggs */
   var eTotal = eggsAll.reduce(function(s,r){return s+(+r.Eggs_Collected||0);},0);
-  var eUsable= eggsAll.reduce(function(s,r){return s+(+r.Eggs_Usable||0);},0);
-  var eDirty = eggsAll.reduce(function(s,r){return s+(+r.Dirty_Eggs||0);},0);
-  var eCrack = eggsAll.reduce(function(s,r){return s+(+r.Cracked_Eggs||0);},0);
-  setEl('kpi-eggs2', fmtN(eTotal)); setEl('kpi-usable', fmtN(eUsable));
-  setEl('kpi-dirty', fmtN(eDirty)); setEl('kpi-cracked', fmtN(eCrack));
+  var eUsable = eggsAll.reduce(function(s,r){return s+(+r.Eggs_Usable||0);},0);
+  var eDirty  = eggsAll.reduce(function(s,r){return s+(+r.Dirty_Eggs||0);},0);
+  var eCrack  = eggsAll.reduce(function(s,r){return s+(+r.Cracked_Eggs||0);},0);
+  setEl('kpi-eggs2',fmtN(eTotal)); setEl('kpi-usable',fmtN(eUsable));
+  setEl('kpi-dirty',fmtN(eDirty)); setEl('kpi-cracked',fmtN(eCrack));
 
-  /* KPI hatch */
   var hSet  = hatchAll.reduce(function(s,r){return s+(+r.Eggs_Set||0);},0);
   var hFert = hatchAll.reduce(function(s,r){return s+(+r.Fertile_Eggs||0);},0);
   var hChk  = hatchAll.reduce(function(s,r){return s+(+r.Chicks_Hatched||0);},0);
   var hDIS  = hatchAll.reduce(function(s,r){return s+(+r.Dead_In_Shell||0);},0);
-  var hSE = hSet>0?(hFert/hSet*100).toFixed(1):0;
-  var hSF = hFert>0?(hChk/hFert*100).toFixed(1):0;
-  var hDS = hFert>0?(hDIS/hFert*100).toFixed(1):0;
-  setEl('kpi-se2',hSE); setEl('kpi-sf2',hSF); setEl('kpi-dis2',hDS);
+  setEl('kpi-se2',  hSet>0?(hFert/hSet*100).toFixed(1):0);
+  setEl('kpi-sf2',  hFert>0?(hChk/hFert*100).toFixed(1):0);
+  setEl('kpi-dis2', hFert>0?(hDIS/hFert*100).toFixed(1):0);
   setEl('kpi-eggsset',fmtN(hSet)); setEl('kpi-chicks2',fmtN(hChk)); setEl('kpi-dis3',fmtN(hDIS));
 
-  /* KPI birds */
   var bActive = birdsAll.filter(function(r){return r.Status==='Active';}).length;
   var bSel    = birdsAll.filter(function(r){return r.Status==='Selected';}).length;
   var bFams   = new Set(birdsAll.map(function(r){return r.Family_Code;}).filter(Boolean)).size;
   setEl('kpi-birds-total',fmtN(birdsAll.length)); setEl('kpi-birds-active',fmtN(bActive));
   setEl('kpi-birds-sel',fmtN(bSel)); setEl('kpi-birds-fam',fmtN(bFams));
 
-  /* KPI mating */
   var mAct  = matingAll.filter(function(r){return r.Status==='Active';}).length;
   var mSire = matingAll.reduce(function(s,r){return s+(+r.Sire_Count||0);},0);
   var mDam  = matingAll.reduce(function(s,r){return s+(+r.Dam_Count||0);},0);
   setEl('kpi-mat-total',fmtN(matingAll.length)); setEl('kpi-mat-active',fmtN(mAct));
   setEl('kpi-mat-sire',fmtN(mSire)); setEl('kpi-mat-dam',fmtN(mDam));
 
-  /* KPI selection */
   var sPass = selAll.filter(function(r){return /select|ผ่าน|คัดได้/i.test(String(r.Decision));}).length;
   var sFail = selAll.filter(function(r){return /reject|คัดออก|ไม่ผ่าน/i.test(String(r.Decision));}).length;
   var sAvg  = selAll.length>0?(selAll.reduce(function(s,r){return s+(+r.Final_Score||0);},0)/selAll.length).toFixed(1):0;
   setEl('kpi-sel-total',fmtN(selAll.length)); setEl('kpi-sel-pass',fmtN(sPass));
   setEl('kpi-sel-fail',fmtN(sFail)); setEl('kpi-sel-score',sAvg);
 
-  /* Subtitles */
-  setEl('overviewSub',  'ข้อมูลจาก Google Sheet • อัปเดต ' + now);
-  setEl('eggsSub',      'บันทึกไข่ ' + eggsAll.length + ' แถว • อัปเดต ' + now);
-  setEl('hatchSub',     'ผลฟักไข่ ' + hatchAll.length + ' ล็อต • อัปเดต ' + now);
-  setEl('birdsSub',     'ทะเบียนไก่ ' + birdsAll.length + ' ตัว • อัปเดต ' + now);
-  setEl('matingSub',    'แผนผสม ' + matingAll.length + ' แผน • อัปเดต ' + now);
-  setEl('selSub',       'ผลคัดเลือก ' + selAll.length + ' ตัว • อัปเดต ' + now);
+  setEl('overviewSub', 'ข้อมูลจาก Google Sheet • อัปเดต '+now);
+  setEl('eggsSub',     'บันทึกไข่ '+eggsAll.length+' แถว • อัปเดต '+now);
+  setEl('hatchSub',    'ผลฟักไข่ '+hatchAll.length+' ล็อต • อัปเดต '+now);
+  setEl('birdsSub',    'ทะเบียนไก่ '+birdsAll.length+' ตัว • อัปเดต '+now);
+  setEl('matingSub',   'แผนผสม '+matingAll.length+' แผน • อัปเดต '+now);
+  setEl('selSub',      'ผลคัดเลือก '+selAll.length+' ตัว • อัปเดต '+now);
 
-  /* Tables */
   renderEggs(eggsAll); renderHatch(hatchAll);
   renderBirds(birdsAll); renderMating(matingAll); renderSel(selAll);
-
-  /* Charts */
   updateCharts(data, eggsAll, hatchAll, selAll);
-
-  /* Insights */
-  renderInsights(k, hatchAll, eggsAll, birdsAll, matingAll, selAll);
 }
 
 /* ── CHARTS UPDATE ── */
@@ -665,37 +688,30 @@ function updateCharts(data, eggsAll, hatchAll, selAll) {
   var byLine = data.by_line || {};
   var lines  = Object.keys(byLine);
 
-  /* c1 SF% รายล็อต */
   if (window._charts.c1 && hatchAll.length) {
     var lots = hatchAll.slice(-12);
     var c1 = window._charts.c1;
     c1.data.labels = lots.map(function(r){return shortDate(r.Hatch_Date||r.Hatch_Lot_ID);});
     c1.data.datasets[0].data = lots.map(function(r){return +r.SF_pct||0;});
-    c1.data.datasets[0].backgroundColor = lots.map(function(r){var v=+r.SF_pct||0; return v>=60?CC[0]:v>=45?CC[1]:CC[3];});
+    c1.data.datasets[0].backgroundColor = lots.map(function(r){var v=+r.SF_pct||0;return v>=60?CC[0]:v>=45?CC[1]:CC[3];});
     c1.data.datasets[0].datalabels = {anchor:'end',align:'end',color:'#374151',font:{size:9,weight:'700'},formatter:function(v){return v+'%';}};
     c1.update();
   }
-
-  /* c2 สัดส่วน Family */
   if (window._charts.c2 && hatchAll.length) {
     var famC = {};
-    hatchAll.forEach(function(r){var l=r.Line_Name||'Unknown'; famC[l]=(famC[l]||0)+1;});
+    hatchAll.forEach(function(r){var l=r.Line_Name||'Unknown';famC[l]=(famC[l]||0)+1;});
     window._charts.c2.data.labels = Object.keys(famC);
     window._charts.c2.data.datasets[0].data = Object.values(famC);
     window._charts.c2.update();
   }
-
-  /* c3 SE/SF/DIS by Line */
   if (window._charts.c3 && lines.length) {
     var c3 = window._charts.c3;
     c3.data.labels = lines;
-    c3.data.datasets[0].data = lines.map(function(l){var d=byLine[l]; return d.eggs>0?(d.fertile/d.eggs*100).toFixed(1):0;});
-    c3.data.datasets[1].data = lines.map(function(l){var d=byLine[l]; return d.fertile>0?(d.chicks/d.fertile*100).toFixed(1):0;});
-    c3.data.datasets[2].data = lines.map(function(l){var d=byLine[l]; return d.fertile>0?(d.dis/d.fertile*100).toFixed(1):0;});
+    c3.data.datasets[0].data = lines.map(function(l){var d=byLine[l];return d.eggs>0?(d.fertile/d.eggs*100).toFixed(1):0;});
+    c3.data.datasets[1].data = lines.map(function(l){var d=byLine[l];return d.fertile>0?(d.chicks/d.fertile*100).toFixed(1):0;});
+    c3.data.datasets[2].data = lines.map(function(l){var d=byLine[l];return d.fertile>0?(d.dis/d.fertile*100).toFixed(1):0;});
     c3.update();
   }
-
-  /* c4 ไข่รายวัน */
   if (window._charts.c4 && data.eggs_by_date) {
     var dates = Object.keys(data.eggs_by_date).sort().slice(-14);
     var c4 = window._charts.c4;
@@ -703,21 +719,17 @@ function updateCharts(data, eggsAll, hatchAll, selAll) {
     c4.data.datasets[0].data = dates.map(function(d){return data.eggs_by_date[d];});
     c4.update();
   }
-
-  /* c5 Top Family eggs */
   if (window._charts.c5 && eggsAll.length) {
     var fE = {};
-    eggsAll.forEach(function(r){var f=r.Family_Code||'Unknown'; fE[f]=(fE[f]||0)+(+r.Eggs_Collected||0);});
-    var sorted = Object.entries(fE).sort(function(a,b){return b[1]-a[1];}).slice(0,10);
+    eggsAll.forEach(function(r){var f=r.Family_Code||'Unknown';fE[f]=(fE[f]||0)+(+r.Eggs_Collected||0);});
+    var s5 = Object.entries(fE).sort(function(a,b){return b[1]-a[1];}).slice(0,10);
     var c5 = window._charts.c5;
-    c5.data.labels = sorted.map(function(x){return x[0];});
-    c5.data.datasets[0].data = sorted.map(function(x){return x[1];});
+    c5.data.labels = s5.map(function(x){return x[0];});
+    c5.data.datasets[0].data = s5.map(function(x){return x[1];});
     c5.data.datasets[0].backgroundColor = CC[0];
     c5.data.datasets[0].datalabels = {anchor:'end',align:'end',color:'#374151',font:{size:9,weight:'700'},formatter:function(v){return fmtN(v);}};
     c5.update();
   }
-
-  /* c6 SF/DIS line */
   if (window._charts.c6 && hatchAll.length) {
     var lots6 = hatchAll.slice(-12);
     var c6 = window._charts.c6;
@@ -726,8 +738,6 @@ function updateCharts(data, eggsAll, hatchAll, selAll) {
     c6.data.datasets[1].data = lots6.map(function(r){return +r.DIS_pct||0;});
     c6.update();
   }
-
-  /* c7 ลูกไก่ราย lot */
   if (window._charts.c7 && hatchAll.length) {
     var lots7 = hatchAll.slice(-12);
     var c7 = window._charts.c7;
@@ -737,35 +747,30 @@ function updateCharts(data, eggsAll, hatchAll, selAll) {
     c7.data.datasets[0].datalabels = {anchor:'end',align:'end',color:'#374151',font:{size:8,weight:'600'},formatter:function(v){return fmtN(v);}};
     c7.update();
   }
-
-  /* c8 Score by Family */
   if (window._charts.c8 && selAll.length) {
-    var fScore={}, fCount={};
-    selAll.forEach(function(r){var f=r.Family_Code||'Unknown'; fScore[f]=(fScore[f]||0)+(+r.Final_Score||0); fCount[f]=(fCount[f]||0)+1;});
-    var sorted8 = Object.keys(fScore).map(function(f){return [f,(fScore[f]/fCount[f]).toFixed(1)];}).sort(function(a,b){return b[1]-a[1];}).slice(0,10);
+    var fSc={},fCt={};
+    selAll.forEach(function(r){var f=r.Family_Code||'Unknown';fSc[f]=(fSc[f]||0)+(+r.Final_Score||0);fCt[f]=(fCt[f]||0)+1;});
+    var s8 = Object.keys(fSc).map(function(f){return [f,(fSc[f]/fCt[f]).toFixed(1)];}).sort(function(a,b){return b[1]-a[1];}).slice(0,10);
     var c8 = window._charts.c8;
-    c8.data.labels = sorted8.map(function(x){return x[0];});
-    c8.data.datasets[0].data = sorted8.map(function(x){return +x[1];});
-    c8.data.datasets[0].backgroundColor = sorted8.map(function(_,i){return i<3?CC[0]:CC[1];});
+    c8.data.labels = s8.map(function(x){return x[0];});
+    c8.data.datasets[0].data = s8.map(function(x){return +x[1];});
+    c8.data.datasets[0].backgroundColor = s8.map(function(_,i){return i<3?CC[0]:CC[1];});
     c8.data.datasets[0].datalabels = {anchor:'end',align:'end',color:'#374151',font:{size:9,weight:'700'},formatter:function(v){return v;}};
     c8.update();
   }
-
-  /* c9 สัดส่วนคัดเลือก */
   if (window._charts.c9 && selAll.length) {
     var sp = selAll.filter(function(r){return /select|ผ่าน|คัดได้/i.test(String(r.Decision));}).length;
     var sf = selAll.filter(function(r){return /reject|คัดออก|ไม่ผ่าน/i.test(String(r.Decision));}).length;
-    var spe = selAll.length - sp - sf;
     var c9 = window._charts.c9;
     c9.data.labels = ['ผ่านการคัดเลือก','คัดออก','รอประเมิน'];
-    c9.data.datasets[0].data = [sp, sf, spe];
+    c9.data.datasets[0].data = [sp, sf, selAll.length-sp-sf];
     c9.update();
   }
 }
 
 /* ── TABLES ── */
 function renderEggs(rows) {
-  setEl('eggs-count', rows.length + ' แถว');
+  setEl('eggs-count', rows.length+' แถว');
   var tb = document.getElementById('eggs-tbody');
   if (!tb) return;
   if (!rows.length) { tb.innerHTML = emptyRow(9,'ยังไม่มีข้อมูลไข่รายวันใน Sheet'); return; }
@@ -774,26 +779,15 @@ function renderEggs(rows) {
       '<td style="font-weight:700">'+fmtN(r.Eggs_Collected)+'</td><td>'+fmtN(r.Dirty_Eggs)+'</td><td>'+fmtN(r.Cracked_Eggs)+'</td>'+
       '<td style="color:#065f46;font-weight:700">'+fmtN(r.Eggs_Usable)+'</td><td>'+esc(r.Recorded_By)+'</td></tr>';
   }).join('');
-  var mob = document.getElementById('eggs-mobile');
-  if (mob) mob.innerHTML = rows.slice(-5).reverse().map(function(r) {
-    return '<div class="mobile-record"><div class="mobile-record-title">'+esc(r.Family_Code)+' — '+esc(r.Record_Date)+'</div>'+
-      '<div class="mobile-record-grid">'+
-      '<div class="mobile-field"><span class="mobile-field-label">ไข่รวม</span><span class="mobile-field-value">'+fmtN(r.Eggs_Collected)+' ฟอง</span></div>'+
-      '<div class="mobile-field"><span class="mobile-field-label">ไข่ใช้ได้</span><span class="mobile-field-value" style="color:#065f46">'+fmtN(r.Eggs_Usable)+' ฟอง</span></div>'+
-      '<div class="mobile-field"><span class="mobile-field-label">สกปรก</span><span class="mobile-field-value">'+fmtN(r.Dirty_Eggs)+'</span></div>'+
-      '<div class="mobile-field"><span class="mobile-field-label">แตก</span><span class="mobile-field-value">'+fmtN(r.Cracked_Eggs)+'</span></div>'+
-      '</div></div>';
-  }).join('');
 }
-
 function renderHatch(rows) {
-  setEl('hatch-count', rows.length + ' ล็อต');
+  setEl('hatch-count', rows.length+' ล็อต');
   var tb = document.getElementById('hatch-tbody');
   if (!tb) return;
   if (!rows.length) { tb.innerHTML = emptyRow(10,'ยังไม่มีข้อมูลฟักไข่ใน Sheet'); return; }
   tb.innerHTML = rows.slice().reverse().map(function(r) {
-    var sf = +r.SF_pct||0;
-    var sfC = sf>=70?'#065f46':sf>=50?'#374151':'#991b1b';
+    var sf=+r.SF_pct||0;
+    var sfC=sf>=70?'#065f46':sf>=50?'#374151':'#991b1b';
     return '<tr><td>'+esc(r.Hatch_Lot_ID)+'</td><td>'+esc(r.Family_Code)+'</td><td>'+esc(r.Line_Name)+'</td><td>'+esc(r.Hatch_Date)+'</td>'+
       '<td>'+fmtN(r.Eggs_Set)+'</td><td>'+fmtN(r.Infertile)+'</td>'+
       '<td style="font-weight:700;color:var(--navy)">'+fmtN(r.Chicks_Hatched)+'</td>'+
@@ -801,77 +795,44 @@ function renderHatch(rows) {
       '<td style="font-weight:700;color:'+sfC+'">'+fmt1(r.SF_pct)+'%</td>'+
       '<td>'+fmt1(r.DIS_pct)+'%</td></tr>';
   }).join('');
-  var mob = document.getElementById('hatch-mobile');
-  if (mob) mob.innerHTML = rows.slice(-3).reverse().map(function(r) {
-    return '<div class="mobile-record"><div class="mobile-record-title">'+esc(r.Hatch_Lot_ID)+' — '+esc(r.Hatch_Date)+'</div>'+
-      '<div class="mobile-record-grid">'+
-      '<div class="mobile-field"><span class="mobile-field-label">ไข่ฟัก</span><span class="mobile-field-value">'+fmtN(r.Eggs_Set)+'</span></div>'+
-      '<div class="mobile-field"><span class="mobile-field-label">ลูกไก่</span><span class="mobile-field-value" style="color:#065f46;font-weight:700">'+fmtN(r.Chicks_Hatched)+'</span></div>'+
-      '<div class="mobile-field"><span class="mobile-field-label">SF%</span><span class="mobile-field-value">'+fmt1(r.SF_pct)+'%</span></div>'+
-      '<div class="mobile-field"><span class="mobile-field-label">DIS%</span><span class="mobile-field-value">'+fmt1(r.DIS_pct)+'%</span></div>'+
-      '</div></div>';
-  }).join('');
 }
-
 function renderBirds(rows) {
-  setEl('birds-count', rows.length + ' ตัว');
+  setEl('birds-count', rows.length+' ตัว');
   var tb = document.getElementById('birds-tbody');
   if (!tb) return;
   if (!rows.length) { tb.innerHTML = emptyRow(10,'ยังไม่มีข้อมูลทะเบียนไก่ใน Sheet'); return; }
   tb.innerHTML = rows.slice(-50).reverse().map(function(r) {
-    var st = String(r.Status||'');
-    var sc = st==='Active'?'status-active':st==='Selected'?'status-selected':'status-planning';
+    var st=String(r.Status||'');
+    var sc=st==='Active'?'status-active':st==='Selected'?'status-selected':'status-planning';
     return '<tr><td>'+esc(r.Bird_ID)+'</td><td>'+esc(r.Family_Code)+'</td><td>'+esc(r.Line_Name)+'</td>'+
       '<td>'+esc(r.Generation)+'</td><td>'+esc(r.Sex)+'</td><td>'+esc(r.Hatch_Date)+'</td>'+
       '<td>'+esc(r.Ring_Color)+'</td><td>'+esc(r.Ring_Number)+'</td><td>'+esc(r.Pen_Location)+'</td>'+
       '<td><span class="status-badge '+sc+'">'+esc(r.Status)+'</span></td></tr>';
   }).join('');
-  var mob = document.getElementById('birds-mobile');
-  if (mob) mob.innerHTML = rows.slice(-5).reverse().map(function(r) {
-    return '<div class="mobile-record"><div class="mobile-record-title">'+esc(r.Bird_ID)+'</div>'+
-      '<div class="mobile-record-grid">'+
-      '<div class="mobile-field"><span class="mobile-field-label">Family</span><span class="mobile-field-value">'+esc(r.Family_Code)+'</span></div>'+
-      '<div class="mobile-field"><span class="mobile-field-label">เพศ</span><span class="mobile-field-value">'+esc(r.Sex)+'</span></div>'+
-      '<div class="mobile-field"><span class="mobile-field-label">วงแหวน</span><span class="mobile-field-value">'+esc(r.Ring_Color)+' #'+esc(r.Ring_Number)+'</span></div>'+
-      '<div class="mobile-field"><span class="mobile-field-label">สถานะ</span><span class="mobile-field-value">'+esc(r.Status)+'</span></div>'+
-      '</div></div>';
-  }).join('');
 }
-
 function renderMating(rows) {
-  setEl('mating-count', rows.length + ' แผน');
+  setEl('mating-count', rows.length+' แผน');
   var tb = document.getElementById('mating-tbody');
   if (!tb) return;
   if (!rows.length) { tb.innerHTML = emptyRow(11,'ยังไม่มีข้อมูลแผนผสมพันธุ์ใน Sheet'); return; }
   tb.innerHTML = rows.map(function(r) {
-    var st = String(r.Status||'');
-    var sc = st==='Active'?'status-active':st==='Planning'?'status-planning':'';
+    var st=String(r.Status||'');
+    var sc=st==='Active'?'status-active':st==='Planning'?'status-planning':'';
     return '<tr><td>'+esc(r.Mating_ID)+'</td><td>'+esc(r.Line_Name)+'</td><td>'+esc(r.Family_Code)+'</td>'+
       '<td>'+esc(r.Sire_ID)+'</td><td>'+fmtN(r.Sire_Count)+'</td><td>'+fmtN(r.Dam_Count)+'</td>'+
       '<td>'+esc(r.Mating_Type)+'</td><td>'+esc(r.Start_Date)+'</td><td>'+esc(r.End_Date)+'</td>'+
       '<td>'+esc(r.Pen_Location)+'</td>'+
       '<td><span class="status-badge '+sc+'">'+esc(r.Status)+'</span></td></tr>';
   }).join('');
-  var mob = document.getElementById('mating-mobile');
-  if (mob) mob.innerHTML = rows.slice(0,5).map(function(r) {
-    return '<div class="mobile-record"><div class="mobile-record-title">'+esc(r.Mating_ID)+' — '+esc(r.Line_Name)+'</div>'+
-      '<div class="mobile-record-grid">'+
-      '<div class="mobile-field"><span class="mobile-field-label">วิธีผสม</span><span class="mobile-field-value">'+esc(r.Mating_Type)+'</span></div>'+
-      '<div class="mobile-field"><span class="mobile-field-label">สถานะ</span><span class="mobile-field-value">'+esc(r.Status)+'</span></div>'+
-      '<div class="mobile-field"><span class="mobile-field-label">พ่อ</span><span class="mobile-field-value">'+fmtN(r.Sire_Count)+' ตัว</span></div>'+
-      '<div class="mobile-field"><span class="mobile-field-label">แม่</span><span class="mobile-field-value">'+fmtN(r.Dam_Count)+' ตัว</span></div>'+
-      '</div></div>';
-  }).join('');
 }
-
 function renderSel(rows) {
-  setEl('sel-count', rows.length + ' ตัว');
+  setEl('sel-count', rows.length+' ตัว');
   var tb = document.getElementById('sel-tbody');
   if (!tb) return;
   if (!rows.length) { tb.innerHTML = emptyRow(10,'ยังไม่มีข้อมูลผลคัดเลือกใน Sheet'); return; }
   tb.innerHTML = rows.slice(-50).reverse().map(function(r) {
-    var dec = String(r.Decision||'');
-    var dc = /select|ผ่าน|คัดได้/i.test(dec)?'#065f46':/reject|คัดออก|ไม่ผ่าน/i.test(dec)?'#991b1b':'#374151';
+    var dec=String(r.Decision||'');
+    var dc=/select|ผ่าน|คัดได้/i.test(dec)?'#065f46':/reject|คัดออก|ไม่ผ่าน/i.test(dec)?'#991b1b':'#374151';
     return '<tr><td>'+esc(r.Bird_ID)+'</td><td>'+esc(r.Family_Code)+'</td><td>'+esc(r.Sex)+'</td>'+
       '<td>'+fmt1(r.Weight_Score)+'</td><td>'+fmt1(r.Conformation_Score)+'</td>'+
       '<td>'+fmt1(r.Health_Score)+'</td><td>'+fmt1(r.Production_Score)+'</td>'+
@@ -879,75 +840,18 @@ function renderSel(rows) {
       '<td style="font-weight:700;color:'+dc+'">'+esc(r.Decision)+'</td>'+
       '<td>'+esc(r.Selection_Date)+'</td></tr>';
   }).join('');
-  var mob = document.getElementById('sel-mobile');
-  if (mob) mob.innerHTML = rows.slice(-5).reverse().map(function(r) {
-    return '<div class="mobile-record"><div class="mobile-record-title">'+esc(r.Bird_ID)+'</div>'+
-      '<div class="mobile-record-grid">'+
-      '<div class="mobile-field"><span class="mobile-field-label">Family</span><span class="mobile-field-value">'+esc(r.Family_Code)+'</span></div>'+
-      '<div class="mobile-field"><span class="mobile-field-label">คะแนน</span><span class="mobile-field-value">'+fmt1(r.Final_Score)+'</span></div>'+
-      '<div class="mobile-field"><span class="mobile-field-label">ผล</span><span class="mobile-field-value">'+esc(r.Decision)+'</span></div>'+
-      '<div class="mobile-field"><span class="mobile-field-label">เพศ</span><span class="mobile-field-value">'+esc(r.Sex)+'</span></div>'+
-      '</div></div>';
-  }).join('');
-}
-
-/* ── INSIGHTS ── */
-function renderInsights(k, hatchAll, eggsAll, birdsAll, matingAll, selAll) {
-  var bestLot  = hatchAll.length ? hatchAll.reduce(function(a,b){return (+b.SF_pct||0)>(+a.SF_pct||0)?b:a;}) : null;
-  var worstLot = hatchAll.length ? hatchAll.reduce(function(a,b){return (+b.SF_pct||0)<(+a.SF_pct||0)?b:a;}) : null;
-  var hDIS = +k.dis_pct||0;
-
-  setEl('ins-ov-pos', bestLot ? 'ล็อตดีสุด: '+esc(bestLot.Hatch_Lot_ID||bestLot.Hatch_Date)+' SF% '+fmt1(bestLot.SF_pct)+'% ลูกไก่ '+fmtN(bestLot.Chicks_Hatched)+' ตัว' : 'ยังไม่มีข้อมูลล็อตฟัก');
-  setEl('ins-ov-warn', hDIS>15 ? 'DIS% เฉลี่ย '+hDIS+'% สูงกว่าเกณฑ์ 15% — ควรตรวจสอบตู้ฟักและสุขภาพแม่พันธุ์' : 'DIS% เฉลี่ย '+hDIS+'% อยู่ในเกณฑ์ปกติ');
-  setEl('ins-ov-note', 'ฟักไข่ '+hatchAll.length+' ล็อต, ไก่ในระบบ '+fmtN(birdsAll.length)+' ตัว, แผนผสม '+fmtN(matingAll.length)+' แผน');
-
-  var eTotal = eggsAll.reduce(function(s,r){return s+(+r.Eggs_Collected||0);},0);
-  var eUsable= eggsAll.reduce(function(s,r){return s+(+r.Eggs_Usable||0);},0);
-  var uRatio = eTotal>0?((eUsable/eTotal)*100).toFixed(1):0;
-  var famE={};
-  eggsAll.forEach(function(r){var f=r.Family_Code||'Unknown'; famE[f]=(famE[f]||0)+(+r.Eggs_Collected||0);});
-  var topFam = Object.entries(famE).sort(function(a,b){return b[1]-a[1];})[0];
-  setEl('ins-eg-pos', 'ไข่ใช้ได้ '+fmtN(eUsable)+' ฟอง ('+uRatio+'%) จากทั้งหมด '+fmtN(eTotal)+' ฟอง');
-  setEl('ins-eg-warn', +uRatio<85 && eTotal>0 ? 'ไข่ใช้ได้ต่ำกว่า 85% — ควรตรวจสอบการจัดการไข่และสุขภาพแม่พันธุ์' : 'สัดส่วนไข่ใช้ได้อยู่ในเกณฑ์ดี ('+uRatio+'%)');
-  setEl('ins-eg-note', topFam ? 'Family ให้ไข่มากสุด: '+topFam[0]+' รวม '+fmtN(topFam[1])+' ฟอง' : '—');
-
-  setEl('ins-ha-pos', bestLot ? 'ล็อตดีสุด '+esc(bestLot.Hatch_Lot_ID||bestLot.Hatch_Date)+': SF% '+fmt1(bestLot.SF_pct)+'%, ลูกไก่ '+fmtN(bestLot.Chicks_Hatched)+' ตัว' : 'รอข้อมูล');
-  setEl('ins-ha-warn', worstLot ? 'ล็อตต่ำสุด '+esc(worstLot.Hatch_Lot_ID||worstLot.Hatch_Date)+': SF% '+fmt1(worstLot.SF_pct)+'% ควรตรวจสอบสาเหตุ' : 'รอข้อมูล');
-  setEl('ins-ha-note', 'ล็อตขนาดเล็กมักให้ SF% สูงกว่า เนื่องจากความหนาแน่นในตู้ฟัก');
-
-  var activePct = birdsAll.length>0?((birdsAll.filter(function(r){return r.Status==='Active';}).length/birdsAll.length)*100).toFixed(0):0;
-  var noRing = birdsAll.filter(function(r){return !r.Ring_Number||r.Ring_Number===''||r.Ring_Number==='0';}).length;
-  var gens = Array.from(new Set(birdsAll.map(function(r){return r.Generation;}).filter(Boolean)));
-  setEl('ins-bi-pos', 'ไก่ Active '+activePct+'% ของทะเบียนทั้งหมด '+fmtN(birdsAll.length)+' ตัว');
-  setEl('ins-bi-warn', noRing>0 ? 'ไก่ '+fmtN(noRing)+' ตัวยังไม่มีเลขวงแหวน ควรกรอกให้ครบก่อนผสมพันธุ์' : 'ข้อมูลวงแหวนครบถ้วน');
-  setEl('ins-bi-note', 'Generation ที่มี: '+(gens.join(', ')||'—'));
-
-  var activeMat = matingAll.filter(function(r){return r.Status==='Active';}).length;
-  var noFam = matingAll.filter(function(r){return !r.Family_Code||r.Family_Code==='0';}).length;
-  var types = Array.from(new Set(matingAll.map(function(r){return r.Mating_Type;}).filter(Boolean)));
-  setEl('ins-ma-pos', 'แผน Active '+fmtN(activeMat)+' แผน จาก '+fmtN(matingAll.length)+' แผนทั้งหมด');
-  setEl('ins-ma-warn', noFam>0 ? 'แผนผสม '+fmtN(noFam)+' แผนยังไม่มี Family Code' : 'ทุกแผนมี Family Code');
-  setEl('ins-ma-note', 'วิธีผสม: '+(types.join(', ')||'—'));
-
-  var sPass = selAll.filter(function(r){return /select|ผ่าน|คัดได้/i.test(String(r.Decision));}).length;
-  var passRate = selAll.length>0?((sPass/selAll.length)*100).toFixed(0):0;
-  var topSel = selAll.length ? selAll.reduce(function(a,b){return (+b.Final_Score||0)>(+a.Final_Score||0)?b:a;}) : null;
-  var avgSc = selAll.length>0?(selAll.reduce(function(s,r){return s+(+r.Final_Score||0);},0)/selAll.length).toFixed(1):0;
-  setEl('ins-se-pos', 'ผ่านการคัดเลือก '+passRate+'% ('+fmtN(sPass)+'/'+fmtN(selAll.length)+' ตัว)');
-  setEl('ins-se-warn', topSel ? 'คะแนนสูงสุด: '+esc(topSel.Bird_ID)+' ('+esc(topSel.Family_Code)+') รวม '+fmt1(topSel.Final_Score)+' คะแนน' : 'รอข้อมูล');
-  setEl('ins-se-note', 'คะแนนเฉลี่ย '+avgSc+' คะแนน จาก '+fmtN(selAll.length)+' ตัวที่ประเมิน');
 }
 
 /* ── HELPERS ── */
-function setEl(id,val) { var el=document.getElementById(id); if(el) el.textContent=val; }
-function fmtN(n) { var v=Number(n); return isNaN(v)?'—':v.toLocaleString('th-TH'); }
-function fmt1(n) { var v=Number(n); if(isNaN(v)||v===0) return '—'; return typeof v.toFixed==='function'?v.toFixed(1):v; }
-function esc(v) { return String(v||'—').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function emptyRow(cols,msg) { return '<tr><td colspan="'+cols+'" style="text-align:center;padding:32px;color:var(--gray-500)">'+msg+'</td></tr>'; }
-function shortDate(d) {
-  if (!d) return '—';
+function setEl(id,val){var el=document.getElementById(id);if(el)el.textContent=val;}
+function fmtN(n){var v=Number(n);return isNaN(v)?'—':v.toLocaleString('th-TH');}
+function fmt1(n){var v=Number(n);if(isNaN(v)||v===0)return '—';return v.toFixed(1);}
+function esc(v){return String(v||'—').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function emptyRow(cols,msg){return '<tr><td colspan="'+cols+'" style="text-align:center;padding:32px;color:var(--gray-500)">'+msg+'</td></tr>';}
+function shortDate(d){
+  if(!d) return '—';
   var s=String(d);
-  if (s.includes('-')) { var p=s.slice(0,10).split('-'); return p[1]+'/'+p[2]; }
+  if(s.includes('-')){var p=s.slice(0,10).split('-');return p[1]+'/'+p[2];}
   return s.slice(0,10);
 }
 </script>
