@@ -150,6 +150,15 @@ tr:hover td{background:var(--gray-50)}
 .status-planning{background:#eff6ff;color:#1e40af}
 .status-selected{background:#fef3c7;color:#92400e}
 
+/* PAGINATION */
+.pagination{display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-top:1px solid var(--gray-100);background:#FAFAFA;flex-wrap:wrap;gap:6px}
+.pagination-info{font-size:11px;color:var(--gray-500);font-weight:600}
+.pagination-btns{display:flex;gap:4px}
+.pg-btn{padding:5px 12px;border:1.5px solid var(--gray-200);border-radius:7px;background:#fff;color:var(--navy);font-size:11px;font-weight:700;cursor:pointer;font-family:'Sarabun',sans-serif;transition:all .12s}
+.pg-btn:hover{background:var(--gray-100);border-color:#C49A9A}
+.pg-btn.active{background:#B71C1C;color:#fff;border-color:#B71C1C}
+.pg-btn:disabled{opacity:.4;cursor:not-allowed}
+
 /* BOTTOM NAV */
 .bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;height:var(--bottom-nav-h);background:linear-gradient(135deg,#7F0000,#5D0000);border-top:1px solid rgba(255,255,255,0.1);z-index:100;overflow-x:auto;scrollbar-width:none;box-shadow:0 -4px 20px rgba(127,0,0,0.25)}
 .bottom-nav::-webkit-scrollbar{display:none}
@@ -343,9 +352,13 @@ body.force-desktop .chart-grid-2col .chart-card{margin-bottom:0 !important}
             <div class="chart-card"><div class="chart-title">ไข่รวมต่อ Family (Top 10)</div><div class="chart-sub">Family ที่ให้ไข่มากสุด</div><div class="chart-wrap"><canvas id="c5"></canvas></div></div>
           </div>
           <div class="table-card">
-            <div class="table-header"><div class="table-title">บันทึกไข่รายวัน (50 แถวล่าสุด)</div><div class="table-count" id="eggs-count">0 แถว</div></div>
+            <div class="table-header"><div class="table-title">บันทึกไข่รายวัน</div><div class="table-count" id="eggs-count">0 แถว</div></div>
             <div class="table-scroll"><table><thead><tr><th>วันที่</th><th>Mating ID</th><th>Family Code</th><th>สายพันธุ์</th><th>ไข่รวม</th><th>สกปรก</th><th>แตก</th><th>ใช้ได้</th><th>บันทึกโดย</th></tr></thead>
             <tbody id="eggs-tbody"><tr><td colspan="9" style="text-align:center;padding:32px;color:var(--gray-500)">กำลังโหลดข้อมูล...</td></tr></tbody></table></div>
+            <div class="pagination" id="eggs-pagination" style="display:none">
+              <span class="pagination-info" id="eggs-pg-info"></span>
+              <div class="pagination-btns" id="eggs-pg-btns"></div>
+            </div>
           </div>
         </div>
 
@@ -368,6 +381,10 @@ body.force-desktop .chart-grid-2col .chart-card{margin-bottom:0 !important}
             <div class="table-header"><div class="table-title">รายละเอียดทุกล็อตฟักไข่</div><div class="table-count" id="hatch-count">0 ล็อต</div></div>
             <div class="table-scroll"><table><thead><tr><th>Hatch Lot ID</th><th>Family Code</th><th>สายพันธุ์</th><th>วันฟักออก</th><th>ไข่ฟัก</th><th>ไข่ลม</th><th>ลูกไก่</th><th>SE%</th><th>SF%</th><th>DIS%</th></tr></thead>
             <tbody id="hatch-tbody"><tr><td colspan="10" style="text-align:center;padding:32px;color:var(--gray-500)">กำลังโหลดข้อมูล...</td></tr></tbody></table></div>
+            <div class="pagination" id="hatch-pagination" style="display:none">
+              <span class="pagination-info" id="hatch-pg-info"></span>
+              <div class="pagination-btns" id="hatch-pg-btns"></div>
+            </div>
           </div>
         </div>
 
@@ -381,9 +398,13 @@ body.force-desktop .chart-grid-2col .chart-card{margin-bottom:0 !important}
             <div class="kpi-card" style="--accent:#9B84D4"><div class="kpi-label">Family ที่มีไก่</div><div class="kpi-value" id="kpi-birds-fam">—</div><div class="kpi-unit">Family</div></div>
           </div>
           <div class="table-card">
-            <div class="table-header"><div class="table-title">ทะเบียนไก่ (50 แถวล่าสุด)</div><div class="table-count" id="birds-count">0 ตัว</div></div>
+            <div class="table-header"><div class="table-title">ทะเบียนไก่</div><div class="table-count" id="birds-count">0 ตัว</div></div>
             <div class="table-scroll"><table><thead><tr><th>Bird ID</th><th>Family Code</th><th>สายพันธุ์</th><th>Generation</th><th>เพศ</th><th>วันเกิด</th><th>สีวงแหวน</th><th>เลขวงแหวน</th><th>คอก</th><th>สถานะ</th></tr></thead>
             <tbody id="birds-tbody"><tr><td colspan="10" style="text-align:center;padding:32px;color:var(--gray-500)">กำลังโหลดข้อมูล...</td></tr></tbody></table></div>
+            <div class="pagination" id="birds-pagination" style="display:none">
+              <span class="pagination-info" id="birds-pg-info"></span>
+              <div class="pagination-btns" id="birds-pg-btns"></div>
+            </div>
           </div>
         </div>
 
@@ -400,6 +421,10 @@ body.force-desktop .chart-grid-2col .chart-card{margin-bottom:0 !important}
             <div class="table-header"><div class="table-title">แผนผสมพันธุ์ทั้งหมด</div><div class="table-count" id="mating-count">0 แผน</div></div>
             <div class="table-scroll"><table><thead><tr><th>Mating ID</th><th>สายพันธุ์</th><th>Family Code</th><th>รหัสพ่อ</th><th>พ่อ</th><th>แม่</th><th>วิธีผสม</th><th>วันเริ่ม</th><th>วันสิ้นสุด</th><th>คอก</th><th>สถานะ</th></tr></thead>
             <tbody id="mating-tbody"><tr><td colspan="11" style="text-align:center;padding:32px;color:var(--gray-500)">กำลังโหลดข้อมูล...</td></tr></tbody></table></div>
+            <div class="pagination" id="mating-pagination" style="display:none">
+              <span class="pagination-info" id="mating-pg-info"></span>
+              <div class="pagination-btns" id="mating-pg-btns"></div>
+            </div>
           </div>
         </div>
 
@@ -417,9 +442,13 @@ body.force-desktop .chart-grid-2col .chart-card{margin-bottom:0 !important}
             <div class="chart-card"><div class="chart-title">สัดส่วนผลการคัดเลือก</div><div class="chart-sub">ผ่าน / คัดออก / รอประเมิน</div><div class="chart-wrap"><canvas id="c9"></canvas></div></div>
           </div>
           <div class="table-card">
-            <div class="table-header"><div class="table-title">ผลการคัดเลือก (50 แถวล่าสุด)</div><div class="table-count" id="sel-count">0 ตัว</div></div>
+            <div class="table-header"><div class="table-title">ผลการคัดเลือก</div><div class="table-count" id="sel-count">0 ตัว</div></div>
             <div class="table-scroll"><table><thead><tr><th>Bird ID</th><th>Family Code</th><th>เพศ</th><th>น้ำหนัก</th><th>สรีระ</th><th>สุขภาพ</th><th>การผลิต</th><th>คะแนนรวม</th><th>ผล</th><th>วันที่</th></tr></thead>
             <tbody id="sel-tbody"><tr><td colspan="10" style="text-align:center;padding:32px;color:var(--gray-500)">กำลังโหลดข้อมูล...</td></tr></tbody></table></div>
+            <div class="pagination" id="sel-pagination" style="display:none">
+              <span class="pagination-info" id="sel-pg-info"></span>
+              <div class="pagination-btns" id="sel-pg-btns"></div>
+            </div>
           </div>
         </div>
 
@@ -713,10 +742,19 @@ function updateCharts(data, eggsAll, hatchAll, selAll) {
     c3.update();
   }
   if (window._charts.c4 && data.eggs_by_date) {
-    var dates = Object.keys(data.eggs_by_date).sort().slice(-14);
+    // normalize tất date keys → yyyy-mm-dd แล้ว sort
+    var rawEbd = data.eggs_by_date;
+    var ebd = {};
+    Object.keys(rawEbd).forEach(function(k) {
+      var norm = normalizeDate(k);
+      if (norm) ebd[norm] = (ebd[norm]||0) + rawEbd[k];
+    });
+    var dates = Object.keys(ebd).sort().slice(-14);
     var c4 = window._charts.c4;
-    c4.data.labels = dates.map(function(d){return d.slice(5);});
-    c4.data.datasets[0].data = dates.map(function(d){return data.eggs_by_date[d];});
+    c4.data.labels = dates.map(function(d){
+      var p=d.split('-'); return p[2]+'/'+p[1];
+    });
+    c4.data.datasets[0].data = dates.map(function(d){return ebd[d];});
     c4.update();
   }
   if (window._charts.c5 && eggsAll.length) {
@@ -768,27 +806,104 @@ function updateCharts(data, eggsAll, hatchAll, selAll) {
   }
 }
 
-/* ── TABLES ── */
+/* ── TABLES WITH PAGINATION ── */
+var PG = {}; /* page state per table: {eggs:0, hatch:0, birds:0, mating:0, sel:0} */
+var PG_DATA = {}; /* cached row data per table */
+var PG_SIZE = 10;
+var PG_MAX  = 100;
+
+function buildPagination(key, total, renderFn) {
+  var maxRows = Math.min(total, PG_MAX);
+  var pages   = Math.ceil(maxRows / PG_SIZE);
+  var cur     = PG[key] || 0;
+  if (cur >= pages) cur = pages - 1;
+  PG[key] = cur;
+
+  var from = cur * PG_SIZE + 1;
+  var to   = Math.min((cur + 1) * PG_SIZE, maxRows);
+  var pgEl = document.getElementById(key+'-pagination');
+  var infoEl = document.getElementById(key+'-pg-info');
+  var btnsEl = document.getElementById(key+'-pg-btns');
+  if (!pgEl) return;
+
+  pgEl.style.display = pages > 1 ? 'flex' : 'none';
+  if (infoEl) infoEl.textContent = 'แสดง '+from+'–'+to+' จาก '+maxRows+' แถว';
+  if (btnsEl) {
+    var html = '';
+    html += '<button class="pg-btn" onclick="pgGo(\''+key+'\','+(-1)+')" '+(cur===0?'disabled':'')+'>‹ ก่อน</button>';
+    for (var i=0; i<pages; i++) {
+      html += '<button class="pg-btn'+(i===cur?' active':'')+'" onclick="pgGo(\''+key+'\','+i+')">'+( i+1)+'</button>';
+    }
+    html += '<button class="pg-btn" onclick="pgGo(\''+key+'\','+pages+')" '+(cur===pages-1?'disabled':'')+'>ถัด ›</button>';
+    btnsEl.innerHTML = html;
+  }
+  renderFn(cur);
+}
+
+function pgGo(key, page) {
+  var maxRows = Math.min((PG_DATA[key]||[]).length, PG_MAX);
+  var pages   = Math.ceil(maxRows / PG_SIZE);
+  if (page < 0) page = 0;
+  if (page >= pages) page = pages - 1;
+  PG[key] = page;
+  if (key==='eggs')   drawEggsPage(page);
+  if (key==='hatch')  drawHatchPage(page);
+  if (key==='birds')  drawBirdsPage(page);
+  if (key==='mating') drawMatingPage(page);
+  if (key==='sel')    drawSelPage(page);
+  buildPagination(key, (PG_DATA[key]||[]).length, function(p){
+    if (key==='eggs')   drawEggsPage(p);
+    if (key==='hatch')  drawHatchPage(p);
+    if (key==='birds')  drawBirdsPage(p);
+    if (key==='mating') drawMatingPage(p);
+    if (key==='sel')    drawSelPage(p);
+  });
+}
+
+function getPage(key, page) {
+  var rows = PG_DATA[key] || [];
+  var start = page * PG_SIZE;
+  return rows.slice(start, start + PG_SIZE);
+}
+
 function renderEggs(rows) {
+  var sorted = rows.slice().reverse().slice(0, PG_MAX);
+  PG_DATA['eggs'] = sorted;
+  PG['eggs'] = 0;
   setEl('eggs-count', rows.length+' แถว');
+  buildPagination('eggs', sorted.length, drawEggsPage);
+  drawEggsPage(0);
+}
+function drawEggsPage(page) {
   var tb = document.getElementById('eggs-tbody');
   if (!tb) return;
-  if (!rows.length) { tb.innerHTML = emptyRow(9,'ยังไม่มีข้อมูลไข่รายวันใน Sheet'); return; }
-  tb.innerHTML = rows.slice(-50).reverse().map(function(r) {
-    return '<tr><td>'+esc(r.Record_Date)+'</td><td>'+esc(r.Mating_ID)+'</td><td>'+esc(r.Family_Code)+'</td><td>'+esc(r.Line_Name)+'</td>'+
+  var slice = getPage('eggs', page);
+  if (!slice.length) { tb.innerHTML = emptyRow(9,'ยังไม่มีข้อมูลไข่รายวันใน Sheet'); return; }
+  tb.innerHTML = slice.map(function(r) {
+    return '<tr><td>'+shortDate(r.Record_Date)+'</td><td>'+esc(r.Mating_ID)+'</td><td>'+esc(r.Family_Code)+'</td><td>'+esc(r.Line_Name)+'</td>'+
       '<td style="font-weight:700">'+fmtN(r.Eggs_Collected)+'</td><td>'+fmtN(r.Dirty_Eggs)+'</td><td>'+fmtN(r.Cracked_Eggs)+'</td>'+
       '<td style="color:#065f46;font-weight:700">'+fmtN(r.Eggs_Usable)+'</td><td>'+esc(r.Recorded_By)+'</td></tr>';
   }).join('');
 }
+
 function renderHatch(rows) {
+  var sorted = rows.slice().reverse().slice(0, PG_MAX);
+  PG_DATA['hatch'] = sorted;
+  PG['hatch'] = 0;
   setEl('hatch-count', rows.length+' ล็อต');
+  buildPagination('hatch', sorted.length, drawHatchPage);
+  drawHatchPage(0);
+}
+function drawHatchPage(page) {
   var tb = document.getElementById('hatch-tbody');
   if (!tb) return;
-  if (!rows.length) { tb.innerHTML = emptyRow(10,'ยังไม่มีข้อมูลฟักไข่ใน Sheet'); return; }
-  tb.innerHTML = rows.slice().reverse().map(function(r) {
+  var slice = getPage('hatch', page);
+  if (!slice.length) { tb.innerHTML = emptyRow(10,'ยังไม่มีข้อมูลฟักไข่ใน Sheet'); return; }
+  tb.innerHTML = slice.map(function(r) {
     var sf=+r.SF_pct||0;
     var sfC=sf>=70?'#065f46':sf>=50?'#374151':'#991b1b';
-    return '<tr><td>'+esc(r.Hatch_Lot_ID)+'</td><td>'+esc(r.Family_Code)+'</td><td>'+esc(r.Line_Name)+'</td><td>'+esc(r.Hatch_Date)+'</td>'+
+    return '<tr><td>'+esc(r.Hatch_Lot_ID)+'</td><td>'+esc(r.Family_Code)+'</td><td>'+esc(r.Line_Name)+'</td>'+
+      '<td>'+shortDate(r.Hatch_Date)+'</td>'+
       '<td>'+fmtN(r.Eggs_Set)+'</td><td>'+fmtN(r.Infertile)+'</td>'+
       '<td style="font-weight:700;color:var(--navy)">'+fmtN(r.Chicks_Hatched)+'</td>'+
       '<td>'+fmt1(r.Fertility_pct)+'%</td>'+
@@ -796,41 +911,68 @@ function renderHatch(rows) {
       '<td>'+fmt1(r.DIS_pct)+'%</td></tr>';
   }).join('');
 }
+
 function renderBirds(rows) {
+  var sorted = rows.slice().reverse().slice(0, PG_MAX);
+  PG_DATA['birds'] = sorted;
+  PG['birds'] = 0;
   setEl('birds-count', rows.length+' ตัว');
+  buildPagination('birds', sorted.length, drawBirdsPage);
+  drawBirdsPage(0);
+}
+function drawBirdsPage(page) {
   var tb = document.getElementById('birds-tbody');
   if (!tb) return;
-  if (!rows.length) { tb.innerHTML = emptyRow(10,'ยังไม่มีข้อมูลทะเบียนไก่ใน Sheet'); return; }
-  tb.innerHTML = rows.slice(-50).reverse().map(function(r) {
+  var slice = getPage('birds', page);
+  if (!slice.length) { tb.innerHTML = emptyRow(10,'ยังไม่มีข้อมูลทะเบียนไก่ใน Sheet'); return; }
+  tb.innerHTML = slice.map(function(r) {
     var st=String(r.Status||'');
     var sc=st==='Active'?'status-active':st==='Selected'?'status-selected':'status-planning';
     return '<tr><td>'+esc(r.Bird_ID)+'</td><td>'+esc(r.Family_Code)+'</td><td>'+esc(r.Line_Name)+'</td>'+
-      '<td>'+esc(r.Generation)+'</td><td>'+esc(r.Sex)+'</td><td>'+esc(r.Hatch_Date)+'</td>'+
+      '<td>'+esc(r.Generation)+'</td><td>'+esc(r.Sex)+'</td><td>'+shortDate(r.Hatch_Date)+'</td>'+
       '<td>'+esc(r.Ring_Color)+'</td><td>'+esc(r.Ring_Number)+'</td><td>'+esc(r.Pen_Location)+'</td>'+
       '<td><span class="status-badge '+sc+'">'+esc(r.Status)+'</span></td></tr>';
   }).join('');
 }
+
 function renderMating(rows) {
+  var sorted = rows.slice(0, PG_MAX);
+  PG_DATA['mating'] = sorted;
+  PG['mating'] = 0;
   setEl('mating-count', rows.length+' แผน');
+  buildPagination('mating', sorted.length, drawMatingPage);
+  drawMatingPage(0);
+}
+function drawMatingPage(page) {
   var tb = document.getElementById('mating-tbody');
   if (!tb) return;
-  if (!rows.length) { tb.innerHTML = emptyRow(11,'ยังไม่มีข้อมูลแผนผสมพันธุ์ใน Sheet'); return; }
-  tb.innerHTML = rows.map(function(r) {
+  var slice = getPage('mating', page);
+  if (!slice.length) { tb.innerHTML = emptyRow(11,'ยังไม่มีข้อมูลแผนผสมพันธุ์ใน Sheet'); return; }
+  tb.innerHTML = slice.map(function(r) {
     var st=String(r.Status||'');
     var sc=st==='Active'?'status-active':st==='Planning'?'status-planning':'';
     return '<tr><td>'+esc(r.Mating_ID)+'</td><td>'+esc(r.Line_Name)+'</td><td>'+esc(r.Family_Code)+'</td>'+
       '<td>'+esc(r.Sire_ID)+'</td><td>'+fmtN(r.Sire_Count)+'</td><td>'+fmtN(r.Dam_Count)+'</td>'+
-      '<td>'+esc(r.Mating_Type)+'</td><td>'+esc(r.Start_Date)+'</td><td>'+esc(r.End_Date)+'</td>'+
+      '<td>'+esc(r.Mating_Type)+'</td><td>'+shortDate(r.Start_Date)+'</td><td>'+shortDate(r.End_Date)+'</td>'+
       '<td>'+esc(r.Pen_Location)+'</td>'+
       '<td><span class="status-badge '+sc+'">'+esc(r.Status)+'</span></td></tr>';
   }).join('');
 }
+
 function renderSel(rows) {
+  var sorted = rows.slice().reverse().slice(0, PG_MAX);
+  PG_DATA['sel'] = sorted;
+  PG['sel'] = 0;
   setEl('sel-count', rows.length+' ตัว');
+  buildPagination('sel', sorted.length, drawSelPage);
+  drawSelPage(0);
+}
+function drawSelPage(page) {
   var tb = document.getElementById('sel-tbody');
   if (!tb) return;
-  if (!rows.length) { tb.innerHTML = emptyRow(10,'ยังไม่มีข้อมูลผลคัดเลือกใน Sheet'); return; }
-  tb.innerHTML = rows.slice(-50).reverse().map(function(r) {
+  var slice = getPage('sel', page);
+  if (!slice.length) { tb.innerHTML = emptyRow(10,'ยังไม่มีข้อมูลผลคัดเลือกใน Sheet'); return; }
+  tb.innerHTML = slice.map(function(r) {
     var dec=String(r.Decision||'');
     var dc=/select|ผ่าน|คัดได้/i.test(dec)?'#065f46':/reject|คัดออก|ไม่ผ่าน/i.test(dec)?'#991b1b':'#374151';
     return '<tr><td>'+esc(r.Bird_ID)+'</td><td>'+esc(r.Family_Code)+'</td><td>'+esc(r.Sex)+'</td>'+
@@ -838,7 +980,7 @@ function renderSel(rows) {
       '<td>'+fmt1(r.Health_Score)+'</td><td>'+fmt1(r.Production_Score)+'</td>'+
       '<td style="font-weight:700;color:var(--navy)">'+fmt1(r.Final_Score)+'</td>'+
       '<td style="font-weight:700;color:'+dc+'">'+esc(r.Decision)+'</td>'+
-      '<td>'+esc(r.Selection_Date)+'</td></tr>';
+      '<td>'+shortDate(r.Selection_Date)+'</td></tr>';
   }).join('');
 }
 
@@ -848,11 +990,44 @@ function fmtN(n){var v=Number(n);return isNaN(v)?'—':v.toLocaleString('th-TH')
 function fmt1(n){var v=Number(n);if(isNaN(v)||v===0)return '—';return v.toFixed(1);}
 function esc(v){return String(v||'—').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function emptyRow(cols,msg){return '<tr><td colspan="'+cols+'" style="text-align:center;padding:32px;color:var(--gray-500)">'+msg+'</td></tr>';}
-function shortDate(d){
-  if(!d) return '—';
-  var s=String(d);
-  if(s.includes('-')){var p=s.slice(0,10).split('-');return p[1]+'/'+p[2];}
-  return s.slice(0,10);
+
+/* normalize วันที่ทุก format → yyyy-mm-dd */
+function normalizeDate(d) {
+  if (!d) return null;
+  var s = String(d).trim();
+  /* กรองข้อความ Date object ที่ serialize มา เช่น "Wed Feb 05 2026..." */
+  if (s.length > 20) {
+    var dt = new Date(s);
+    if (!isNaN(dt)) {
+      var yy=dt.getFullYear(), mm=String(dt.getMonth()+1).padStart(2,'0'), dd=String(dt.getDate()).padStart(2,'0');
+      return yy+'-'+mm+'-'+dd;
+    }
+    return null;
+  }
+  /* yyyy-mm-dd */
+  if (/^\d{4}-\d{2}-\d{2}$/.test(s)) {
+    var p=s.split('-');
+    if (Number(p[1])>12) return p[0]+'-'+p[2]+'-'+p[1]; /* yyyy-dd-mm */
+    return s;
+  }
+  /* d-m-yyyy หรือ dd-mm-yyyy */
+  if (/^\d{1,2}-\d{1,2}-\d{4}$/.test(s)) {
+    var p2=s.split('-');
+    return p2[2]+'-'+('0'+p2[1]).slice(-2)+'-'+('0'+p2[0]).slice(-2);
+  }
+  /* d/m/yyyy */
+  if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(s)) {
+    var p3=s.split('/');
+    return p3[2]+'-'+('0'+p3[1]).slice(-2)+'-'+('0'+p3[0]).slice(-2);
+  }
+  return null;
+}
+
+function shortDate(d) {
+  var norm = normalizeDate(String(d||''));
+  if (!norm) return '—';
+  var p = norm.split('-');
+  return p[2]+'/'+p[1];
 }
 </script>
 </body>
