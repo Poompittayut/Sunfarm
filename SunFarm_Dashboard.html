@@ -159,7 +159,23 @@ tr:hover td{background:var(--gray-50)}
 .pg-btn.active{background:#B71C1C;color:#fff;border-color:#B71C1C}
 .pg-btn:disabled{opacity:.4;cursor:not-allowed}
 
-/* BOTTOM NAV */
+/* SIMPLE MOBILE CHARTS */
+.simple-chart{display:none;padding:4px 0}
+.sc-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;font-size:12px}
+.sc-label{width:72px;flex-shrink:0;color:var(--gray-700);font-size:11px;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sc-bar-wrap{flex:1;background:#f3f4f6;border-radius:4px;height:18px;position:relative;overflow:hidden}
+.sc-bar{height:100%;border-radius:4px;transition:width .4s ease;min-width:2px}
+.sc-val{width:44px;flex-shrink:0;font-size:11px;font-weight:700;color:var(--navy);text-align:left}
+.sc-legend{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:8px}
+.sc-legend-item{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--gray-500)}
+.sc-legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+/* Mobile: show simple, hide canvas */
+body.force-mobile .canvas-chart{display:none !important}
+body.force-mobile .simple-chart{display:block}
+@media(max-width:768px){
+  .canvas-chart{display:none !important}
+  .simple-chart{display:block}
+}
 .bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;height:var(--bottom-nav-h);background:linear-gradient(135deg,#7F0000,#5D0000);border-top:1px solid rgba(255,255,255,0.1);z-index:100;overflow-x:auto;scrollbar-width:none;box-shadow:0 -4px 20px rgba(127,0,0,0.25)}
 .bottom-nav::-webkit-scrollbar{display:none}
 .bottom-nav-inner{display:flex;height:100%;min-width:max-content;padding:0 8px}
@@ -169,9 +185,19 @@ tr:hover td{background:var(--gray-50)}
 .bnav-item.active .bnav-icon{background:rgba(74,144,217,0.28)}
 .bnav-label{font-size:10px;font-weight:700;white-space:nowrap}
 
+/* MOBILE TOPBAR */
+.btn-text-short{display:none}
+.btn-text-full{display:inline}
+
 /* MOBILE */
 body.force-mobile .sidebar{display:none}
 body.force-mobile .bottom-nav{display:flex !important}
+body.force-mobile .topbar-meta-desktop{display:none}
+body.force-mobile .topbar-title{font-size:14px !important}
+body.force-mobile .btn-text-full{display:none !important}
+body.force-mobile .btn-text-short{display:inline !important}
+body.force-mobile .btn-refresh,body.force-mobile .btn-logout{padding:6px 8px}
+body.force-mobile .badge-clock{font-size:10px;padding:4px 8px;letter-spacing:0}
 body.force-mobile .kpi-grid{grid-template-columns:repeat(2,1fr) !important;gap:10px !important}
 body.force-mobile .kpi-value{font-size:28px !important}
 body.force-mobile .kpi-card{padding:12px 14px !important}
@@ -200,6 +226,12 @@ body.force-desktop .chart-grid-2col .chart-card{margin-bottom:0 !important}
 @media(max-width:768px){
   .sidebar{display:none}
   .bottom-nav{display:flex}
+  .topbar-meta-desktop{display:none}
+  .topbar-title{font-size:14px !important}
+  .btn-text-full{display:none !important}
+  .btn-text-short{display:inline !important}
+  .btn-refresh,.btn-logout{padding:6px 8px}
+  .badge-clock{font-size:10px;padding:4px 8px;letter-spacing:0}
   .kpi-grid{grid-template-columns:repeat(2,1fr);gap:10px}
   .kpi-value{font-size:28px}
   .kpi-card{padding:12px 14px}
@@ -310,13 +342,13 @@ body.force-desktop .chart-grid-2col .chart-card{margin-bottom:0 !important}
         <div class="topbar-left">
           <div>
             <div class="topbar-title" id="topbarTitle">ภาพรวมการเพาะพันธุ์</div>
-            <div class="topbar-meta">อัปเดต: <span id="updatedTime">กำลังโหลด...</span></div>
+            <div class="topbar-meta topbar-meta-desktop">อัปเดต: <span id="updatedTime">กำลังโหลด...</span></div>
           </div>
         </div>
         <div class="topbar-right">
           <div class="badge-clock" id="realtime-clock">--:--:--</div>
-          <button class="btn-refresh" id="refreshBtn" onclick="refreshData()">🔄 รีเฟรช</button>
-          <button class="btn-logout" onclick="doLogout()">🚪 ออกจากระบบ</button>
+          <button class="btn-refresh" id="refreshBtn" onclick="refreshData()"><span class="btn-text-full">🔄 รีเฟรช</span><span class="btn-text-short">🔄</span></button>
+          <button class="btn-logout" onclick="doLogout()"><span class="btn-text-full">🚪 ออกจากระบบ</span><span class="btn-text-short">🚪</span></button>
         </div>
       </div>
 
@@ -336,10 +368,25 @@ body.force-desktop .chart-grid-2col .chart-card{margin-bottom:0 !important}
             <div class="kpi-card" style="--accent:#D4C050"><div class="kpi-icon">🔬</div><div class="kpi-label">สายพันธุ์ทดลอง</div><div class="kpi-value" id="kpi-lines">—</div><div class="kpi-unit">สาย</div></div>
           </div>
           <div class="chart-grid-2col">
-            <div class="chart-card"><div class="chart-title">SF% รายล็อต</div><div class="chart-sub">อัตราฟักสำเร็จแต่ละล็อต</div><div class="chart-wrap"><canvas id="c1"></canvas></div></div>
-            <div class="chart-card"><div class="chart-title">สัดส่วน Family ต่อสายพันธุ์</div><div class="chart-sub">จำนวน lot แต่ละสายพันธุ์</div><div class="chart-wrap"><canvas id="c2"></canvas></div></div>
+            <div class="chart-card">
+              <div class="chart-title">SF% รายล็อต (12 ล็อตล่าสุด)</div>
+              <div class="chart-sub">อัตราฟักสำเร็จแต่ละล็อต</div>
+              <div class="chart-wrap canvas-chart"><canvas id="c1"></canvas></div>
+              <div class="chart-wrap simple-chart" id="sc1" style="height:auto"></div>
+            </div>
+            <div class="chart-card">
+              <div class="chart-title">สัดส่วนต่อสายพันธุ์</div>
+              <div class="chart-sub">จำนวน lot แต่ละสายพันธุ์</div>
+              <div class="chart-wrap canvas-chart"><canvas id="c2"></canvas></div>
+              <div class="simple-chart" id="sc2"></div>
+            </div>
           </div>
-          <div class="chart-card"><div class="chart-title">เปรียบเทียบ SE% / SF% / DIS% ต่อสายพันธุ์</div><div class="chart-sub">ประสิทธิภาพฟักไข่แยกตาม Line</div><div class="chart-wrap" style="height:200px"><canvas id="c3"></canvas></div></div>
+          <div class="chart-card">
+            <div class="chart-title">เปรียบเทียบ SE% / SF% / DIS% ต่อสายพันธุ์</div>
+            <div class="chart-sub">ประสิทธิภาพฟักไข่แยกตาม Line</div>
+            <div class="chart-wrap canvas-chart" style="height:200px"><canvas id="c3"></canvas></div>
+            <div class="simple-chart" id="sc3"></div>
+          </div>
         </div>
 
         <!-- EGGS -->
@@ -352,8 +399,18 @@ body.force-desktop .chart-grid-2col .chart-card{margin-bottom:0 !important}
             <div class="kpi-card" style="--accent:#D97A94"><div class="kpi-label">ไข่แตก</div><div class="kpi-value" id="kpi-cracked">—</div><div class="kpi-unit">ฟอง</div></div>
           </div>
           <div class="chart-grid-2col">
-            <div class="chart-card"><div class="chart-title">ไข่รวมรายวัน (14 วันล่าสุด)</div><div class="chart-sub">ปริมาณไข่ทั้งหมดต่อวัน</div><div class="chart-wrap"><canvas id="c4"></canvas></div></div>
-            <div class="chart-card"><div class="chart-title">ไข่รวมต่อ Family (Top 10)</div><div class="chart-sub">Family ที่ให้ไข่มากสุด</div><div class="chart-wrap"><canvas id="c5"></canvas></div></div>
+            <div class="chart-card">
+              <div class="chart-title">ไข่รวมรายวัน (14 วันล่าสุด)</div>
+              <div class="chart-sub">ปริมาณไข่ทั้งหมดต่อวัน</div>
+              <div class="chart-wrap canvas-chart"><canvas id="c4"></canvas></div>
+              <div class="simple-chart" id="sc4"></div>
+            </div>
+            <div class="chart-card">
+              <div class="chart-title">ไข่รวมต่อ Family (Top 10)</div>
+              <div class="chart-sub">Family ที่ให้ไข่มากสุด</div>
+              <div class="chart-wrap canvas-chart"><canvas id="c5"></canvas></div>
+              <div class="simple-chart" id="sc5"></div>
+            </div>
           </div>
           <div class="table-card">
             <div class="table-header"><div class="table-title">บันทึกไข่รายวัน</div><div class="table-count" id="eggs-count">0 แถว</div></div>
@@ -378,8 +435,18 @@ body.force-desktop .chart-grid-2col .chart-card{margin-bottom:0 !important}
             <div class="kpi-card" style="--accent:#D97A94"><div class="kpi-label">ตายในกก. รวม</div><div class="kpi-value" id="kpi-dis3">—</div><div class="kpi-unit">ตัว</div></div>
           </div>
           <div class="chart-grid-2col">
-            <div class="chart-card"><div class="chart-title">SF% และ DIS% รายล็อต</div><div class="chart-sub">แนวโน้มอัตราฟักและตายในกก.</div><div class="chart-wrap"><canvas id="c6"></canvas></div></div>
-            <div class="chart-card"><div class="chart-title">ลูกไก่ที่ได้รายล็อต</div><div class="chart-sub">จำนวนลูกไก่แต่ละล็อต</div><div class="chart-wrap"><canvas id="c7"></canvas></div></div>
+            <div class="chart-card">
+              <div class="chart-title">SF% และ DIS% รายล็อต</div>
+              <div class="chart-sub">แนวโน้มอัตราฟักและตายในกก.</div>
+              <div class="chart-wrap canvas-chart"><canvas id="c6"></canvas></div>
+              <div class="simple-chart" id="sc6"></div>
+            </div>
+            <div class="chart-card">
+              <div class="chart-title">ลูกไก่ที่ได้รายล็อต</div>
+              <div class="chart-sub">จำนวนลูกไก่แต่ละล็อต</div>
+              <div class="chart-wrap canvas-chart"><canvas id="c7"></canvas></div>
+              <div class="simple-chart" id="sc7"></div>
+            </div>
           </div>
           <div class="table-card">
             <div class="table-header"><div class="table-title">รายละเอียดทุกล็อตฟักไข่</div><div class="table-count" id="hatch-count">0 ล็อต</div></div>
@@ -442,8 +509,18 @@ body.force-desktop .chart-grid-2col .chart-card{margin-bottom:0 !important}
             <div class="kpi-card" style="--accent:#6BA3D4"><div class="kpi-label">คะแนนเฉลี่ย</div><div class="kpi-value" id="kpi-sel-score">—</div><div class="kpi-unit">คะแนน</div></div>
           </div>
           <div class="chart-grid-2col">
-            <div class="chart-card"><div class="chart-title">คะแนนเฉลี่ยต่อ Family (Top 10)</div><div class="chart-sub">Final Score แยก Family</div><div class="chart-wrap"><canvas id="c8"></canvas></div></div>
-            <div class="chart-card"><div class="chart-title">สัดส่วนผลการคัดเลือก</div><div class="chart-sub">ผ่าน / คัดออก / รอประเมิน</div><div class="chart-wrap"><canvas id="c9"></canvas></div></div>
+            <div class="chart-card">
+              <div class="chart-title">คะแนนเฉลี่ยต่อ Family (Top 10)</div>
+              <div class="chart-sub">Final Score แยก Family</div>
+              <div class="chart-wrap canvas-chart"><canvas id="c8"></canvas></div>
+              <div class="simple-chart" id="sc8"></div>
+            </div>
+            <div class="chart-card">
+              <div class="chart-title">สัดส่วนผลการคัดเลือก</div>
+              <div class="chart-sub">ผ่าน / คัดออก / รอประเมิน</div>
+              <div class="chart-wrap canvas-chart"><canvas id="c9"></canvas></div>
+              <div class="simple-chart" id="sc9"></div>
+            </div>
           </div>
           <div class="table-card">
             <div class="table-header"><div class="table-title">ผลการคัดเลือก</div><div class="table-count" id="sel-count">0 ตัว</div></div>
@@ -771,6 +848,7 @@ function render(data) {
   renderEggs(eggsAll); renderHatch(hatchAll);
   renderBirds(birdsAll); renderMating(matingAll); renderSel(selAll);
   updateCharts(data, eggsAll, hatchAll, selAll);
+  renderSimpleCharts(data, eggsAll, hatchAll, selAll);
 }
 
 /* ── CHARTS UPDATE ── */
@@ -1043,6 +1121,167 @@ function drawSelPage(page) {
       '<td style="font-weight:700;color:'+dc+'">'+esc(r.Decision)+'</td>'+
       '<td>'+shortDate(r.Selection_Date)+'</td></tr>';
   }).join('');
+}
+
+/* ── SIMPLE MOBILE CHARTS ── */
+function renderSimpleCharts(data, eggsAll, hatchAll, selAll) {
+  var byLine = data.by_line || {};
+
+  function hBar(el, rows, color) {
+    /* rows = [{label, value, max?}] */
+    if (!el) return;
+    var maxVal = Math.max.apply(null, rows.map(function(r){return r.value;})) || 1;
+    el.innerHTML = rows.map(function(r) {
+      var pct = Math.round(r.value / maxVal * 100);
+      return '<div class="sc-row">' +
+        '<div class="sc-label" title="'+r.label+'">'+r.label+'</div>' +
+        '<div class="sc-bar-wrap"><div class="sc-bar" style="width:'+pct+'%;background:'+color+'"></div></div>' +
+        '<div class="sc-val">'+r.display+'</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  /* sc1 — SF% รายล็อต */
+  if (hatchAll.length) {
+    var lots = hatchAll.slice(-8);
+    hBar(document.getElementById('sc1'), lots.map(function(r){
+      var v = +r.SF_pct||0;
+      return {label: shortDate(r.Hatch_Date||r.Hatch_Lot_ID), value: v, display: v+'%'};
+    }), '#6DB88A');
+  }
+
+  /* sc2 — สัดส่วน Family ต่อสายพันธุ์ */
+  if (hatchAll.length) {
+    var famC = {};
+    hatchAll.forEach(function(r){var l=r.Line_Name||'Unknown'; famC[l]=(famC[l]||0)+1;});
+    var total2 = Object.values(famC).reduce(function(a,b){return a+b;},0)||1;
+    var el2 = document.getElementById('sc2');
+    if (el2) {
+      el2.innerHTML = Object.keys(famC).map(function(k,i){
+        var pct = Math.round(famC[k]/total2*100);
+        return '<div class="sc-row">' +
+          '<div class="sc-label" title="'+k+'">'+k+'</div>' +
+          '<div class="sc-bar-wrap"><div class="sc-bar" style="width:'+pct+'%;background:'+CC[i%CC.length]+'"></div></div>' +
+          '<div class="sc-val">'+pct+'%</div>' +
+        '</div>';
+      }).join('');
+    }
+  }
+
+  /* sc3 — SE% / SF% / DIS% ต่อสายพันธุ์ */
+  var lines = Object.keys(byLine);
+  if (lines.length) {
+    var el3 = document.getElementById('sc3');
+    if (el3) {
+      el3.innerHTML = lines.map(function(l) {
+        var d = byLine[l];
+        var se  = d.eggs>0?   (d.fertile/d.eggs*100).toFixed(1):0;
+        var sf  = d.fertile>0?(d.chicks/d.fertile*100).toFixed(1):0;
+        var dis = d.fertile>0?(d.dis/d.fertile*100).toFixed(1):0;
+        return '<div style="margin-bottom:10px">' +
+          '<div style="font-size:11px;font-weight:700;color:var(--navy);margin-bottom:4px">'+l+'</div>' +
+          _miniBar('SE%', se, 100, CC[0]) +
+          _miniBar('SF%', sf, 100, CC[1]) +
+          _miniBar('DIS%', dis, 100, CC[3]) +
+        '</div>';
+      }).join('') +
+      '<div class="sc-legend">' +
+        '<div class="sc-legend-item"><div class="sc-legend-dot" style="background:'+CC[0]+'"></div>SE%</div>' +
+        '<div class="sc-legend-item"><div class="sc-legend-dot" style="background:'+CC[1]+'"></div>SF%</div>' +
+        '<div class="sc-legend-item"><div class="sc-legend-dot" style="background:'+CC[3]+'"></div>DIS%</div>' +
+      '</div>';
+    }
+  }
+
+  /* sc4 — ไข่รายวัน */
+  if (data.eggs_by_date) {
+    var rawEbd = data.eggs_by_date, ebd = {};
+    Object.keys(rawEbd).forEach(function(k){ var n=normalizeDate(k); if(n) ebd[n]=(ebd[n]||0)+rawEbd[k]; });
+    var dates = Object.keys(ebd).sort().slice(-10);
+    hBar(document.getElementById('sc4'), dates.map(function(d){
+      return {label: shortDate(d), value: ebd[d], display: fmtN(ebd[d])};
+    }), CC[0]);
+  }
+
+  /* sc5 — ไข่ต่อ Family */
+  if (eggsAll.length) {
+    var fE = {};
+    eggsAll.forEach(function(r){var f=r.Family_Code||'Unknown'; fE[f]=(fE[f]||0)+(+r.Eggs_Collected||0);});
+    var top5 = Object.entries(fE).sort(function(a,b){return b[1]-a[1];}).slice(0,8);
+    hBar(document.getElementById('sc5'), top5.map(function(x){
+      return {label: x[0], value: x[1], display: fmtN(x[1])};
+    }), CC[0]);
+  }
+
+  /* sc6 — SF% & DIS% รายล็อต */
+  if (hatchAll.length) {
+    var lots6 = hatchAll.slice(-6);
+    var el6 = document.getElementById('sc6');
+    if (el6) {
+      el6.innerHTML = lots6.map(function(r){
+        var sf = +r.SF_pct||0, dis = +r.DIS_pct||0;
+        return '<div style="margin-bottom:8px">' +
+          '<div style="font-size:10px;font-weight:700;color:var(--gray-700);margin-bottom:3px">'+shortDate(r.Hatch_Date||r.Hatch_Lot_ID)+'</div>' +
+          _miniBar('SF%', sf, 100, CC[0]) +
+          _miniBar('DIS%', dis, 100, CC[3]) +
+        '</div>';
+      }).join('') +
+      '<div class="sc-legend">' +
+        '<div class="sc-legend-item"><div class="sc-legend-dot" style="background:'+CC[0]+'"></div>SF%</div>' +
+        '<div class="sc-legend-item"><div class="sc-legend-dot" style="background:'+CC[3]+'"></div>DIS%</div>' +
+      '</div>';
+    }
+  }
+
+  /* sc7 — ลูกไก่รายล็อต */
+  if (hatchAll.length) {
+    var lots7 = hatchAll.slice(-8);
+    hBar(document.getElementById('sc7'), lots7.map(function(r){
+      return {label: shortDate(r.Hatch_Date||r.Hatch_Lot_ID), value: +r.Chicks_Hatched||0, display: fmtN(r.Chicks_Hatched)};
+    }), CC[1]);
+  }
+
+  /* sc8 — คะแนนเฉลี่ยต่อ Family */
+  var selAll2 = data.raw && data.raw.select ? data.raw.select : selAll;
+  if (selAll2.length) {
+    var fSc={}, fCt={};
+    selAll2.forEach(function(r){var f=r.Family_Code||'Unknown'; fSc[f]=(fSc[f]||0)+(+r.Final_Score||0); fCt[f]=(fCt[f]||0)+1;});
+    var top8 = Object.keys(fSc).map(function(f){return [f,(fSc[f]/fCt[f]).toFixed(1)];}).sort(function(a,b){return b[1]-a[1];}).slice(0,8);
+    hBar(document.getElementById('sc8'), top8.map(function(x){
+      return {label: x[0], value: +x[1], display: x[1]};
+    }), CC[0]);
+  }
+
+  /* sc9 — สัดส่วนผลคัดเลือก */
+  if (selAll2 && selAll2.length) {
+    var sp = selAll2.filter(function(r){return /select|ผ่าน|คัดได้/i.test(String(r.Decision));}).length;
+    var sf2 = selAll2.filter(function(r){return /reject|คัดออก|ไม่ผ่าน/i.test(String(r.Decision));}).length;
+    var sw = selAll2.length - sp - sf2;
+    var tot = selAll2.length || 1;
+    var el9 = document.getElementById('sc9');
+    if (el9) {
+      el9.innerHTML = [
+        {label:'ผ่านการคัดเลือก', value:sp, color:CC[0]},
+        {label:'คัดออก', value:sf2, color:CC[3]},
+        {label:'รอประเมิน', value:sw, color:CC[1]}
+      ].map(function(item){
+        return '<div class="sc-row">' +
+          '<div class="sc-label">'+item.label+'</div>' +
+          '<div class="sc-bar-wrap"><div class="sc-bar" style="width:'+Math.round(item.value/tot*100)+'%;background:'+item.color+'"></div></div>' +
+          '<div class="sc-val">'+item.value+' ('+Math.round(item.value/tot*100)+'%)</div>' +
+        '</div>';
+      }).join('');
+    }
+  }
+}
+
+function _miniBar(name, val, max, color) {
+  var pct = Math.min(Math.round(val/max*100), 100);
+  return '<div class="sc-row" style="margin-bottom:3px">' +
+    '<div class="sc-label" style="font-size:10px;color:var(--gray-500)">'+name+'</div>' +
+    '<div class="sc-bar-wrap" style="height:14px"><div class="sc-bar" style="width:'+pct+'%;background:'+color+'"></div></div>' +
+    '<div class="sc-val" style="font-size:10px">'+val+'%</div>' +
+  '</div>';
 }
 
 /* ── HELPERS ── */
